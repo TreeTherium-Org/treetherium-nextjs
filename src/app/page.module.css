@@ -163,3 +163,22 @@ a.secondary {
     filter: invert();
   }
 }
+.startup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+  margin: 0;
+}
+
+.startup-image {
+  width: 100%;
+  height: 100vh; /* Full height of the viewport */
+  object-fit: cover; /* Ensures the image covers the entire area without distortion */
+}
+
+.paragraph { 
+  font-size: 18px;
+  color: #4a5568;
+}
