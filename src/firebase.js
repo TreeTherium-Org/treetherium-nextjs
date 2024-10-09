@@ -1,18 +1,25 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCq6Cn43fISIMBN0Ca2mQUeaCYzY4UYkFw",
-  authDomain: "nasilemakku-161c7.firebaseapp.com",
-  projectId: "nasilemakku-161c7",
-  storageBucket: "nasilemakku-161c7.appspot.com",
-  messagingSenderId: "547804126906",
-  appId: "1:547804126906:web:a3c1797d64837527a06c83"
+  apiKey: "AIzaSyDbSH12i-KpDQqYpqJXniiAD3fyU7drJAk",
+  authDomain: "treetherium.firebaseapp.com",
+  projectId: "treetherium",
+  storageBucket: "treetherium.appspot.com",
+  messagingSenderId: "447506327762",
+  appId: "1:447506327762:web:8fae710b5a698cc18a250b"
 };
 
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase only if it hasn't been initialized yet
+let app;
+if (!getApps().length) {
+    app = initializeApp(firebaseConfig);
+} else {
+    app = getApps()[0]; // Use the initialized app
+}
+
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);

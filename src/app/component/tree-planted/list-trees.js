@@ -1,68 +1,66 @@
 import Section from "../layouts/Section";
 import Link from 'next/link';
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../../firebase'; // Ensure the correct path to your firebase.js
 
 const ListTrees = () => {
+    const [trees, setTrees] = useState([]);
+
+    // Fetch tree data from Firestore
+    useEffect(() => {
+        const fetchTrees = async () => {
+            try {
+                const treeCollection = collection(db, 'tree');
+                const treeSnapshot = await getDocs(treeCollection);
+                const treeList = treeSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                setTrees(treeList);
+            } catch (error) {
+                console.error("Error fetching trees: ", error);
+            }
+        };
+        fetchTrees();
+    }, []);
+
     return (
-        <Section allNotification={false} searchPopup={true} title={'Transaction'}>
-            {/* transaction start */}
+        <Section allNotification={false} searchPopup={true} title={'List of Trees'}>
+            {/* Display List of Tree start */}
             <div className="transaction-area pd-top-36">
                 <div className="container">
                     <div className="section-title">
                         <h3 className="title">List of Trees</h3>
                     </div>
-                    <ul className="transaction-inner">
-                        <li className="ba-single-transaction style-two">
-                            <div className="thumb">
-                                <img src="/assets/img/icon/2.png" alt="img" />
+                    <div className="tree-gallery">
+                        {trees.map(tree => (
+                            <div key={tree.id} className="tree-item">
+                                <Link href={`/tree-details?id=${tree.id}`}>
+                                    <div className="tree-image">
+                                        <Image
+                                            src={tree.imageUrl || '/default-image.jpg'}
+                                            alt={tree.title || 'Unnamed Tree'}
+                                            width={300}
+                                            height={300}
+                                            objectFit="cover"
+                                        />
+                                    </div>
+                                    <h4 className="tree-title">{tree.title || 'Unnamed Tree'}</h4>
+                                </Link>
                             </div>
-                            <div className="details">
-                                <h5>Namecheap Inc.</h5>
-                                <p>Domain Purchase</p>
-                                <h5 className="amount">-$130</h5>
-                            </div>
-                        </li>
-                        <li className="ba-single-transaction style-two">
-                            <div className="thumb">
-                                <img src="/assets/img/icon/3.png" alt="img" />
-                            </div>
-                            <div className="details">
-                                <h5>Namecheap Inc.</h5>
-                                <p>Domain Purchase</p>
-                                <h5 className="amount">-$160</h5>
-                            </div>
-                        </li>
-                        <li className="ba-single-transaction style-two">
-                            <div className="thumb">
-                                <img src="/assets/img/icon/4.png" alt="img" />
-                            </div>
-                            <div className="details">
-                                <h5>Namecheap Inc.</h5>
-                                <p>Domain Purchase</p>
-                                <h5 className="amount">-$890</h5>
-                            </div>
-                        </li>
-                        <li className="ba-single-transaction style-two">
-                            <div className="thumb">
-                                <img src="/assets/img/icon/5.png" alt="img" />
-                            </div>
-                            <div className="details">
-                                <h5>Namecheap Inc.</h5>
-                                <p>Domain Purchase</p>
-                                <h5 className="amount">-$1,000</h5>
-                            </div>
-                        </li>
-                    </ul>
+                        ))}
+                    </div>
                 </div>
             </div>
-            {/* transaction End */}
+            {/* Display List of Tree End */}
 
             <div className="btn-wrap mg-top-40 mg-bottom-40">
                 <div className="container">
-                    <Link href="/transaction"  className="btn-large btn-blue w-100">
-                       Add new tree <i className="fa fa-angle-double-right" />
+                    <Link href="/trees-form" className="btn-large btn-blue w-100">
+                        Add new tree <i className="fa fa-angle-double-right" />
                     </Link>
                 </div>
             </div>
+
         </Section>
     );
 };
