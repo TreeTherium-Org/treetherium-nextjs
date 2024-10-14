@@ -1,62 +1,47 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 
 const Header = (props) => {
-  const [search, setSearch] = useState(false);
-
-  const searchPopup = (
-    <>
-      <div
-        className={search ? "body-overlay active" : "body-overlay"}
-        id="body-overlay"
-        onClick={() => setSearch(false)}
-      />
-      <div className={search ? "search-popup active" : "search-popup"} id="search-popup">
-        <form className="search-form">
-          <div className="form-group">
-            <input type="text" className="form-control" placeholder="Search....." />
-          </div>
-          <button type="button" className="submit-btn">
-            <i className="fa fa-search" />
-          </button>
-        </form>
-      </div>
-    </>
-  );
-
   return (
     <>
-      {props.searchPopup ? searchPopup : null}
-      <div className="header-area" style={{ backgroundImage: "url('/assets/img/bg/1.png')" }}>
+      {/* Updated the header area to remove image background and set a green color */}
+      <div className="header-area" style={{ backgroundColor: "#778B28" }}>
         <div className="container">
           <div className="row">
-            <div className="col-sm-4 col-3">
-              <Link href="/" className="menu-back-page home-clicked">
+          <div className="col-sm-4 col-3">
+              {/* Use an anchor tag to go back to the previous page */}
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault(); // Prevent default link behavior
+                  window.history.back(); // Go back in history
+                }}
+                className="menu-back-page home-clicked"
+              >
                 <i className="fa fa-angle-left" />
-              </Link>
+              </a>
             </div>
             <div className="col-sm-4 col-6 text-center">
               <div className="page-name">{props.title}</div>
             </div>
             <div className="col-sm-4 col-3 text-right">
-              {props.searchPopup ? (
-                <div className="search header-search" onClick={() => setSearch(true)}>
-                  <i className="fa fa-search" />
-                </div>
-              ) : null}
+              {/* Replaced the search section with a logo */}
+              <div className="header-logo">
+                <img
+                   src="/assets/img/TT-Logo.png" // Update this path to your logo
+                  alt="Logo"
+                  style={{ borderRadius: "50%", width: "30px", height: "30px" }} // Adjust size as needed
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Page Title */}
-      <div className="page-title mg-top-50">
-        <div className="container">
-          <Link href="/" className="float-left home-clicked">Home</Link>
-          <span className="float-right">{props.title}</span>
-        </div>
+      <div className="page-title mg-top-20">
       </div>
     </>
   );

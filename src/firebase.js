@@ -3,6 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDbSH12i-KpDQqYpqJXniiAD3fyU7drJAk",
   authDomain: "treetherium.firebaseapp.com",

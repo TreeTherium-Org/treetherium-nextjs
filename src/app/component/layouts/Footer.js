@@ -12,6 +12,7 @@ const Footer = () => {
           style={{ backgroundColor: "#fff" }} // Updated path for Next.js
         >
           <div className="container">
+            {/* You can add any additional content or branding here */}
           </div>
         </div>
         <div className="container">
@@ -24,27 +25,21 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/all-pages">
-                  <i className="fa fa-file-text" />
-                  <p>Pages</p>
-                </Link>
-              </li>
-              <li>
-                <Link href="/components">
-                  <i className="fa fa-plus" />
-                  <p>Components</p>
-                </Link>
-              </li>
-              <li>
-                <div className="menu-bar">
-                  <i className="fa fa-bars" />
+                <Link href="/menu">
+                  <i className="fa fa-bars" /> {/* Use a relevant icon */}
                   <p>Menu</p>
-                </div>
+                </Link>
               </li>
               <li>
-                <Link href="/carts">
-                  <i className="fa fa-home" />
-                  <p>My Cart</p>
+                <Link href="/faq">
+                  <i className="fa fa-question-circle" /> {/* Use a relevant icon */}
+                  <p>FAQ</p>
+                </Link>
+              </li>
+              <li>
+                <Link href="/profile">
+                  <i className="fa fa-user" /> {/* Use a relevant icon */}
+                  <p>Profile</p>
                 </Link>
               </li>
             </ul>
