@@ -6,179 +6,102 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-  font-family: var(--font-geist-sans);
-}
-
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
+  background-image: url('/assets/img/hands-tree-2.jpg'); /* Path to your image */
+  background-size: cover; /* Cover the entire viewport */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent repeating the image */
+  min-height: 100vh; /* Make sure it covers the full height of the viewport */
+  display: flex; /* Flexbox for centering */
+  flex-direction: column; /* Stack children vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center horizontally */
+  color: white; /* Change text color to contrast with background */
+  padding: 0 20px; /* Add padding for smaller viewports */
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
+  background: rgba(129, 118, 7, 0.6); /* Semi-transparent background */
+  padding: 40px; /* Add padding to the main content */
+  border-radius: 10px; /* Rounded corners */
+  text-align: center; /* Center the text */
+  max-width: 600px; /* Optional: Limit the width */
+  width: 100%; /* Ensure it spans full width on smaller devices */
+  margin: auto; /* Center the main content */
 }
 
-.main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  list-style-position: inside;
+.title {
+  font-size: 2.5rem; /* Adjust font size for title */
+  margin-bottom: 20px; /* Spacing below the title */
+  text-align: center; /* Center the title */
 }
 
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
+.message {
+  font-size: 1.5rem; /* Adjust font size for message */
+  margin-bottom: 30px; /* Spacing below the message */
 }
 
-.main code {
-  font-family: inherit;
-  background: var(--gray-alpha-100);
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-weight: 600;
+.joinButton {
+  background-color: #A3A830; /* Light green button color */
+  color: white; /* Text color */
+  padding: 12px 24px; /* Padding for button */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1.1rem; /* Increase font size for better readability */
 }
 
-.ctas {
-  display: flex;
-  gap: 16px;
-}
-
-.ctas a {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: none;
-  border: 1px solid transparent;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
-}
-
-a.primary {
-  background: var(--foreground);
-  color: var(--background);
-  gap: 8px;
-}
-
-a.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 180px;
+.joinButton:hover {
+  background-color: #778B28; /* Dark green on hover */
 }
 
 .footer {
-  grid-row-start: 3;
-  display: flex;
-  gap: 24px;
+  margin-top: 40px; /* Spacing above the footer */
+  display: flex; /* Flexbox for horizontal alignment */
+  justify-content: space-between; /* Center the footer content */
+  align-items: center; /* Align the links in the center */
+  width: 100%; /* Full width */
+  gap: 20px; /* Add space between the links */
+  flex-wrap: wrap; /* Wrap the links on smaller screens if needed */
 }
 
-.footer a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.footerLink {
+  color: white; /* Color for footer links */
+  text-decoration: none; /* No underline */
+  font-size: 1rem; /* Adjust font size */
+  white-space: nowrap; /* Prevent text from breaking onto a new line */
 }
 
-.footer img {
-  flex-shrink: 0;
-}
-
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
-
-  .footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-}
-
-@media (max-width: 600px) {
-  .page {
-    padding: 32px;
-    padding-bottom: 80px;
-  }
-
+/* Media queries for responsive design */
+@media (max-width: 768px) {
   .main {
-    align-items: center;
+    padding: 20px; /* Reduce padding on smaller screens */
   }
 
-  .main ol {
-    text-align: center;
+  .title {
+    font-size: 2rem; /* Adjust title font size */
   }
 
-  .ctas {
-    flex-direction: column;
+  .message {
+    font-size: 1.2rem; /* Adjust message font size */
   }
 
-  .ctas a {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 16px;
-  }
-
-  a.secondary {
-    min-width: auto;
+  .joinButton {
+    padding: 10px 20px; /* Adjust button padding */
+    font-size: 1rem; /* Adjust button font size */
   }
 
   .footer {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+    gap: 10px; /* Reduce gap between links on smaller screens */
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+@media (max-width: 480px) {
+  .footer {
+    justify-content: space-between; /* Adjust spacing on very small screens */
+    padding: 0 10px; /* Add padding to ensure it fits within the viewport */
   }
-}
-.startup-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f5f5f5;
-  margin: 0;
-}
 
-.startup-image {
-  width: 100%;
-  height: 100vh; /* Full height of the viewport */
-  object-fit: cover; /* Ensures the image covers the entire area without distortion */
-}
-
-.paragraph { 
-  font-size: 18px;
-  color: #4a5568;
+  .footerLink {
+    font-size: 0.9rem; /* Slightly reduce font size for better fit */
+  }
 }
