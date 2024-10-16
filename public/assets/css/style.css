@@ -35,6 +35,8 @@ Version: 1.0.0
   --main-color: #6236ff;
   --heading-color: #474747;
   --paragraph-color: #474747;
+  --light-green: #A3A830;
+  --dark-green: #778B28;
   --heading-font: 'Poppins', sans-serif;
   --body-font: 'Poppins', sans-serif; }
 
@@ -680,6 +682,7 @@ ul {
   .section-title .title {
     font-size: 24px;
     font-weight: 600;
+
     display: inline-block; }
   .section-title a {
     float: right;
@@ -1037,6 +1040,7 @@ ul {
     margin-top: 5px;
     color: #fff; }
   .header-area .logo {
+
     margin-top: 2px;
     display: inline-block; }
   .header-area .menu-back-page {
@@ -1047,6 +1051,7 @@ ul {
     margin-top: 5px;
     color: #4F3738;
     font-family: 'Poppins'; }
+    
   .header-area .header-search {
     margin-top: 5px;
     color: #fff;
@@ -2084,6 +2089,7 @@ ul {
       list-style: none;
       display: inline-block;
       margin: 0 18px;
+
       padding: 10px 0 8px 0; }
       .footer-bottom ul li p {
         margin-bottom: 0;
@@ -4690,3 +4696,4 @@ span.badge-pulse-orange {
   color: #555; /* Dark grey text color */
   font-size: 20px; /* Font size */
 }
+

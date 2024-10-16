@@ -116,10 +116,18 @@ const Signin = () => {
                             <input type="checkbox" />
                             <span>Remember Password</span>
                         </div>
-                        <button className="btn btn-purple" type="submit">Login</button>
-                        <Link href="/signup">
-                                Create an account
-                        </Link>
+
+                        {/* Login button and Create account link in same container */}
+                        <div className="login-create-container">
+                            <button className="btn btn-purple" type="submit">Login</button>
+
+                            {/* Create account link directly below login button */}
+                            <div className="create-account-link">
+                                <Link href="/signup">
+                                    Create an account
+                                </Link>
+                            </div>
+                        </div>
                     </form>
                     {error && <p className="error">{error}</p>}
 
