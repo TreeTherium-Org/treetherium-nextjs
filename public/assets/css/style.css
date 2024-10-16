@@ -33,8 +33,8 @@ Version: 1.0.0
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,400i,500,500i,600,600i,700,700&display=swap");
 :root {
   --main-color: #6236ff;
-  --heading-color: #474747;
-  --paragraph-color: #474747;
+  --heading-color: #4F3738;
+  --paragraph-color: #4F3738;
   --light-green: #A3A830;
   --dark-green: #778B28;
   --heading-font: 'Poppins', sans-serif;

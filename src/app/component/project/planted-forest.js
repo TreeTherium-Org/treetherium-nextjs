@@ -67,7 +67,8 @@ const MyPlantedForest = () => {
                                 alt="Single Tree"
                                 width={100}
                                 height={100}
-                                style={{ borderRadius: '20%' }}
+                                marginBottom={20}
+                                style={{ borderRadius: '20%', marginBottom: '20px' }}
                             />
                             <p>Plant a Tree</p>
                         </div>
@@ -77,7 +78,7 @@ const MyPlantedForest = () => {
                                 alt="Tree Planting Project"
                                 width={100}
                                 height={100}
-                                style={{ borderRadius: '20%' }}
+                                style={{ borderRadius: '20%', marginBottom: '20px' }}
                             />
                             <p>Start a Project</p>
                         </div>
@@ -140,11 +141,11 @@ const dataGridStyle = {
 };
 
 const dataCardStyle = {
-    backgroundColor: '#ffe6f0', // Light pink color
+    backgroundColor: '#f7f4f1', // Light brown color
     borderRadius: '10px',
     padding: '20px',
     textAlign: 'center',
-    border: '1px solid #ccc',
+    border: '1px solid  #c1b3a8',
     boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow
     height: '120px', // Fixed height to ensure uniformity
     display: 'flex',
@@ -165,7 +166,8 @@ const buttonCardStyle = {
     alignItems: 'center',
     textAlign: 'center',
     cursor: 'pointer',
-    backgroundColor: '#f5f5f5',
+    border: '1px solid  #c1b3a8',
+    backgroundColor: '#f7f4f1',
     borderRadius: '10px',
     padding: '15px',
     boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow

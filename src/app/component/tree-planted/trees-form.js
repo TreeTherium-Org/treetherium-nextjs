@@ -98,7 +98,7 @@ export default function UploadForm() {
         <Section allNotification={false} searchPopup={false} title={'Upload A Tree'}>
             <div className="transaction-area pd-top-36">
                 <div className="container">
-                    <h3 className="form-title">Let Us Know About Your Tree</h3>
+                    <h3 className="form-title">"Let Us Know About Your Tree"</h3>
                     <div className="form-image">
                         <img src="https://cdn.pixabay.com/photo/2014/02/27/16/10/flowers-276014_1280.jpg" alt="Tree illustration" className="illustration-image" />
                     </div>
@@ -106,7 +106,7 @@ export default function UploadForm() {
                         {error && <p className="error-message">{error}</p>}
                         <form onSubmit={handleSubmit} encType="multipart/form-data" className="upload-form">
                             <div className="form-group">
-                                <label htmlFor="title">Tree Name</label>
+                                <label htmlFor="title">Tree Species</label>
                                 <input
                                     type="text"
                                     name="title"
@@ -115,7 +115,7 @@ export default function UploadForm() {
                                     onChange={handleChange}
                                     required
                                     className="form-control"
-                                    placeholder="Enter title"
+                                    placeholder="Enter species"
                                 />
                             </div>
 
