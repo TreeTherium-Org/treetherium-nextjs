@@ -32,6 +32,9 @@ Version: 1.0.0
 ----------------------------------------------*/
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,400i,500,500i,600,600i,700,700&display=swap");
 :root {
+  --main-color: #6236ff;
+  --heading-color: #474747;
+  --paragraph-color: #474747;
   --light-green: #A3A830;
   --dark-green: #778B28;
   --heading-font: 'Poppins', sans-serif;
@@ -624,14 +627,14 @@ ul {
 
 .btn-blue {
   color: #fff;
-  background: #6236ff; }
+  background: #A3A830; }
 
 .btn-red {
   background: #f9376c;
   color: #fff; }
 
 .btn-purple {
-  background: #A3A830;
+  background: #16423C;
   color: #fff; }
 
 .btn-green {
@@ -674,11 +677,12 @@ ul {
 ---------------------------*/
 .section-title {
   margin-bottom: 14px;
+  text-align: center;
   overflow: hidden; }
   .section-title .title {
     font-size: 24px;
     font-weight: 600;
-    float: left;
+
     display: inline-block; }
   .section-title a {
     float: right;
@@ -1022,8 +1026,8 @@ ul {
   font-weight: 500; }
 
 .ba-page-name h3 {
-  color: #fff;
-  background: #A3A830;
+  color: #4F3738;
+  background: #16423C;
   padding: 17px;
   margin-bottom: 0; }
 
@@ -1036,15 +1040,18 @@ ul {
     margin-top: 5px;
     color: #fff; }
   .header-area .logo {
-    margin-top: 5px;
+
+    margin-top: 2px;
     display: inline-block; }
   .header-area .menu-back-page {
-    margin-top: 6px;
-    color: #fff;
+    margin-top: 2px;
+    color: #4F3738;
     font-size: 20px; }
   .header-area .page-name {
     margin-top: 5px;
-    color: #fff; }
+    color: #4F3738;
+    font-family: 'Poppins'; }
+    
   .header-area .header-search {
     margin-top: 5px;
     color: #fff;
@@ -1875,7 +1882,7 @@ ul {
 
 /************* signin ***********/
 .contact-form-inner {
-  background: #F5F5F5 ;
+  background: #C4DAD2;
   padding: 40px 20px; }
   .contact-form-inner .btn {
     height: 45px;
@@ -2073,7 +2080,7 @@ ul {
   z-index: 9;
   bottom: 0;
   left: 0;
-  background: #fff;
+  background: #778B28;
   border-top: 1px solid #DCDCE9; }
   .footer-bottom ul {
     margin: 0;
@@ -2081,7 +2088,8 @@ ul {
     .footer-bottom ul li {
       list-style: none;
       display: inline-block;
-      margin: 0 8px;
+      margin: 0 18px;
+
       padding: 10px 0 8px 0; }
       .footer-bottom ul li p {
         margin-bottom: 0;
@@ -4504,7 +4512,7 @@ span.badge-pulse-orange {
   margin-top: 15px;
   padding: 10px 20px;
   border: none;
-  background-color: #16423C;
+  background-color: #16423C; /* Purple color */
   color: white;
   cursor: pointer;
   border-radius: 3px;
@@ -4524,7 +4532,168 @@ span.badge-pulse-orange {
   background-color: #888;
 }
 
+.section-title {
+  margin-bottom: 20px; /* Space below the title */
+}
+
+.title {
+  font-size: 2rem; /* Increase font size for emphasis */
+  font-weight: 600; /* Semi-bold */
+  text-align: center; /* Center the title */
+  color: #333; /* Dark text color for contrast */
+}
+
+.tree-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between tree items */
+  justify-content: center; /* Center the tree items */
+}
+
+.tree-item {
+  text-align: center; /* Center text for each tree item */
+  width: 300px; /* Fixed width for uniformity */
+}
+
+.no-trees {
+  text-align: center; /* Center content when no trees are present */
+  margin-top: 20px; /* Space above */
+}
+
+.no-trees p {
+  font-size: 1.5rem; /* Increase font size for the message */
+  color: #777; /* Gray text color for a subtle look */
+}
+
+.btn-large {
+  background-color: #A3A830; /* Custom blue color */
+  color: white; /* White text color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Slightly rounded corners */
+  font-size: 1.2rem; /* Increase font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.btn-large:hover {
+  background-color: #005bb5; /* Darker blue on hover */
+}
 
 
+/* Modern and minimalistic styles */
+.form-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #4F3738;
+  margin-bottom: 16px;
+  text-align: center;
+}
 
+.form-image {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.illustration-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.upload-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.btn-wrap {
+  text-align: center;
+}
+
+.btn-submit {
+  background: #A3A830;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+.btn-submit:hover {
+  background: #217dbb;
+}
+
+@media (max-width: 768px) {
+  .upload-card {
+      padding: 16px;
+  }
+
+  .form-title {
+      font-size: 1.5rem;
+  }
+
+  .btn-submit {
+      font-size: 0.9rem;
+      padding: 8px 16px;
+  }
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+  height: 300px; /* Adjust height as necessary */
+  object-fit: cover; /* Ensures the image covers the area */
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.loading-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #f0f0f0; /* Light grey background */
+  color: #555; /* Dark grey text color */
+  font-size: 20px; /* Font size */
+}
 

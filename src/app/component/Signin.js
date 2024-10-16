@@ -2,7 +2,7 @@ import { useState } from "react";
 import Section from '../component/layouts/Section.js';
 import { useRouter } from "next/router";
 import Link from "next/link"; // Using Next.js Link component
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import { auth, db } from '../../firebase';
 import { collection, doc, setDoc } from "firebase/firestore";
 
@@ -81,6 +81,7 @@ const Signin = () => {
 
     // Initialize providers
     const googleProvider = new GoogleAuthProvider();
+    const facebookProvider = new FacebookAuthProvider();
 
     return (
         <Section allNotification={false} searchPopup={true} title={'Login'}>
@@ -136,6 +137,9 @@ const Signin = () => {
                         </button>
                         <button onClick={() => handleProviderSignIn(googleProvider)} className="social-button btn-google">
                             <img src="https://theplace2b.com.au/wp-content/uploads/2020/09/178-1783296_g-transparent-circle-google-logo.png" alt="Google" /> Sign in with Google
+                        </button>
+                        <button onClick={() => handleProviderSignIn(facebookProvider)} className="social-button btn-facebook">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" /> Sign in with Facebook
                         </button>
                     </div>
                 </div>
