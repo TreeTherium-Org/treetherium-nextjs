@@ -47,15 +47,23 @@ const MyPlantedForest = () => {
                 </header>
                 <main style={mainStyle}>
                     <div style={dataGridStyle}>
-                        <div style={dataCardStyle}>No. of Projects</div>
-                        <div style={dataCardStyle}>Carbon Sequestration Data</div>
-                        <div style={dataCardStyle}>Oxygen Produced Data</div>
-                        <div style={dataCardStyle}>List of Trees - Type of Trees</div>
+                        <div style={dataCardStyle}>
+                            <strong>My Projects:</strong> <span style={{ fontSize: '1.2em' }}><strong>0.0</strong></span>
+                        </div>
+                        <div style={dataCardStyle}>
+                            <strong>My Trees:</strong> <span style={{ fontSize: '1.2em' }}><strong>0.0</strong></span>
+                        </div>
+                        <div style={dataCardStyle}>
+                            <strong>Carbon Sequestration:</strong> <span style={{ fontSize: '1.2em' }}><strong>0.00 Tons</strong></span>
+                        </div>
+                        <div style={dataCardStyle}>
+                            <strong>Oxygen Produced:</strong> <span style={{ fontSize: '1.2em' }}><strong>0.00 Liters</strong></span>
+                        </div>
                     </div>
                     <div style={buttonGridStyle}>
                         <div style={buttonCardStyle} onClick={() => handleButtonClick('/list-trees')}>
                             <Image
-                                src="/assets/img/lsp/single-tree.jpg"
+                                src="/assets/img/lsp/single-tree.jpeg"
                                 alt="Single Tree"
                                 width={100}
                                 height={100}
@@ -65,7 +73,7 @@ const MyPlantedForest = () => {
                         </div>
                         <div style={buttonCardStyle} onClick={() => handleButtonClick('/start-project')}>
                             <Image
-                                src="/assets/img/lsp/many-trees.jpg"
+                                src="/assets/img/lsp/many-trees.jpeg"
                                 alt="Tree Planting Project"
                                 width={100}
                                 height={100}
@@ -111,8 +119,10 @@ const containerStyle = {
 
 const headerStyle = {
     textAlign: 'center',
-    marginBottom: '20px',
-};
+    marginTop: '50px',
+    color: '#4F3738'
+  };
+  
 
 const mainStyle = {
     flex: 1,
@@ -130,11 +140,19 @@ const dataGridStyle = {
 };
 
 const dataCardStyle = {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#ffe6f0', // Light pink color
     borderRadius: '10px',
     padding: '20px',
     textAlign: 'center',
+    border: '1px solid #ccc',
+    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow
+    height: '120px', // Fixed height to ensure uniformity
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
 };
+
 
 const buttonGridStyle = {
     display: 'flex',
@@ -147,14 +165,10 @@ const buttonCardStyle = {
     alignItems: 'center',
     textAlign: 'center',
     cursor: 'pointer',
-};
-
-const circleStyle = {
-    width: '100px',
-    height: '100px',
-    backgroundColor: '#e0e0e0',
-    borderRadius: '20%',
-    marginBottom: '10px',
+    backgroundColor: '#f5f5f5',
+    borderRadius: '10px',
+    padding: '15px',
+    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow
 };
 
 const popupOverlayStyle = {

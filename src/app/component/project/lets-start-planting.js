@@ -51,7 +51,7 @@ const HomePage = () => {
             <div onClick={() => handleButtonClick('list-trees')} style={cardStyle}>
               <div style={circleStyle}>
                 <Image
-                  src="/assets/img/lsp/single-tree.jpg"
+                  src="/assets/img/lsp/single-tree.jpeg"
                   alt="Single Tree"
                   width={100}
                   height={100}
@@ -64,7 +64,7 @@ const HomePage = () => {
             <div onClick={() => handleButtonClick('/list-projects')} style={cardStyle}>
               <div style={circleStyle}>
                 <Image
-                  src="/assets/img/lsp/many-trees.jpg"
+                  src="/assets/img/lsp/many-trees.jpeg"
                   alt="Tree Planting Project"
                   width={100}
                   height={100}

@@ -6,40 +6,32 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <>
-      <div className="footer-area">
-        <div
-          className="footer-top text-center"
-          style={{ backgroundColor: "#fff" }} // Updated path for Next.js
-        >
-          <div className="container">
-            {/* You can add any additional content or branding here */}
-          </div>
-        </div>
+      <div className="footer-area" style={{ backgroundColor: "#fff", padding: "10px 0" }}>
         <div className="container">
-          <div className="footer-bottom text-center">
-            <ul>
-              <li>
+          <div className="footer-bottom d-flex justify-content-around">
+            <ul className="footer-menu d-flex justify-content-around" style={{ width: "100%", padding: "0", margin: "0", listStyle: "none" }}>
+              <li className="text-center">
                 <Link href="/" className="home-clicked">
-                  <i className="fa fa-home" />
-                  <p>Home</p>
+                  <i className="fa fa-home" style={{ fontSize: "20px", color: "#4F3738" }} />
+                  <p style={{ margin: "0", color: "#4F3738" }}>Home</p>
                 </Link>
               </li>
-              <li>
+              <li className="text-center">
                 <Link href="/menu">
-                  <i className="fa fa-bars" /> {/* Use a relevant icon */}
-                  <p>Menu</p>
+                  <i className="fa fa-bars" style={{ fontSize: "20px", color: "#4F3738" }} />
+                  <p style={{ margin: "0", color: "#4F3738" }}>Menu</p>
                 </Link>
               </li>
-              <li>
+              <li className="text-center">
                 <Link href="/faq">
-                  <i className="fa fa-question-circle" /> {/* Use a relevant icon */}
-                  <p>FAQ</p>
+                  <i className="fa fa-question-circle" style={{ fontSize: "20px", color: "#4F3738" }} />
+                  <p style={{ margin: "0", color: "#4F3738" }}>FAQ</p>
                 </Link>
               </li>
-              <li>
+              <li className="text-center">
                 <Link href="/profile">
-                  <i className="fa fa-user" /> {/* Use a relevant icon */}
-                  <p>Profile</p>
+                  <i className="fa fa-user" style={{ fontSize: "20px", color: "#4F3738" }} />
+                  <p style={{ margin: "0", color: "#4F3738" }}>Profile</p>
                 </Link>
               </li>
             </ul>

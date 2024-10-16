@@ -1046,7 +1046,7 @@ ul {
   .header-area .page-name {
     margin-top: 5px;
     color: #4F3738;
-    font-family: 'Sans-Serif'; }
+    font-family: 'Poppins'; }
   .header-area .header-search {
     margin-top: 5px;
     color: #fff;
@@ -4578,7 +4578,7 @@ span.badge-pulse-orange {
 .form-title {
   font-size: 1.75rem;
   font-weight: 600;
-  color: #333;
+  color: #4F3738;
   margin-bottom: 16px;
   text-align: center;
 }

@@ -95,7 +95,7 @@ export default function UploadForm() {
     };
 
     return (
-        <Section allNotification={false} searchPopup={false} title={'Upload a Tree'}>
+        <Section allNotification={false} searchPopup={false} title={'Upload A Tree'}>
             <div className="transaction-area pd-top-36">
                 <div className="container">
                     <h3 className="form-title">Let Us Know About Your Tree</h3>
