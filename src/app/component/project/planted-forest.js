@@ -43,7 +43,7 @@ const MyPlantedForest = () => {
         <Section allNotification={false} searchPopup={true} title={'My Planted Forest'}>
             <div style={containerStyle}>
                 <header style={headerStyle}>
-                    <h1>My Planted Forest</h1>
+                    <h3>My Data Overview</h3>
                 </header>
                 <main style={mainStyle}>
                     <div style={dataGridStyle}>
@@ -114,13 +114,13 @@ export default MyPlantedForest;
 const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
+    height: '75vh',
     padding: '20px',
 };
 
 const headerStyle = {
     textAlign: 'center',
-    marginTop: '50px',
+    marginTop: '25px',
     color: '#4F3738'
   };
   

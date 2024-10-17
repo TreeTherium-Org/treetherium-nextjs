@@ -100,7 +100,7 @@ export default function UploadForm() {
                 <div className="container">
                     <h3 className="form-title">"Let Us Know About Your Tree"</h3>
                     <div className="form-image">
-                        <img src="https://cdn.pixabay.com/photo/2014/02/27/16/10/flowers-276014_1280.jpg" alt="Tree illustration" className="illustration-image" />
+                        <img src="/assets/img/hands-tree-2.jpg" alt="Tree illustration" className="illustration-image" />
                     </div>
                     <div className="card upload-card">
                         {error && <p className="error-message">{error}</p>}

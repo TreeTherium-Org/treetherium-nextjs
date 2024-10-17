@@ -60,7 +60,7 @@ body {
   color: var(--paragraph-color);
   overflow-x: hidden;
   font-family: var(--body-font);
-  background: #f6f6f6;
+  background: #ebf6e2;
   font-size: 14px; }
 
 h1 {
@@ -634,7 +634,7 @@ ul {
   color: #fff; }
 
 .btn-purple {
-  background: #16423C;
+  background: #778b28;
   color: #fff; }
 
 .btn-green {
@@ -4697,3 +4697,21 @@ span.badge-pulse-orange {
   font-size: 20px; /* Font size */
 }
 
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.logo-image {
+  max-width: 100px; /* Adjust the size as needed */
+  height: auto;
+  margin: 0 auto;
+}
+
+.single-checkbox-wrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}

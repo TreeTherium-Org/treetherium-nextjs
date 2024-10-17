@@ -6,7 +6,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <>
-      <div className="footer-area" style={{ backgroundColor: "#fff", padding: "10px 0" }}>
+      <div className="footer-area" style={{ backgroundColor: "#fff" }}>
         <div className="container">
           <div className="footer-bottom d-flex justify-content-around">
             <ul className="footer-menu d-flex justify-content-around" style={{ width: "100%", padding: "0", margin: "0", listStyle: "none" }}>

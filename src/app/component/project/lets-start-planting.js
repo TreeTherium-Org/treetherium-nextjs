@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Section from "../layouts/Section";
 import { useRouter } from 'next/router';
+import LetsStartPlantingPage from '../../../pages/lets-start-planting';
 
-const HomePage = () => {
+const LetsStartPlanting = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [showWalletPopup, setShowWalletPopup] = useState(false);
   const router = useRouter();
@@ -43,7 +44,7 @@ const HomePage = () => {
     <Section allNotification={false} searchPopup={true} title={'Lets Start Planting'}>
       <div style={containerStyle}>
         <header style={headerStyle}>
-          <h1>Let's Start Planting</h1>
+          <h3>Let's Start Planting</h3>
         </header>
         {/* Main Section */}
         <main style={mainStyle}>
@@ -53,8 +54,8 @@ const HomePage = () => {
                 <Image
                   src="/assets/img/lsp/single-tree.jpeg"
                   alt="Single Tree"
-                  width={100}
-                  height={100}
+                  width={150}
+                  height={150}
                   style={{ borderRadius: '20%' }}
                 />
               </div>
@@ -66,8 +67,8 @@ const HomePage = () => {
                 <Image
                   src="/assets/img/lsp/many-trees.jpeg"
                   alt="Tree Planting Project"
-                  width={100}
-                  height={100}
+                  width={150}
+                  height={150}
                   style={{ borderRadius: '20%' }}
                 />
               </div>
@@ -100,7 +101,7 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default LetsStartPlanting;
 
 const containerStyle = {
   display: 'flex',
@@ -125,7 +126,22 @@ const mainStyle = {
 
 const gridStyle = {
   display: 'flex',
-  gap: '50px',
+  flexDirection: 'column', // Align items vertically
+  gap: '20px', // Space between each button
+  alignItems: 'center', // Center align the buttons horizontally
+};
+
+
+const circleStyle = {
+  width: '250px', // Increase the size of the button area
+  height: '150px', // Increase the size of the button area
+  backgroundColor: '#fff',
+  borderRadius: '50%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom: '10px',
+  color: '#4F3738',
 };
 
 const cardStyle = {
@@ -134,19 +150,9 @@ const cardStyle = {
   alignItems: 'center',
   textAlign: 'center',
   cursor: 'pointer',
+  fontSize: '1.2em', // Adjust text size to be larger
 };
 
-const circleStyle = {
-  width: '100px',
-  height: '100px',
-  backgroundColor: '#f0f0f0',
-  borderRadius: '50%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginBottom: '10px',
-  color: '#4F3738'
-};
 
 const popupOverlayStyle = {
   position: 'fixed',

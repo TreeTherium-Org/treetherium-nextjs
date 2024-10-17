@@ -103,9 +103,12 @@ const Signup = () => {
 
     return (
         <Section allNotification={false} searchPopup={true} title="Register">
-            <div className="ba-page-name text-center mg-bottom-40">
-                <h3>Register</h3>
+            <div className="logo-container">
+                <h3>
+                    <img src="/assets/img/TT-Logo.png" alt="TreeTherium Logo" className="logo-image" />
+                </h3>
             </div>
+
             <div className="signin-area mg-bottom-35">
                 <div className="container">
                     <form className="contact-form-inner" onSubmit={signUp}>

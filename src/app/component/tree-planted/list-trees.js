@@ -42,9 +42,6 @@ const ListTrees = () => {
             {/* Display List of Tree start */}
             <div className="transaction-area pd-top-36">
                 <div className="container">
-                    <div className="section-title">
-                        <h3 className="title">List of Trees</h3>
-                    </div>
                     <div className="tree-gallery">
                         {trees.length > 0 ? (
                             trees.map(tree => (
