@@ -13644,9 +13644,6 @@ a.text-dark:hover {
     pointer-events: none
 }
 
-.nice-select.disabled:after {
-    border-color: $color-gray80
-}
 
 .nice-select.wide {
     width: 100%

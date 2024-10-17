@@ -105,7 +105,7 @@ const Signup = () => {
         <Section allNotification={false} searchPopup={true} title="Register">
             <div className="logo-container">
                 <h3>
-                    <img src="/assets/img/TT-Logo.png" alt="TreeTherium Logo" className="logo-image" />
+                 
                 </h3>
             </div>
 

@@ -43,7 +43,7 @@ const MyPlantedForest = () => {
         <Section allNotification={false} searchPopup={true} title={'My Planted Forest'}>
             <div style={containerStyle}>
                 <header style={headerStyle}>
-                    <h3>My Data Overview</h3>
+                    <h3 className="form-title">My Data Overview</h3>
                 </header>
                 <main style={mainStyle}>
                     <div style={dataGridStyle}>
@@ -120,7 +120,7 @@ const containerStyle = {
 
 const headerStyle = {
     textAlign: 'center',
-    marginTop: '25px',
+    marginTop: '15px',
     color: '#4F3738'
   };
   
@@ -130,14 +130,13 @@ const mainStyle = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    gap: '30px',
+    gap: '20px',
 };
 
 const dataGridStyle = {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '20px',
-    marginBottom: '20px',
 };
 
 const dataCardStyle = {
@@ -156,8 +155,9 @@ const dataCardStyle = {
 
 
 const buttonGridStyle = {
-    display: 'flex',
-    justifyContent: 'space-around',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr', // Two columns to match the layout of the data cards
+    gap: '20px', // Adjusts spacing between the buttons
 };
 
 const buttonCardStyle = {
@@ -166,12 +166,16 @@ const buttonCardStyle = {
     alignItems: 'center',
     textAlign: 'center',
     cursor: 'pointer',
-    border: '1px solid  #c1b3a8',
+    border: '1px solid #c1b3a8',
     backgroundColor: '#f7f4f1',
     borderRadius: '10px',
-    padding: '15px',
-    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow
+    padding: '20px',
+    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow for consistency
+    height: '200px', // Adjust as needed for visual consistency with the data cards
+    justifyContent: 'center',
+    gap: '10px', // Space between the image and text
 };
+
 
 const popupOverlayStyle = {
     position: 'fixed',

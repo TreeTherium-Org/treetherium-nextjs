@@ -4582,7 +4582,7 @@ span.badge-pulse-orange {
 
 /* Modern and minimalistic styles */
 .form-title {
-  font-size: 1.75rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #4F3738;
   margin-bottom: 16px;
@@ -4662,7 +4662,7 @@ span.badge-pulse-orange {
   }
 
   .form-title {
-      font-size: 1.5rem;
+      font-size: 1.1rem;
   }
 
   .btn-submit {
@@ -4714,4 +4714,8 @@ span.badge-pulse-orange {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.tree-title {
+  margin-top: 20px;
 }

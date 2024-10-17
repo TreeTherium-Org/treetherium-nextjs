@@ -73,7 +73,7 @@ const Signin = () => {
         <Section allNotification={false} searchPopup={true} title={'Login'}>
             <div className="logo-container">
                 <h3>
-                    <img src="/assets/img/TT-Logo.png" alt="TreeTherium Logo" className="logo-image" />
+
                 </h3>
             </div>
 
