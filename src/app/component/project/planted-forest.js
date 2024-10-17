@@ -43,7 +43,7 @@ const MyPlantedForest = () => {
         <Section allNotification={false} searchPopup={true} title={'My Planted Forest'}>
             <div style={containerStyle}>
                 <header style={headerStyle}>
-                    <h1>My Planted Forest</h1>
+                    <h3 className="form-title">My Data Overview</h3>
                 </header>
                 <main style={mainStyle}>
                     <div style={dataGridStyle}>
@@ -67,7 +67,8 @@ const MyPlantedForest = () => {
                                 alt="Single Tree"
                                 width={100}
                                 height={100}
-                                style={{ borderRadius: '20%' }}
+                                marginBottom={20}
+                                style={{ borderRadius: '20%', marginBottom: '20px' }}
                             />
                             <p>Plant a Tree</p>
                         </div>
@@ -77,7 +78,7 @@ const MyPlantedForest = () => {
                                 alt="Tree Planting Project"
                                 width={100}
                                 height={100}
-                                style={{ borderRadius: '20%' }}
+                                style={{ borderRadius: '20%', marginBottom: '20px' }}
                             />
                             <p>Start a Project</p>
                         </div>
@@ -113,13 +114,13 @@ export default MyPlantedForest;
 const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
+    height: '75vh',
     padding: '20px',
 };
 
 const headerStyle = {
     textAlign: 'center',
-    marginTop: '50px',
+    marginTop: '25px',
     color: '#4F3738'
   };
   
@@ -129,22 +130,21 @@ const mainStyle = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    gap: '30px',
+    gap: '20px',
 };
 
 const dataGridStyle = {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '20px',
-    marginBottom: '20px',
 };
 
 const dataCardStyle = {
-    backgroundColor: '#ffe6f0', // Light pink color
+    backgroundColor: '#f7f4f1', // Light brown color
     borderRadius: '10px',
     padding: '20px',
     textAlign: 'center',
-    border: '1px solid #ccc',
+    border: '1px solid  #c1b3a8',
     boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow
     height: '120px', // Fixed height to ensure uniformity
     display: 'flex',
@@ -155,8 +155,9 @@ const dataCardStyle = {
 
 
 const buttonGridStyle = {
-    display: 'flex',
-    justifyContent: 'space-around',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr', // Two columns to match the layout of the data cards
+    gap: '20px', // Adjusts spacing between the buttons
 };
 
 const buttonCardStyle = {
@@ -165,11 +166,16 @@ const buttonCardStyle = {
     alignItems: 'center',
     textAlign: 'center',
     cursor: 'pointer',
-    backgroundColor: '#f5f5f5',
+    border: '1px solid #c1b3a8',
+    backgroundColor: '#f7f4f1',
     borderRadius: '10px',
-    padding: '15px',
-    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow
+    padding: '20px',
+    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow for consistency
+    height: '200px', // Adjust as needed for visual consistency with the data cards
+    justifyContent: 'center',
+    gap: '10px', // Space between the image and text
 };
+
 
 const popupOverlayStyle = {
     position: 'fixed',

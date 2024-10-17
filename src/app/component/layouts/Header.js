@@ -25,7 +25,7 @@ const Header = (props) => {
 
       {/* Banner with page title */}
       <div className="header-banner" style={{ backgroundColor: "#778B28", padding: "10px 0", textAlign: "center" }}>
-        <div className="page-name" style={{ color: "#4F3738", fontWeight: "bold", fontSize: "18px" }}>
+        <div className="page-name" style={{ color: "#FFF", fontWeight: "bold", fontSize: "18px" }}>
           {props.title}
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Section from '../component/layouts/Section.js';
 import { useRouter } from "next/router";
-import Link from "next/link"; // Using Next.js Link component
+import Link from "next/link";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import { auth, db } from '../../firebase';
 import { collection, doc, setDoc } from "firebase/firestore";
@@ -23,11 +23,7 @@ const Signin = () => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-
-            // Store the user's data in localStorage or state
             localStorage.setItem("user", JSON.stringify(user));
-
-            // Redirect to user-setting page
             router.push("/user-setting");
         } catch (error) {
             console.error(error);
@@ -39,11 +35,7 @@ const Signin = () => {
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
-
-            // Store user data locally or in state
             localStorage.setItem("user", JSON.stringify(user));
-
-            // Redirect to user-setting page
             router.push("/user-setting");
         } catch (error) {
             console.error("Error signing in with provider:", error);
@@ -56,16 +48,11 @@ const Signin = () => {
             if (window.solana && window.solana.isPhantom) {
                 const provider = window.solana;
                 const response = await provider.connect();
-
                 const publicKey = provider.publicKey?.toString();
                 if (publicKey) {
                     console.log("Connected to Phantom Wallet with public key:", publicKey);
-
-                    // Save the wallet address and username to Firestore
                     const userDocRef = doc(collection(db, "users"), publicKey);
                     await setDoc(userDocRef, { walletAddress: publicKey });
-
-                    // Redirect to user-setting page
                     router.push("/user-setting");
                 } else {
                     throw new Error("Public key is null.");
@@ -79,17 +66,18 @@ const Signin = () => {
         }
     };
 
-    // Initialize providers
     const googleProvider = new GoogleAuthProvider();
     const facebookProvider = new FacebookAuthProvider();
 
     return (
         <Section allNotification={false} searchPopup={true} title={'Login'}>
-            <div className="ba-page-name text-center mg-bottom-40">
-                <h3>Login</h3>
+            <div className="logo-container">
+                <h3>
+
+                </h3>
             </div>
 
-            <div className="signin-area mg-bottom-35">
+            <div className="signin-area">
                 <div className="container">
                     <form className="contact-form-inner" onSubmit={signIn}>
                         <label className="single-input-wrap">
@@ -99,6 +87,7 @@ const Signin = () => {
                                 name="email"
                                 value={email}
                                 onChange={handleChange}
+                                className="form-input"
                                 required
                             />
                         </label>
@@ -109,6 +98,7 @@ const Signin = () => {
                                 name="password"
                                 value={password}
                                 onChange={handleChange}
+                                className="form-input"
                                 required
                             />
                         </label>
@@ -117,15 +107,10 @@ const Signin = () => {
                             <span>Remember Password</span>
                         </div>
 
-                        {/* Login button and Create account link in same container */}
                         <div className="login-create-container">
                             <button className="btn btn-purple" type="submit">Login</button>
-
-                            {/* Create account link directly below login button */}
                             <div className="create-account-link">
-                                <Link href="/signup">
-                                    Create an account
-                                </Link>
+                                <Link href="/signup">Create an account</Link>
                             </div>
                         </div>
                     </form>
@@ -133,13 +118,10 @@ const Signin = () => {
 
                     <div className="social-buttons">
                         <button onClick={connectPhantomWallet} className="social-button btn-phantom-wallet">
-                            <img src="https://s5-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/073/700/original/1200x1200.png?1712005160" alt="Phantom Wallet" /> Sign in with Phantom Wallet
+                            <img src="https://s5-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/073/700/original/1200x1200.png?1712005160" alt="Phantom Wallet" className="icon" /> Sign in with Phantom Wallet
                         </button>
                         <button onClick={() => handleProviderSignIn(googleProvider)} className="social-button btn-google">
-                            <img src="https://theplace2b.com.au/wp-content/uploads/2020/09/178-1783296_g-transparent-circle-google-logo.png" alt="Google" /> Sign in with Google
-                        </button>
-                        <button onClick={() => handleProviderSignIn(facebookProvider)} className="social-button btn-facebook">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" /> Sign in with Facebook
+                            <img src="https://theplace2b.com.au/wp-content/uploads/2020/09/178-1783296_g-transparent-circle-google-logo.png" alt="Google" className="icon" /> Sign in with Google
                         </button>
                     </div>
                 </div>
