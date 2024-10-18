@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Section from '../component/layouts/Section.js';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 import { collection, doc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../../firebase'; // Update the path to your Firebase setup
+import { auth, db } from '../../firebase';
 
 const Signup = () => {
     const [username, setUsername] = useState('');
@@ -31,7 +31,9 @@ const Signup = () => {
                 username: username,
             });
 
-            router.push('/user-setting'); // Redirect to user-setting page
+            localStorage.setItem("userId", user.uid); // Store as plain string
+
+            router.push('/home'); // Redirect to the home page
         } catch (error) {
             console.error('Error signing up: ', error);
             setError(error.message);
@@ -49,8 +51,10 @@ const Signup = () => {
                     const userDocRef = doc(collection(db, 'users'), publicKey);
                     await setDoc(userDocRef, {
                         walletAddress: publicKey,
+                        username, // Store the provided username
                     });
-                    router.push('/user-setting');
+                    localStorage.setItem(publicKey);
+                    router.push('/home');
                 } else {
                     throw new Error('Public key is null.');
                 }
@@ -59,25 +63,9 @@ const Signup = () => {
             }
         } catch (error) {
             console.error('Error connecting to Phantom Wallet:', error);
-// TODO: Check which is the working connectPhantomWallet function
-//     // Phantom wallet connection
-//     const connectPhantomWallet = async () => {
-//         try {
-//             const provider = new PhantomWalletAdapter();
-//             await provider.connect();
-//             const publicKey = provider.publicKey?.toString();
-//             if (publicKey) {
-//                 const userDocRef = doc(collection(db, "users"), publicKey);
-//                 await setDoc(userDocRef, { walletAddress: publicKey });
-//                 router.push("/user-setting");
-//             } else {
-//                 throw new Error("Public key is null.");
-//             }
-//         } catch (error) {
             setError(error.message);
         }
     };
-
 
     const handleProviderSignIn = async (provider) => {
         try {
@@ -89,8 +77,12 @@ const Signup = () => {
                 uid: user.uid,
                 email: user.email,
                 username: user.displayName || username,
+                createdAt: new Date(),
+                provider: provider.providerId
             });
-            router.push('/user-setting');
+
+            localStorage.setItem("userId", user.uid); // Store as plain string
+            router.push('/home');
         } catch (error) {
             console.error('Error signing in with provider:', error);
             setError(error.message);
@@ -100,13 +92,10 @@ const Signup = () => {
     const googleProvider = new GoogleAuthProvider();
     const facebookProvider = new FacebookAuthProvider();
 
-
     return (
         <Section allNotification={false} searchPopup={true} title="Register">
             <div className="logo-container">
-                <h3>
-                 
-                </h3>
+                <h3></h3>
             </div>
 
             <div className="signin-area mg-bottom-35">

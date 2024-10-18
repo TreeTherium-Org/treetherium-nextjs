@@ -1893,13 +1893,13 @@ ul {
   .contact-form-inner .forgot-btn {
     display: block;
     margin-top: 20px;
-    color: #272727; }
+    color: #4F3738; }
 
 .single-input-wrap {
   width: 100%;
   margin-bottom: 20px; }
   .single-input-wrap span {
-    color: #272727;
+    color: #4F3738;
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 4px;
@@ -1916,7 +1916,7 @@ ul {
   margin-right: 4px; }
 
 .single-checkbox-wrap span {
-  color: #272727; }
+  color: #4F3738; }
 
 /********** verification-inner **********/
 .verification-inner {
