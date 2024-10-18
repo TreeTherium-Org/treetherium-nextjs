@@ -15,30 +15,30 @@ const Home = () => {
   return (
     <Section allNotification={false} searchPopup={true} title={'Home'}>
         <div style={containerStyle}>
-        <header style={{ ...headerStyle, padding: 0, margin: 0 }}>
-          <div style={{ width: '100vw', position: 'relative', left: '50%', transform: 'translateX(-50%)', overflow: 'hidden' }}>  {/* Full viewport width */}
-            <Image
-              src="/assets/img/home-page.png"
-              alt="Everyone Can Grow A Tree"
-              width={2000}             // Set a large enough width for the image
-              height={400}             // Adjust the height according to your needs
-              style={{ width: '100%', height: 'auto' }}  // Ensure the image fills the container
-            />
-          </div>
-        </header>
-        <main style={mainStyle}>
-            <div style={dataGridStyle}>
-                <div style={dataCardStyle} onClick={() => handleButtonClick('/my-forest')}>
-                    <strong>My Forest</strong> <span style={{ fontSize: '1.2em' }}></span>
-                </div>
-                <div style={dataCardStyle} onClick={() => handleButtonClick('/analytics')}>
-                    <strong>Analytics</strong> <span style={{ fontSize: '1.2em' }}></span>
-                </div>
-                <div style={dataCardStyle} onClick={() => handleButtonClick('/start-project')}>
-                    <strong>Knowledge Base</strong> <span style={{ fontSize: '1.2em' }}></span>
-                </div>
+          <header style={{ ...headerStyle, padding: 0, marginTop: 30, marginBottom: 30 }}>
+            <div style={{ width: '100vw', position: 'relative', left: '50%', transform: 'translateX(-50%)', overflow: 'hidden' }}>  {/* Full viewport width */}
+              <Image
+                src="/assets/img/home-page.png"
+                alt="Everyone Can Grow A Tree"
+                width={2000}             // Set a large enough width for the image
+                height={600}             // Adjust the height according to your needs
+                style={{ width: '100%', height: 'auto' }}  // Ensure the image fills the container
+              />
             </div>
-        </main>
+          </header>
+          <main style={mainStyle}>
+              <div style={dataGridStyle}>
+                  <div style={dataCardStyle} onClick={() => handleButtonClick('/my-forest')}>
+                      <strong>My Forest</strong> <span style={{ fontSize: '1.2em' }}></span>
+                  </div>
+                  <div style={dataCardStyle} onClick={() => handleButtonClick('/analytics')}>
+                      <strong>Analytics</strong> <span style={{ fontSize: '1.2em' }}></span>
+                  </div>
+                  <div style={dataCardStyle} onClick={() => handleButtonClick('/start-project')}>
+                      <strong>Knowledge Base</strong> <span style={{ fontSize: '1.2em' }}></span>
+                  </div>
+              </div>
+          </main>
         </div>
     </Section>
 );
@@ -50,12 +50,11 @@ const containerStyle = {
   display: 'flex',
   flexDirection: 'column',
   height: '100vh',
-  padding: '20px',
+  padding: '30px',
 };
 
 const headerStyle = {
   textAlign: 'center',
-  marginTop: '25px',
 };
 
 
@@ -63,15 +62,16 @@ const mainStyle = {
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
-  gap: '30px',
+  justifyContent: 'flex-start',
+  gap: '20px',
+  marginTop: 30
 };
 
 const dataGridStyle = {
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
   gap: '20px',
-  marginBottom: '20px',
+  marginBottom: '250px',
 };
 
 const dataCardStyle = {

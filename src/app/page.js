@@ -1,71 +1,145 @@
 'use client';
 
-import styles from "./page.module.css";import React from 'react';
+import React from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/router'; // Import useRouter from next/router
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { Swiper, SwiperSlide } from 'swiper/react'; // Import Swiper and SwiperSlide
+import 'swiper/css'; // Import Swiper styles
+
 import Section from '/src/app/component/layouts/Section.js';
 
-
 export default function App() {
+  const images = [
+    { src: '/assets/img/home-page.png', alt: 'Image 1' },
+    { src: '/assets/img/home-page.png', alt: 'Image 2' }, // Add more images
+    { src: '/assets/img/home-page.png', alt: 'Image 3' },
+  ];
+  const router = useRouter(); // Initialize the router
+  //Function to handle buntton click to redirect pages
+  const handleButtonClick = (route) => {
+    router.push(route); // Redirect to the specified route
+  
+  };
+
   return (
-    <Section allNotification={false} searchPopup={true} title={'Home'}>
+    <Section allNotification={false} searchPopup={true} title={'Welcome'}>
       <header style={headerStyle}>
-          <h1>Tokenizing Tree Planting Worldwide</h1>
-          <h3>Create A Greener World Together</h3>
+        <h1 style={titleStyle}>Tokenizing Tree Planting Worldwide</h1>
+        <h3 style={titleStyle}>
+          Create A <span style={subtitleStyle}>Greener</span> World Together
+        </h3>
       </header>
+
       <main style={mainStyle}>
-        <div>
-          <h3>Step by step how to use this app</h3>
+        <div className="section-title">
+          <h3 style={stepTitleStyle}>Step by step how to use this app</h3>
         </div>
-        <div style={dataGridStyle}>
-            <div style={dataCardStyle} onClick={() => handleButtonClick('/my-forest')}>
-                <strong>My Forest</strong> <span style={{ fontSize: '1.2em' }}></span>
-            </div>
+
+        {/* Swiper Component */}
+        <div style={imageContainerStyle}>
+          <Swiper
+            spaceBetween={30}
+            slidesPerView={3} // Show one image at a time
+            pagination={{ clickable: true }} // Enable pagination
+            loop={true} // Infinite loop for continuous swipe
+          >
+            {images.map((image, index) => (
+              <SwiperSlide key={index}>
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={500}
+                  height={500}
+                  style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
-        <button>
-          Register/Sign In
+
+        <button className="btn btn-purple" onClick={() => handleButtonClick('/signup')}>
+          Register / Login
         </button>
-        </main>
+
+        <div style={cardContainerStyle}>
+          <div style={dataCardStyle} >
+            <strong>Vision/Mission</strong>
+          </div>
+        </div>
+      </main>
     </Section>
   );
 }
 
-const containerStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100vh',
-  padding: '20px',
-};
-
+// Styling
 const headerStyle = {
   textAlign: 'center',
-  marginTop: '25px',
+  marginTop: '20px',
 };
 
+const titleStyle = {
+  fontSize: '1.1em', // Larger title for emphasis
+  fontWeight: 'bold',
+  color: '#4F3738',
+};
+
+const subtitleStyle = {
+  fontSize: '1.1em', // Larger subtitle for readability
+  color: '#6b8e23', // Lighter green
+};
+
+const stepTitleStyle = {
+  fontSize: '1.1em',
+  textAlign: 'center',
+  marginBottom: '10px',
+};
 
 const mainStyle = {
   flex: 1,
+  padding: '20px',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
-  gap: '30px',
+  gap: '20px',
+  alignItems: 'center', // Center-align content
 };
 
-const dataGridStyle = {
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: '20px',
-  marginBottom: '20px',
+const imageContainerStyle = {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center', // Center-align the image
+};
+
+const buttonStyle = {
+  backgroundColor: '#4CAF50', // Green color for eco-friendly theme
+  color: 'white',
+  padding: '15px 20px',
+  fontSize: '1.2em',
+  borderRadius: '8px',
+  border: 'none',
+  cursor: 'pointer',
+  marginTop: '20px',
+  textAlign: 'center',
+  width: '80%', // Full width button
+  maxWidth: '300px', // Restrict the button size on larger screens
+};
+
+const cardContainerStyle = {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: '20px',
 };
 
 const dataCardStyle = {
-  backgroundColor: '#f7f4f1', //Light brown
+  backgroundColor: '#f7f4f1',
   borderRadius: '10px',
   padding: '20px',
   textAlign: 'center',
-  border: '1px solid #c1b3a8', //Brown
-  boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow
-  height: '120px', // Fixed height to ensure uniformity
+  border: '1px solid #c1b3a8',
+  boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)',
+  height: '120px',
+  width: '80%',
+  maxWidth: '300px', // Ensure the card doesn't get too large
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
