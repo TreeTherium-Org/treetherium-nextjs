@@ -22,56 +22,65 @@ export default function App() {
   };
 
   return (
-    <Section allNotification={false} searchPopup={true} title={'Welcome'}>
-      <header style={headerStyle}>
-        <h1 style={titleStyle}>Tokenizing Tree Planting Worldwide</h1>
-        <h3 style={titleStyle}>
-          Create A <span style={subtitleStyle}>Greener</span> World Together
-        </h3>
-      </header>
 
-      <main style={mainStyle}>
-        <div className="section-title">
-          <h3 style={stepTitleStyle}>Step by step how to use this app</h3>
-        </div>
-
-        {/* Swiper Component */}
-        <div style={imageContainerStyle}>
-          <Swiper
-            spaceBetween={30}
-            slidesPerView={3} // Show one image at a time
-            pagination={{ clickable: true }} // Enable pagination
-            loop={true} // Infinite loop for continuous swipe
-          >
-            {images.map((image, index) => (
-              <SwiperSlide key={index}>
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={500}
-                  height={500}
-                  style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-        <button className="btn btn-purple" onClick={() => handleButtonClick('/signup')}>
-          Register / Login
-        </button>
-
-        <div style={cardContainerStyle}>
-          <div style={dataCardStyle} >
-            <strong>Vision/Mission</strong>
+      <div style={containerStyle}>
+        <header style={headerStyle}>
+          <h1 style={titleStyle}>Tokenizing Tree Planting Worldwide</h1>
+          <h3 style={titleStyle}>
+            Create A <span style={subtitleStyle}>Greener</span> World Together
+          </h3>
+        </header>
+        <main style={mainStyle}>
+          <div className="section-title">
+            <h3 style={stepTitleStyle}>Step by step how to use this app</h3>
           </div>
-        </div>
-      </main>
-    </Section>
+
+          {/* Swiper Component */}
+          <div style={imageContainerStyle}>
+            <Swiper
+              spaceBetween={30}
+              slidesPerView={3} // Show one image at a time
+              pagination={{ clickable: true }} // Enable pagination
+              loop={true} // Infinite loop for continuous swipe
+            >
+              {images.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={500}
+                    height={500}
+                    style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          <button className="btn btn-purple" onClick={() => handleButtonClick('/signup')}>
+            Register / Login
+          </button>
+
+          <div style={cardContainerStyle}>
+            <div style={dataCardStyle} >
+              <strong>Vision/Mission</strong>
+            </div>
+          </div>
+        </main>
+      </div>
   );
 }
 
 // Styling
+
+const containerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  height: '81vh',
+  padding: '20px',
+  backgroundColor: '#ebf6e2', 
+};
+
 const headerStyle = {
   textAlign: 'center',
   marginTop: '20px',
@@ -132,7 +141,7 @@ const cardContainerStyle = {
 
 const dataCardStyle = {
   backgroundColor: '#f7f4f1',
-  borderRadius: '10px',
+  borderRadius: '2px',
   padding: '20px',
   textAlign: 'center',
   border: '1px solid #c1b3a8',
