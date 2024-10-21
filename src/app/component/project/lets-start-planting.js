@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import Section from "../layouts/Section";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 const LetsStartPlanting = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
@@ -10,7 +10,7 @@ const LetsStartPlanting = () => {
 
   useEffect(() => {
     const checkWalletConnection = () => {
-      const connected = localStorage.getItem('walletConnected'); // Replace with actual connection check
+      const connected = localStorage.getItem("walletConnected"); // Replace with actual connection check
       if (connected) {
         setIsWalletConnected(true);
       }
@@ -29,16 +29,20 @@ const LetsStartPlanting = () => {
   const connectWallet = () => {
     setIsWalletConnected(true);
     setShowWalletPopup(false);
-    localStorage.setItem('walletConnected', 'true'); // Update the wallet connection state
+    localStorage.setItem("walletConnected", "true"); // Update the wallet connection state
   };
 
   const disconnectWallet = () => {
     setIsWalletConnected(false);
-    localStorage.removeItem('walletConnected'); // Clear the wallet connection state
+    localStorage.removeItem("walletConnected"); // Clear the wallet connection state
   };
 
   return (
-    <Section allNotification={false} searchPopup={true} title={'Lets Start Planting'}>
+    <Section
+      allNotification={false}
+      searchPopup={true}
+      title={"Lets Start Planting"}
+    >
       <div style={containerStyle}>
         <header style={headerStyle}>
           <h3 className="form-title">"Let's Start Planting"</h3>
@@ -62,6 +66,7 @@ const LetsStartPlanting = () => {
                 height={150}
                 style={{ borderRadius: '20%', marginBottom: '10px', boxShadow: imageShadowStyle }}
               />
+
               <p>Tree Planting Project</p>
             </div>
           </div>
@@ -72,8 +77,15 @@ const LetsStartPlanting = () => {
           <div style={popupOverlayStyle}>
             <div style={popupStyle}>
               <p>Please connect your wallet to continue.</p>
-              <button style={buttonStyle} onClick={connectWallet}>Connect Wallet</button>
-              <button style={buttonStyle} onClick={() => setShowWalletPopup(false)}>Close</button>
+              <button style={buttonStyle} onClick={connectWallet}>
+                Connect Wallet
+              </button>
+              <button
+                style={buttonStyle}
+                onClick={() => setShowWalletPopup(false)}
+              >
+                Close
+              </button>
             </div>
           </div>
         )}
@@ -127,38 +139,38 @@ const cardStyle = {
 const imageShadowStyle = '0px 4px 10px rgba(0, 0, 0, 0.2)';
 
 const popupOverlayStyle = {
-  position: 'fixed',
+  position: "fixed",
   top: 0,
   left: 0,
-  width: '100%',
-  height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 };
 
 const popupStyle = {
-  backgroundColor: '#fff',
-  padding: '20px',
-  borderRadius: '10px',
-  textAlign: 'center',
+  backgroundColor: "#fff",
+  padding: "20px",
+  borderRadius: "10px",
+  textAlign: "center",
 };
 
 const buttonStyle = {
-  margin: '10px',
-  padding: '10px 20px',
-  backgroundColor: '#A3A830',
-  color: '#fff',
-  border: 'none',
-  borderRadius: '5px',
-  cursor: 'pointer',
+  margin: "10px",
+  padding: "10px 20px",
+  backgroundColor: "#A3A830",
+  color: "#fff",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
 };
 
 const buttonContainerStyle = {
-  display: 'flex',
-  justifyContent: 'center',
-  marginBottom: '20px',
+  display: "flex",
+  justifyContent: "center",
+  marginBottom: "20px",
 };
 
 const disconnectButtonStyle = {
