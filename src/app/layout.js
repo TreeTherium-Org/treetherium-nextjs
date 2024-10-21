@@ -3,17 +3,15 @@ import "./globals.css";
 
 
 export const metadata = {
-  title: "Landing Page",
-  description: "Welcome to Treetherium",
+  title: "Welcome to Treetherium",
+  description: "Please wait for a second.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
         <body>
-          <Section allNotification={false} searchPopup={true} title={'Welcome'}>
             {children}
-          </Section>
         </body>
     </html>
   );
