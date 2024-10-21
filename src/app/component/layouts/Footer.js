@@ -34,7 +34,7 @@ const Footer = () => {
               style={{ width: "100%", padding: "0", margin: "0", listStyle: "none" }}
             >
               <li className="text-center">
-                <Link href="/" className="home-clicked">
+                <Link href="/home" className="home-clicked">
                   <i className="fa fa-home" style={{ fontSize: "20px", color: "#4F3738" }} />
                   <p style={{ margin: "0", color: "#4F3738" }}>Home</p>
                 </Link>
