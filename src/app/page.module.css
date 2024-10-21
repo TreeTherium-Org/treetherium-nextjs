@@ -1,3 +1,5 @@
+/* page.module.css */
+
 .page {
   --gray-rgb: 0, 0, 0;
   --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
@@ -71,6 +73,40 @@
   white-space: nowrap; /* Prevent text from breaking onto a new line */
 }
 
+/* Full-screen container for splash page */
+.startupPage {
+  position: relative;
+  width: 100vw;
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Ensure image fills the entire screen */
+.startupImage {
+  z-index: 1; /* Behind the text */
+}
+
+/* Loading text style */
+.loadingText {
+  position: absolute;
+  z-index: 2; /* In front of the image */
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Add shadow for better readability */
+  animation: fadein 1.5s infinite; /* Optional: Create a fade animation for text */
+}
+
+/* Optional fade-in animation for loading text */
+@keyframes fadein {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
 /* Media queries for responsive design */
 @media (max-width: 768px) {
   .main {
@@ -92,6 +128,10 @@
 
   .footer {
     gap: 10px; /* Reduce gap between links on smaller screens */
+  }
+
+  .loadingText {
+    font-size: 1.5rem; /* Adjust loading text size on smaller screens */
   }
 }
 
