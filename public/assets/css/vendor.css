@@ -3694,7 +3694,7 @@ body {
     background-color: #ebf6e2
 }
 
-[tabindex="-1"]:focus 
+[tabindex="-1"]:focus {
     outline: 0 !important
 }
 
