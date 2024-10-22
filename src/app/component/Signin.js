@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import { auth, db } from '../../firebase';
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
 const Signin = () => {
     const router = useRouter();
@@ -24,10 +24,18 @@ const Signin = () => {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             localStorage.setItem("user", JSON.stringify(user));
-            router.push("/user-setting");
+            router.push("/home");
         } catch (error) {
+            if (error.code === 'auth/user-not-found') {
+                setError('Account not found. Please sign up first.');
+            } else if (error.code === 'auth/wrong-password') {
+                setError('Incorrect password. Please try again.');
+            } else if (error.code === 'auth/invalid-email') {
+                setError('Invalid email format. Please enter a valid email.');
+            } else {
+                setError('Failed to sign in. Please try again later.');
+            }
             console.error(error);
-            setError(error.message);
         }
     };
 
@@ -35,11 +43,36 @@ const Signin = () => {
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
-            localStorage.setItem("user", JSON.stringify(user));
-            router.push("/user-setting");
+
+            // Check if user exists in Firestore
+            const userDocRef = doc(db, "users", user.uid);
+            const userDoc = await getDoc(userDocRef);
+
+            if (!userDoc.exists()) {
+                // Register new user in Firestore with 'username'
+                await setDoc(userDocRef, {
+                    email: user.email,
+                    username: user.displayName, // Changed to 'username'
+                    createdAt: new Date(),
+                    provider: provider.providerId,
+                });
+            }
+
+            // Save user data in session
+            localStorage.setItem("userId", user.uid); // Store as plain string
+
+            const storedId = localStorage.getItem("userId");
+            console.log("Stored ID:", storedId); // Check the output in the console.
+            router.push("/home");
         } catch (error) {
+            if (error.code === 'auth/popup-closed-by-user') {
+                setError('Sign-in popup closed. Please try again.');
+            } else if (error.code === 'auth/cancelled-popup-request') {
+                setError('Multiple popups open. Please complete one sign-in at a time.');
+            } else {
+                setError('Failed to sign in with the selected provider. Please try again.');
+            }
             console.error("Error signing in with provider:", error);
-            setError(error.message);
         }
     };
 
@@ -53,7 +86,8 @@ const Signin = () => {
                     console.log("Connected to Phantom Wallet with public key:", publicKey);
                     const userDocRef = doc(collection(db, "users"), publicKey);
                     await setDoc(userDocRef, { walletAddress: publicKey });
-                    router.push("/user-setting");
+                    router.push("/home");
+
                 } else {
                     throw new Error("Public key is null.");
                 }

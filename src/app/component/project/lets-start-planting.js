@@ -3,12 +3,11 @@ import Image from "next/image";
 import Section from "../layouts/Section";
 import { useRouter } from "next/router";
 
-const HomePage = () => {
+const LetsStartPlanting = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [showWalletPopup, setShowWalletPopup] = useState(false);
   const router = useRouter();
 
-  // Check if the wallet is already connected on component mount
   useEffect(() => {
     const checkWalletConnection = () => {
       const connected = localStorage.getItem("walletConnected"); // Replace with actual connection check
@@ -16,7 +15,6 @@ const HomePage = () => {
         setIsWalletConnected(true);
       }
     };
-
     checkWalletConnection();
   }, []);
 
@@ -47,44 +45,32 @@ const HomePage = () => {
     >
       <div style={containerStyle}>
         <header style={headerStyle}>
-          <h1>Let`&apos;s Start Planting</h1>
-        </header>
-        {/* Main Section */}
-        <main style={mainStyle}>
-          <div style={gridStyle}>
-            <div
-              onClick={() => handleButtonClick("list-trees")}
-              style={cardStyle}
-            >
-              <div style={circleStyle}>
-                <Image
-                  src="/assets/img/lsp/single-tree.jpeg"
-                  alt="Single Tree"
-                  width={100}
-                  height={100}
-                  style={{ borderRadius: "20%" }}
-                />
-              </div>
+          <h3 className="form-title">"Let's Start Planting"</h3>
+          <div style={buttonGroupStyle}>
+            <div onClick={() => handleButtonClick('list-trees')} style={cardStyle}>
+              <Image
+                src="/assets/img/lsp/single-tree.jpeg"
+                alt="Single Tree"
+                width={150}
+                height={150}
+                style={{ borderRadius: '20%', marginBottom: '10px', boxShadow: imageShadowStyle }}
+              />
               <p>Single Tree</p>
             </div>
 
-            <div
-              onClick={() => handleButtonClick("/list-projects")}
-              style={cardStyle}
-            >
-              <div style={circleStyle}>
-                <Image
-                  src="/assets/img/lsp/many-trees.jpeg"
-                  alt="Tree Planting Project"
-                  width={100}
-                  height={100}
-                  style={{ borderRadius: "20%" }}
-                />
-              </div>
+            <div onClick={() => handleButtonClick('/list-projects')} style={cardStyle}>
+              <Image
+                src="/assets/img/lsp/many-trees.jpeg"
+                alt="Tree Planting Project"
+                width={150}
+                height={150}
+                style={{ borderRadius: '20%', marginBottom: '10px', boxShadow: imageShadowStyle }}
+              />
+
               <p>Tree Planting Project</p>
             </div>
           </div>
-        </main>
+        </header>
 
         {/* Wallet Connection Popup */}
         {showWalletPopup && (
@@ -117,52 +103,40 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default LetsStartPlanting;
 
 const containerStyle = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  height: "100vh",
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  height: '100vh',
 };
 
 const headerStyle = {
-  textAlign: "center",
-  marginTop: "50px",
-  color: "#4F3738",
+  textAlign: 'center',
+  marginTop: '20px',
+  color: '#4F3738',
 };
 
-const mainStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  flex: 1,
-};
-
-const gridStyle = {
-  display: "flex",
-  gap: "50px",
+const buttonGroupStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '20px',
+  marginTop: '10px',
+  alignItems: 'center',
 };
 
 const cardStyle = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  textAlign: "center",
-  cursor: "pointer",
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  textAlign: 'center',
+  cursor: 'pointer',
+  fontSize: '1.2em',
 };
 
-const circleStyle = {
-  width: "100px",
-  height: "100px",
-  backgroundColor: "#f0f0f0",
-  borderRadius: "50%",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  marginBottom: "10px",
-  color: "#4F3738",
-};
+const imageShadowStyle = '0px 4px 10px rgba(0, 0, 0, 0.2)';
 
 const popupOverlayStyle = {
   position: "fixed",
@@ -200,10 +174,10 @@ const buttonContainerStyle = {
 };
 
 const disconnectButtonStyle = {
-  padding: "10px 20px",
-  backgroundColor: "#dc3545", // Red color for disconnect
-  color: "#fff",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer",
+  padding: '10px 20px',
+  backgroundColor: '#dc3545',
+  color: '#fff',
+  border: 'none',
+  borderRadius: '5px',
+  cursor: 'pointer',
 };

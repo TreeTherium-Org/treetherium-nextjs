@@ -3689,12 +3689,12 @@ body {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #212529;
+    color: #4F3738;
     text-align: left;
     background-color: #ebf6e2
 }
 
-[tabindex="-1"]:focus {
+[tabindex="-1"]:focus 
     outline: 0 !important
 }
 
@@ -13644,9 +13644,6 @@ a.text-dark:hover {
     pointer-events: none
 }
 
-.nice-select.disabled:after {
-    border-color: $color-gray80
-}
 
 .nice-select.wide {
     width: 100%

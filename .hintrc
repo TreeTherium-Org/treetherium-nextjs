@@ -9,7 +9,8 @@
         "ignore": [
           "-webkit-text-size-adjust",
           "-ms-transform",
-          "-ms-filter"
+          "-ms-filter",
+          "-moz-backface-visibility"
         ]
       }
     ]

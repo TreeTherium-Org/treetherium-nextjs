@@ -33,8 +33,8 @@ Version: 1.0.0
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,400i,500,500i,600,600i,700,700&display=swap");
 :root {
   --main-color: #6236ff;
-  --heading-color: #474747;
-  --paragraph-color: #474747;
+  --heading-color: #4F3738;
+  --paragraph-color: #4F3738;
   --light-green: #A3A830;
   --dark-green: #778B28;
   --heading-font: 'Poppins', sans-serif;
@@ -634,7 +634,7 @@ ul {
   color: #fff; }
 
 .btn-purple {
-  background: #16423C;
+  background: #778b28;
   color: #fff; }
 
 .btn-green {
@@ -1893,13 +1893,13 @@ ul {
   .contact-form-inner .forgot-btn {
     display: block;
     margin-top: 20px;
-    color: #272727; }
+    color: #4F3738; }
 
 .single-input-wrap {
   width: 100%;
   margin-bottom: 20px; }
   .single-input-wrap span {
-    color: #272727;
+    color: #4F3738;
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 4px;
@@ -1916,7 +1916,7 @@ ul {
   margin-right: 4px; }
 
 .single-checkbox-wrap span {
-  color: #272727; }
+  color: #4F3738; }
 
 /********** verification-inner **********/
 .verification-inner {
@@ -4582,7 +4582,7 @@ span.badge-pulse-orange {
 
 /* Modern and minimalistic styles */
 .form-title {
-  font-size: 1.75rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #4F3738;
   margin-bottom: 16px;
@@ -4662,7 +4662,7 @@ span.badge-pulse-orange {
   }
 
   .form-title {
-      font-size: 1.5rem;
+      font-size: 1.1rem;
   }
 
   .btn-submit {
@@ -4697,3 +4697,25 @@ span.badge-pulse-orange {
   font-size: 20px; /* Font size */
 }
 
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.logo-image {
+  max-width: 100px; /* Adjust the size as needed */
+  height: auto;
+  margin: 0 auto;
+}
+
+.single-checkbox-wrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tree-title {
+  margin-top: 20px;
+}
