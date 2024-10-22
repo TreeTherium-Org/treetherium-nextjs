@@ -120,6 +120,7 @@ const containerStyle = {
 
 const headerStyle = {
     textAlign: 'center',
+
     marginTop: '15px',
     color: '#4F3738'
   };

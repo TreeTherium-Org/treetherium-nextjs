@@ -87,6 +87,7 @@ const Signin = () => {
                     const userDocRef = doc(collection(db, "users"), publicKey);
                     await setDoc(userDocRef, { walletAddress: publicKey });
                     router.push("/home");
+
                 } else {
                     throw new Error("Public key is null.");
                 }

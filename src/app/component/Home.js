@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <Section allNotification={false} searchPopup={true} title={'Home'}>
         <div style={containerStyle}>
-          <header style={{ ...headerStyle, padding: 0, marginTop: '50px',marginBottom: '50px'}}>
+          <header style={{ ...headerStyle, padding: 0, marginTop: 30, marginBottom: 30 }}>
             <div style={{ width: '100vw', position: 'relative', left: '50%', transform: 'translateX(-50%)', overflow: 'hidden' }}>  {/* Full viewport width */}
               <Image
                 src="/assets/img/home-page.png"
@@ -66,7 +66,7 @@ const mainStyle = {
   flexDirection: 'column',
   justifyContent: 'flex-start',
   gap: '20px',
-  marginTop: '30px'
+  marginTop: 30
 };
 
 const dataGridStyle = {
@@ -89,3 +89,4 @@ const dataCardStyle = {
   justifyContent: 'center',
   alignItems: 'center',
 };
+
