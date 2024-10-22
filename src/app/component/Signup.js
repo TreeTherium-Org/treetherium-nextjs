@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Section from '../component/layouts/Section.js';
-import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 
@@ -20,7 +20,7 @@ const Signup = () => {
         if (name === 'password') setPassword(value);
     };
 
-    const signUp = async (e) => {
+    const signUpWithEmail = async (e) => {
         e.preventDefault();
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -31,38 +31,16 @@ const Signup = () => {
                 username: username,
             });
 
-            localStorage.setItem("userId", user.uid); // Store as plain string
+            // Pass the user ID to the NextAuth session
+            await fetch('../api/auth/callback/credentials', {
+                method: 'POST',
+                body: JSON.stringify({ userId: userCredential.user.uid }),
+                headers: { 'Content-Type': 'application/json' },
+            });
 
             router.push('/home'); // Redirect to the home page
         } catch (error) {
             console.error('Error signing up: ', error);
-            setError(error.message);
-        }
-    };
-
-    const connectPhantomWallet = async () => {
-        try {
-            if (window.solana && window.solana.isPhantom) {
-                const provider = window.solana;
-                const response = await provider.connect();
-                const publicKey = provider.publicKey?.toString();
-                if (publicKey) {
-                    console.log('Connected to Phantom Wallet with public key:', publicKey);
-                    const userDocRef = doc(collection(db, 'users'), publicKey);
-                    await setDoc(userDocRef, {
-                        walletAddress: publicKey,
-                        username, // Store the provided username
-                    });
-                    localStorage.setItem(publicKey);
-                    router.push('/home');
-                } else {
-                    throw new Error('Public key is null.');
-                }
-            } else {
-                throw new Error('Phantom Wallet is not installed.');
-            }
-        } catch (error) {
-            console.error('Error connecting to Phantom Wallet:', error);
             setError(error.message);
         }
     };
@@ -81,8 +59,14 @@ const Signup = () => {
                 provider: provider.providerId
             });
 
-            localStorage.setItem("userId", user.uid); // Store as plain string
-            router.push('/home');
+            // Pass the user ID to the NextAuth session
+            await fetch('../api/auth/callback/credentials', {
+                method: 'POST',
+                body: JSON.stringify({ userId: user.uid }),
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            router.push('/home'); // Redirect to the home page
         } catch (error) {
             console.error('Error signing in with provider:', error);
             setError(error.message);
@@ -90,7 +74,39 @@ const Signup = () => {
     };
 
     const googleProvider = new GoogleAuthProvider();
-    const facebookProvider = new FacebookAuthProvider();
+
+    const connectPhantomWallet = async () => {
+        try {
+            const { solana } = window;
+            if (solana && solana.isPhantom) {
+                const response = await solana.connect(); // Connect to Phantom wallet
+                const walletAddress = response.publicKey.toString(); // Get the wallet address
+
+                // Save wallet address to Firebase
+                const userDocRef = doc(collection(db, "users"), walletAddress); // Using wallet address as UID
+                await setDoc(userDocRef, {
+                    uid: walletAddress,
+                    username: username,
+                    provider: 'Phantom',
+                });
+
+                // Pass the wallet address to the NextAuth session
+                await fetch('../api/auth/callback/credentials', {
+                    method: 'POST',
+                    body: JSON.stringify({ userId: walletAddress }),
+                    headers: { 'Content-Type': 'application/json' },
+                });
+
+                router.push('/home'); // Redirect to the home page
+            } else {
+                console.error("Phantom Wallet not found.");
+                setError("Phantom Wallet not found. Please install it.");
+            }
+        } catch (error) {
+            console.error('Error connecting to Phantom Wallet:', error);
+            setError(error.message);
+        }
+    };
 
     return (
         <Section allNotification={false} searchPopup={true} title="Register">
@@ -100,7 +116,7 @@ const Signup = () => {
 
             <div className="signin-area mg-bottom-35">
                 <div className="container">
-                    <form className="contact-form-inner" onSubmit={signUp}>
+                    <form className="contact-form-inner" onSubmit={signUpWithEmail}>
                         <label className="single-input-wrap">
                             <span>User Name*</span>
                             <input

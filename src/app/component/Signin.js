@@ -100,7 +100,6 @@ const Signin = () => {
     };
 
     const googleProvider = new GoogleAuthProvider();
-    const facebookProvider = new FacebookAuthProvider();
 
     return (
         <Section allNotification={false} searchPopup={true} title={'Login'}>

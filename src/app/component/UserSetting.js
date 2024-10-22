@@ -120,6 +120,26 @@ const UserSetting = () => {
                 />
               </div>
               <div className="form-group">
+                <label htmlFor="username">Your Life's Motto</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={"Your Motto"}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Country</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={"Country"}
+                  readOnly
+                />
+              </div>
+              <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"

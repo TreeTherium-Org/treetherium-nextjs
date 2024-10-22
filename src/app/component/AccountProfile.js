@@ -59,9 +59,12 @@ const AccountProfile = () => {
                 className="profile-image"
               />
               <h5 className="profile-name">{userData.username}</h5>
+              <p>"Your Life's Motto"</p>
+              <p>Country</p>
             </div>
 
             <div className="profile-details">
+              
               <div className="detail-item">
                 <label>Your Email</label>
                 <div className="input-box">
@@ -85,16 +88,16 @@ const AccountProfile = () => {
             </div>
 
             <div className="form-actions">
-              <button className="btn-logout" onClick={handleLogout}>
-                Log Out
-              </button>
-              <button className="btn-edit">
+            <button className="btn-edit">
                 <Link
                   href="/usersetting"
                   style={{ color: '#fff' }} // Inline style for top padding
                 >
                   Edit Profile
                 </Link>
+              </button>
+              <button className="btn-logout" onClick={handleLogout}>
+                Log Out
               </button>
             </div>
           </div>

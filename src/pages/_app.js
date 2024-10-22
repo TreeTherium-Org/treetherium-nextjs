@@ -6,6 +6,7 @@ import '../../public/assets/css/style.css';
 import '../../public/assets/css/components/_buttons.css';
 import '../../public/assets/demo/css/demo.css';
 import '../../public/assets/css/vendor.css';
+import { SessionProvider } from 'next-auth/react';
 
 
 // Import Font files (if needed for specific font settings)
@@ -14,7 +15,13 @@ import '../../public/assets/css/vendor.css';
 
 // Function to initialize the app
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return (
+    <SessionProvider session={pageProps.session}>
+      <Component {...pageProps} />
+    </SessionProvider>
+  );
+
+
 }
 
 export default MyApp;
