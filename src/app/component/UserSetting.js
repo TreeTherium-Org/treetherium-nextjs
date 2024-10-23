@@ -1,58 +1,175 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router"; // Import useRouter for navigation
+import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/router";
 import Section from '../component/layouts/Section';
-import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore"; // Import Firestore methods
+import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
+import { useSession } from "next-auth/react";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { getNames } from 'country-list';
 
 const UserSetting = () => {
-  const userId = localStorage.getItem("userId");
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
+  const fileInputRef = useRef(null);
+  const DEFAULT_PROFILE_IMAGE = "/assets/img/user.png"; // Define default image path as constant
 
   const [formData, setFormData] = useState({
     username: "",
+    motto: '',
     email: "",
     walletAddress: "",
+    country: "",
+    profileImageUrl: DEFAULT_PROFILE_IMAGE,
   });
 
-  const db = getFirestore(); // Initialize Firestore
-  const router = useRouter(); // Initialize the router for navigation
+  const [imageError, setImageError] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const [countries, setCountries] = useState([]);
+
+  const db = getFirestore();
+  const storage = getStorage();
+  const router = useRouter();
 
   useEffect(() => {
+    setCountries(getNames());
+
     const fetchUserData = async () => {
       try {
-        const userDocRef = doc(db, "users", userId); // Replace USER_ID with the actual user ID
+        const userDocRef = doc(db, "users", userId);
         const userDoc = await getDoc(userDocRef);
 
         if (userDoc.exists()) {
-          setFormData(userDoc.data());
-        } else {
-          console.log("No such document!");
+          const userData = userDoc.data();
+          setFormData({
+            ...userData,
+            profileImageUrl: userData.profileImageUrl || DEFAULT_PROFILE_IMAGE
+          });
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
+        setFormData(prev => ({
+          ...prev,
+          profileImageUrl: DEFAULT_PROFILE_IMAGE
+        }));
       }
     };
 
     fetchUserData();
-  }, [db]);
+  }, [db, userId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleImageError = () => {
+    setImageError(true);
+    setFormData(prev => ({
+      ...prev,
+      profileImageUrl: DEFAULT_PROFILE_IMAGE
+    }));
+  };
+
+  const validateFile = (file) => {
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    if (!validTypes.includes(file.type)) {
+      throw new Error('Please upload an image file (JPEG, PNG, GIF, or WEBP)');
+    }
+
+    if (file.size > maxSize) {
+      throw new Error('File size must be less than 5MB');
+    }
+  };
+
+  // Inside your handleImageUpload function:
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      // Reset previous errors
+      setUploadError("");
+      setImageError(false);
+
+      // Validate file
+      validateFile(file);
+
+      // Start upload
+      setIsUploading(true);
+
+      if (!userId) {
+        throw new Error('User ID not available');
+      }
+
+      // Delete the old image if it exists and is not the default one
+      if (formData.profileImageUrl && formData.profileImageUrl !== DEFAULT_PROFILE_IMAGE) {
+        const oldImageRef = ref(storage, formData.profileImageUrl);
+        await deleteObject(oldImageRef);
+        console.log('Old profile image deleted successfully');
+      }
+
+      // Create a reference to the storage location for the new image
+      const storageRef = ref(storage, `profile-images/${userId}_${Date.now()}`);
+
+      // Log upload attempt
+      console.log('Attempting to upload file:', {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      });
+
+      // Upload the file
+      const uploadResult = await uploadBytes(storageRef, file);
+      console.log('Upload successful:', uploadResult);
+
+      // Get the download URL of the new image
+      const downloadUrl = await getDownloadURL(storageRef);
+      console.log('Download URL obtained:', downloadUrl);
+
+      // Update form data with new image URL
+      setFormData((prev) => ({
+        ...prev,
+        profileImageUrl: downloadUrl,
+      }));
+
+      // Update the user document in Firestore with the new profile image URL
+      const userDocRef = doc(db, "users", userId);
+      await updateDoc(userDocRef, {
+        profileImageUrl: downloadUrl,
+      });
+
+      console.log('Profile image updated successfully');
+    } catch (error) {
+      console.error('Error during image upload:', error);
+      setUploadError(error.message || 'Failed to upload image. Please try again.');
+      setFormData((prev) => ({
+        ...prev,
+        profileImageUrl: prev.profileImageUrl || DEFAULT_PROFILE_IMAGE,
+      }));
+    } finally {
+      setIsUploading(false);
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
   const handleSave = async () => {
     try {
-      const userDocRef = doc(db, "users", userId); // Replace USER_ID with the actual user ID
-      await updateDoc(userDocRef, formData); // Update user data in Firestore
-      console.log("User data updated:", formData);
+      const userDocRef = doc(db, "users", userId);
+      await updateDoc(userDocRef, formData);
       router.push("/accountprofile");
     } catch (error) {
       console.error("Error updating user data:", error);
+      alert("Failed to save changes. Please try again.");
     }
   };
 
   const handleCancel = () => {
-    // Redirect to AccountProfile page
-    router.push("/accountprofile"); // Adjust the route as necessary
+    router.push("/accountprofile");
   };
 
   const handleWalletConnect = async () => {
@@ -61,34 +178,18 @@ const UserSetting = () => {
       try {
         const response = await provider.connect();
         const newWalletAddress = response.publicKey.toString();
-        console.log("Connected to Phantom Wallet:", newWalletAddress);
-
-        // Check if the user document exists
-        const userDocRef = doc(db, "users", userId); // Replace USER_ID with the actual user ID
+        const userDocRef = doc(db, "users", userId);
         const userDoc = await getDoc(userDocRef);
 
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-
-          // If the wallet address field is empty, insert the new wallet address
-          if (!userData.walletAddress) {
-            await updateDoc(userDocRef, { walletAddress: newWalletAddress });
-            console.log("New wallet address inserted in Firestore:", newWalletAddress);
-            setFormData((prev) => ({ ...prev, walletAddress: newWalletAddress })); // Update local state
-          } else {
-            console.log("Wallet address already exists in Firestore:", userData.walletAddress);
-          }
-        } else {
-          // Create a new document if it does not exist
-          await setDoc(userDocRef, { walletAddress: newWalletAddress, username: formData.username, email: formData.email });
-          console.log("New user document created with wallet address:", newWalletAddress);
-          setFormData({ ...formData, walletAddress: newWalletAddress }); // Update local state
+        if (userDoc.exists() && !userDoc.data().walletAddress) {
+          await updateDoc(userDocRef, { walletAddress: newWalletAddress });
+          setFormData({ ...formData, walletAddress: newWalletAddress });
         }
       } catch (error) {
         console.error("Failed to connect to Phantom Wallet:", error);
       }
     } else {
-      console.log("Phantom Wallet not found");
+      alert("Phantom Wallet not found. Please install it first.");
     }
   };
 
@@ -98,14 +199,39 @@ const UserSetting = () => {
         <div className="container">
           <div className="settings-card">
             <div className="profile-image-container">
-              <img
-                src={`/assets/img/user.png`} // Replace with user profile picture URL
-                alt="Profile"
-                className="profile-image"
-              />
-              <div className="edit-icon">
-                <i className="fa fa-pencil"></i>
+              <div className="image-wrapper">
+                <img
+                  src={imageError ? DEFAULT_PROFILE_IMAGE : formData.profileImageUrl}
+                  alt="Profile"
+                  className="profile-image"
+                  onError={handleImageError}
+                />
+                <button
+                  className="edit-icon"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploading}
+                  title="Upload profile picture"
+                >
+                  <i className="fa fa-pencil"></i>
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/gif,image/webp"
+                  onChange={handleImageUpload}
+                  className="hidden-file-input"
+                />
+                {isUploading && (
+                  <div className="upload-overlay">
+                    <span>Uploading...</span>
+                  </div>
+                )}
               </div>
+              {uploadError && (
+                <div className="error-message">
+                  {uploadError}
+                </div>
+              )}
             </div>
 
             <div className="form">
@@ -120,24 +246,34 @@ const UserSetting = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="username">Your Life's Motto</label>
+                <label htmlFor="motto">Motto</label>
                 <input
                   type="text"
-                  id="username"
-                  name="username"
-                  value={"Your Motto"}
+                  id="motto"
+                  name="motto"
+                  value={formData.motto}
                   onChange={handleChange}
+                  placeholder="Enter your life's motto"
+                  className="form-control"
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="email">Country</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={"Country"}
-                  readOnly
-                />
+              <div className="form-group select-container">
+                <label htmlFor="country">Country</label>
+                <div className="select-wrapper">
+                  <select
+                    id="country"
+                    name="country"
+                    value={formData.country}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select a country</option>
+                    {countries.map((country) => (
+                      <option key={country} value={country}>
+                        {country}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
@@ -157,8 +293,8 @@ const UserSetting = () => {
                   name="walletAddress"
                   value={formData.walletAddress || "No wallet address provided."}
                   readOnly
-                  onClick={handleWalletConnect} // Connect to wallet on click
-                  style={{ cursor: 'pointer' }} // Change cursor to pointer for better UX
+                  onClick={handleWalletConnect}
+                  style={{ cursor: 'pointer' }}
                 />
               </div>
 
@@ -174,7 +310,6 @@ const UserSetting = () => {
           </div>
         </div>
       </div>
-
       <style jsx>{`
         .settings-area {
           padding: 40px 0;
@@ -197,23 +332,71 @@ const UserSetting = () => {
           margin-bottom: 20px;
         }
 
+        .image-wrapper {
+          position: relative;
+          width: 100px;
+          height: 100px;
+        }
+
         .profile-image {
           width: 100px;
           height: 100px;
           border-radius: 50%;
           border: 4px solid #4F3738;
+          object-fit: cover;
         }
 
         .edit-icon {
           position: absolute;
           bottom: 0;
-          right: calc(42% - 15px);
+          right: -5px;
           background-color: #4F3738;
           color: #fff;
           border-radius: 50%;
-          padding: 7px;
+          width: 30px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           cursor: pointer;
-          border: 2px solid #fff; /* Adds a white border around the pencil icon */
+          border: 2px solid #fff;
+          padding: 0;
+          transition: background-color 0.2s;
+        }
+
+        .edit-icon:hover {
+          background-color: #3a2a2b;
+        }
+
+        .edit-icon:disabled {
+          background-color: #999;
+          cursor: not-allowed;
+        }
+
+       .error-message {
+          color: #dc3545;
+          font-size: 0.875rem;
+          margin-top: 0.5rem;
+          text-align: center;
+        }
+
+        .upload-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 12px;
+        }
+
+        .hidden-file-input {
+          display: none;
         }
 
         .form-group {
@@ -227,12 +410,34 @@ const UserSetting = () => {
           margin-bottom: 5px;
         }
 
-        .form-group input {
+        .form-group input,
+        .select-wrapper select {
           width: 100%;
           padding: 10px;
           border-radius: 8px;
           border: 1px solid #eaeaea;
           background-color: #f9f9f9;
+        }
+
+        .select-wrapper {
+          position: relative;
+        }
+
+        .select-wrapper select {
+          appearance: none;
+          padding-right: 30px;
+          cursor: pointer;
+        }
+
+        .select-wrapper::after {
+          content: '▼';
+          font-size: 12px;
+          color: #4F3738;
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          pointer-events: none;
         }
 
         .form-actions {
@@ -249,6 +454,7 @@ const UserSetting = () => {
           cursor: pointer;
           border: none;
           margin: 0 5px;
+          transition: opacity 0.2s;
         }
 
         .btn-cancel {
@@ -259,6 +465,94 @@ const UserSetting = () => {
         .btn-save {
           background-color: #4F3738;
           color: #fff;
+        }
+
+        .btn-cancel:hover, .btn-save:hover {
+          opacity: 0.9;
+        }
+       .select-container {
+          position: relative;
+          z-index: 1;
+        }
+
+        .select-wrapper {
+          position: relative;
+          width: 100%;
+        }
+
+        .select-wrapper select {
+          width: 100%;
+          padding: 10px;
+          border-radius: 8px;
+          border: 1px solid #eaeaea;
+          background-color: #f9f9f9;
+          appearance: none;
+          padding-right: 30px;
+          cursor: pointer;
+          color: #4F3738;
+        }
+
+        .select-wrapper::after {
+          content: '▼';
+          font-size: 12px;
+          color: #4F3738;
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          pointer-events: none;
+        }
+
+        /* New styles for dropdown positioning */
+        .select-wrapper select:focus {
+          outline: none;
+          border-color: #4F3738;
+        }
+
+        .select-wrapper select option {
+          background: white;
+          color: #4F3738;
+          padding: 10px;
+        }
+
+        /* Force dropdown to appear below */
+        @supports (-webkit-appearance: none) or (-moz-appearance: none) {
+          .select-container {
+            overflow: visible;
+          }
+
+          .select-wrapper select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+          }
+
+          .select-wrapper select::-ms-expand {
+            display: none;
+          }
+        }
+
+        /* Ensure dropdown options appear above other elements */
+        .select-wrapper select:focus + .select-wrapper::after {
+          transform: translateY(-50%) rotate(180deg);
+        }
+
+        .form-group + .form-group {
+          margin-top: 20px;
+          position: relative;
+          z-index: 0;
+        }
+
+        /* Style the dropdown options */
+        .select-wrapper select option {
+          padding: 10px;
+          min-height: 1.2em;
+          background: white;
+        }
+
+        /* Ensure other form elements don't overlap */
+        .form-group:not(.select-container) {
+          position: relative;
+          z-index: 0;
         }
       `}</style>
     </Section>

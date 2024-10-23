@@ -1,30 +1,41 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/router'; // Import useRouter from next/router
-import { useSession } from 'next-auth/react'; // Import useSession from next-auth/react
+import { useRouter } from 'next/navigation'; // Changed from next/router to next/navigation
+import { useSession } from 'next-auth/react';
 import Section from '../component/layouts/Section.js';
 
 const Home = () => {
-  const router = useRouter(); // Initialize the router
-  const { data: session, status } = useSession(); // Get session data and status
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  // Log session data when it changes
+  useEffect(() => {
+    if (status === 'loading') {
+      console.log('Loading session...');
+    }
+
+    if (status === 'authenticated') {
+      console.log('Session User ID',session.user.id)
+      console.log('Session data:', {
+        user: session.user,
+        expires: session.expires,
+        status: status
+      });
+    }
+
+    if (status === 'unauthenticated') {
+      console.log('Not authenticated');
+      // Optionally redirect to login page
+      // router.push('/signin');
+    }
+  }, [session, status]);
 
   // Function to handle button click to redirect pages
   const handleButtonClick = (route) => {
     router.push(route); // Redirect to the specified route
   };
-
-  // Check if the session is loading
-  if (status === "loading") {
-    return <p>Loading...</p>; // Optionally, show a loading state
-  }
-
-  // If no session exists, redirect to the login page
-  if (!session) {
-    console.log('Session data:', session);
-    console.log('Session status:', status);
-  }
 
   return (
     <Section allNotification={false} searchPopup={true} title={'Home'}>

@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react'; // Add this import
 import Section from '../component/layouts/Section.js';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 
 const Signup = () => {
@@ -20,53 +21,81 @@ const Signup = () => {
         if (name === 'password') setPassword(value);
     };
 
+    const checkUserExists = async (uid) => {
+        const userDocRef = doc(collection(db, "users"), uid);
+        const userDoc = await getDoc(userDocRef);
+        return userDoc.exists();
+    };
+
     const signUpWithEmail = async (e) => {
         e.preventDefault();
         try {
+            // Create user in Firebase
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const userDocRef = doc(collection(db, "users"), userCredential.user.uid);
-            await setDoc(userDocRef, {
-                uid: userCredential.user.uid,
+            const userExists = await checkUserExists(userCredential.user.uid);
+            
+            if (!userExists) {
+                // Only save to Firestore if user doesn't exist
+                const userDocRef = doc(collection(db, "users"), userCredential.user.uid);
+                await setDoc(userDocRef, {
+                    uid: userCredential.user.uid,
+                    email: userCredential.user.email,
+                    username: username,
+                    createdAt: new Date(),
+                });
+            }
+    
+            // Create NextAuth session
+            const result = await signIn('credentials', {
+                userId: userCredential.user.uid,
                 email: userCredential.user.email,
                 username: username,
+                redirect: false,
             });
-
-            // Pass the user ID to the NextAuth session
-            await fetch('../api/auth/callback/credentials', {
-                method: 'POST',
-                body: JSON.stringify({ userId: userCredential.user.uid }),
-                headers: { 'Content-Type': 'application/json' },
-            });
-
-            router.push('/home'); // Redirect to the home page
+    
+            if (result.error) {
+                throw new Error(result.error);
+            }
+    
+            router.push('/home');
         } catch (error) {
             console.error('Error signing up: ', error);
             setError(error.message);
         }
     };
-
+    
     const handleProviderSignIn = async (provider) => {
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
-            const userDocRef = doc(collection(db, "users"), user.uid);
-
-            await setDoc(userDocRef, {
-                uid: user.uid,
+            const userExists = await checkUserExists(user.uid);
+            
+            if (!userExists) {
+                // Only save to Firestore if user doesn't exist
+                const userDocRef = doc(collection(db, "users"), user.uid);
+                await setDoc(userDocRef, {
+                    uid: user.uid,
+                    email: user.email,
+                    username: user.displayName || username,
+                    createdAt: new Date(),
+                    provider: provider.providerId
+                });
+            }
+    
+            // Create NextAuth session
+            const nextAuthResult = await signIn('credentials', {
+                userId: user.uid,
                 email: user.email,
                 username: user.displayName || username,
-                createdAt: new Date(),
-                provider: provider.providerId
+                provider: provider.providerId,
+                redirect: false,
             });
-
-            // Pass the user ID to the NextAuth session
-            await fetch('../api/auth/callback/credentials', {
-                method: 'POST',
-                body: JSON.stringify({ userId: user.uid }),
-                headers: { 'Content-Type': 'application/json' },
-            });
-
-            router.push('/home'); // Redirect to the home page
+    
+            if (nextAuthResult.error) {
+                throw new Error(nextAuthResult.error);
+            }
+    
+            router.push('/home');
         } catch (error) {
             console.error('Error signing in with provider:', error);
             setError(error.message);
@@ -79,28 +108,39 @@ const Signup = () => {
         try {
             const { solana } = window;
             if (solana && solana.isPhantom) {
-                const response = await solana.connect(); // Connect to Phantom wallet
-                const walletAddress = response.publicKey.toString(); // Get the wallet address
-
-                // Save wallet address to Firebase
-                const userDocRef = doc(collection(db, "users"), walletAddress); // Using wallet address as UID
-                await setDoc(userDocRef, {
-                    uid: walletAddress,
-                    username: username,
+                // Connect to Phantom wallet
+                const response = await solana.connect();
+                const walletAddress = response.publicKey.toString();
+                const userExists = await checkUserExists(walletAddress);
+                
+                if (!userExists) {
+                    // Only save to Firestore if user doesn't exist
+                    const userDocRef = doc(collection(db, "users"), walletAddress);
+                    await setDoc(userDocRef, {
+                        uid: walletAddress,
+                        username: username || `Phantom_${walletAddress.slice(0, 6)}`,
+                        provider: 'Phantom',
+                        createdAt: new Date(),
+                        walletAddress: walletAddress,
+                    });
+                }
+    
+                // Create NextAuth session
+                const nextAuthResult = await signIn('credentials', {
+                    userId: walletAddress,
+                    username: username || `Phantom_${walletAddress.slice(0, 6)}`,
                     provider: 'Phantom',
+                    walletAddress: walletAddress,
+                    redirect: false,
                 });
-
-                // Pass the wallet address to the NextAuth session
-                await fetch('../api/auth/callback/credentials', {
-                    method: 'POST',
-                    body: JSON.stringify({ userId: walletAddress }),
-                    headers: { 'Content-Type': 'application/json' },
-                });
-
-                router.push('/home'); // Redirect to the home page
+    
+                if (nextAuthResult.error) {
+                    throw new Error(nextAuthResult.error);
+                }
+    
+                router.push('/home');
             } else {
-                console.error("Phantom Wallet not found.");
-                setError("Phantom Wallet not found. Please install it.");
+                throw new Error("Phantom Wallet not found. Please install it.");
             }
         } catch (error) {
             console.error('Error connecting to Phantom Wallet:', error);

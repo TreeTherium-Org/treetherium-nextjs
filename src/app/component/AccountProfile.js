@@ -3,20 +3,31 @@ import Section from '../component/layouts/Section';
 import Link from "next/link";
 import { auth, db } from '../../firebase';
 import { doc, getDoc } from "firebase/firestore";
+import { useSession, signOut } from "next-auth/react"; // Import useSession and signOut
+import { useRouter } from "next/router";
 
 const AccountProfile = () => {
   const [userData, setUserData] = useState(null);
-  const userId = localStorage.getItem("userId"); // Retrieve user ID from localStorage
-  console.log(userId);
+  const { data: session, status } = useSession(); // Destructure session data
+  const router = useRouter();
+  const userId = session?.user?.id; // Retrieve user ID from the session object
+
 
   useEffect(() => {
+    // Redirect to home if user is not authenticated
+    if (status === "unauthenticated") {
+      router.push("/home");
+    }
+  }, [status, router]);
+
+
+  useEffect(() => {
+    
     const fetchUserData = async () => {
       if (userId) {
         try {
           const docRef = doc(db, "users", userId);
-          console.log("Fetching document with ID:", userId); // Log the document ID
           const docSnap = await getDoc(docRef);
-          console.log("Document snapshot:", docSnap); // Log the document snapshot
 
           if (docSnap.exists()) {
             setUserData(docSnap.data());
@@ -38,9 +49,8 @@ const AccountProfile = () => {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth); // Sign out the user from Firebase
-      localStorage.removeItem("userId"); // Remove user ID from localStorage
-      window.location.href = "/"; // Redirect to the home page (or login page)
+      await signOut(); // Sign out the user using next-auth
+      router.push("/home"); // Redirect to the home page (or login page) using useRouter
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -54,13 +64,13 @@ const AccountProfile = () => {
           <div className="profile-card">
             <div className="profile-header">
               <img
-                src={userData.profilePictureUrl || `/assets/img/user.png`}
+                src={userData.profileImageUrl || `/assets/img/user.png`}
                 alt="Profile"
                 className="profile-image"
               />
               <h5 className="profile-name">{userData.username}</h5>
-              <p>"Your Life's Motto"</p>
-              <p>Country</p>
+              <p>"{userData.motto ||"Your Life's Motto"}"</p>
+              <p>{userData.country || "Country"}</p>
             </div>
 
             <div className="profile-details">
