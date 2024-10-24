@@ -16,9 +16,9 @@ const firebaseConfig = {
   // Initialize Firebase only if it hasn't been initialized yet
 let app;
 if (!getApps().length) {
-    app = initializeApp(firebaseConfig);
+  app = initializeApp(firebaseConfig);
 } else {
-    app = getApps()[0]; // Use the initialized app
+  app = getApps()[0]; // Use the initialized app
 }
 
 export const auth = getAuth(app);

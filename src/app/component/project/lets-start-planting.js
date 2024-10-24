@@ -45,26 +45,40 @@ const LetsStartPlanting = () => {
     >
       <div style={containerStyle}>
         <header style={headerStyle}>
-          <h3 className="form-title">"Let's Start Planting"</h3>
+          <h3 className="form-title">&quot;Let&apos;s Start Planting&quot;</h3>
           <div style={buttonGroupStyle}>
-            <div onClick={() => handleButtonClick('list-trees')} style={cardStyle}>
+            <div
+              onClick={() => handleButtonClick("list-trees")}
+              style={cardStyle}
+            >
               <Image
                 src="/assets/img/lsp/single-tree.jpeg"
                 alt="Single Tree"
                 width={150}
                 height={150}
-                style={{ borderRadius: '20%', marginBottom: '10px', boxShadow: imageShadowStyle }}
+                style={{
+                  borderRadius: "20%",
+                  marginBottom: "10px",
+                  boxShadow: imageShadowStyle,
+                }}
               />
               <p>Single Tree</p>
             </div>
 
-            <div onClick={() => handleButtonClick('/list-projects')} style={cardStyle}>
+            <div
+              onClick={() => handleButtonClick("/list-projects")}
+              style={cardStyle}
+            >
               <Image
                 src="/assets/img/lsp/many-trees.jpeg"
                 alt="Tree Planting Project"
                 width={150}
                 height={150}
-                style={{ borderRadius: '20%', marginBottom: '10px', boxShadow: imageShadowStyle }}
+                style={{
+                  borderRadius: "20%",
+                  marginBottom: "10px",
+                  boxShadow: imageShadowStyle,
+                }}
               />
 
               <p>Tree Planting Project</p>
@@ -106,37 +120,37 @@ const LetsStartPlanting = () => {
 export default LetsStartPlanting;
 
 const containerStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-start',
-  alignItems: 'center',
-  height: '100vh',
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  height: "100vh",
 };
 
 const headerStyle = {
-  textAlign: 'center',
-  marginTop: '20px',
-  color: '#4F3738',
+  textAlign: "center",
+  marginTop: "20px",
+  color: "#4F3738",
 };
 
 const buttonGroupStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '20px',
-  marginTop: '10px',
-  alignItems: 'center',
+  display: "flex",
+  flexDirection: "column",
+  gap: "20px",
+  marginTop: "10px",
+  alignItems: "center",
 };
 
 const cardStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  textAlign: 'center',
-  cursor: 'pointer',
-  fontSize: '1.2em',
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  textAlign: "center",
+  cursor: "pointer",
+  fontSize: "1.2em",
 };
 
-const imageShadowStyle = '0px 4px 10px rgba(0, 0, 0, 0.2)';
+const imageShadowStyle = "0px 4px 10px rgba(0, 0, 0, 0.2)";
 
 const popupOverlayStyle = {
   position: "fixed",
@@ -174,10 +188,10 @@ const buttonContainerStyle = {
 };
 
 const disconnectButtonStyle = {
-  padding: '10px 20px',
-  backgroundColor: '#dc3545',
-  color: '#fff',
-  border: 'none',
-  borderRadius: '5px',
-  cursor: 'pointer',
+  padding: "10px 20px",
+  backgroundColor: "#dc3545",
+  color: "#fff",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
 };
