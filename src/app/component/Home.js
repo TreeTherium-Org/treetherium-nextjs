@@ -39,27 +39,33 @@ const Home = () => {
 
   return (
     <Section allNotification={false} searchPopup={true} title={'Home'}>
-        <div style={containerStyle}>
-          <header style={{ ...headerStyle, padding: 0, marginTop: 30, marginBottom: 30 }}>
-            <div style={{ width: '100vw', position: 'relative', left: '50%', transform: 'translateX(-50%)', overflow: 'hidden' }}>  {/* Full viewport width */}
-              <Image
-                src="/assets/img/home-page.png"
-                alt="Everyone Can Grow A Tree"
-                width={2000}             // Set a large enough width for the image
-                height={600}             // Adjust the height according to your needs
-                style={{ width: '100%', height: 'auto' }}  // Ensure the image fills the container
-              />
-            </div>
-            <div style={dataCardStyle} onClick={() => handleButtonClick('/analytics')}>
-              <strong>Analytics</strong> <span style={{ fontSize: '1.2em' }}></span>
-            </div>
-            <div style={dataCardStyle} onClick={() => handleButtonClick('/start-project')}>
-              <strong>Knowledge Base</strong> <span style={{ fontSize: '1.2em' }}></span>
-            </div>
+    <div style={containerStyle}>
+      <header style={{ ...headerStyle, padding: 0, marginTop: 30, marginBottom: 30 }}>
+        <div style={{ width: '100vw', position: 'relative', left: '50%', transform: 'translateX(-50%)', overflow: 'hidden' }}>  {/* Full viewport width */}
+          <Image
+            src="/assets/img/home-page.png"
+            alt="Everyone Can Grow A Tree"
+            width={2000}             // Set a large enough width for the image
+            height={600}             // Adjust the height according to your needs
+            style={{ width: '100%', height: 'auto' }}  // Ensure the image fills the container
+          />
+        </div>
+      </header>
+      <main style={mainStyle}>
+          <div style={dataGridStyle}>
+              <div style={dataCardStyle} onClick={() => handleButtonClick('/my-forest')}>
+                  <strong>My Forest</strong> <span style={{ fontSize: '1.2em' }}></span>
+              </div>
+              <div style={dataCardStyle} onClick={() => handleButtonClick('/analytics')}>
+                  <strong>Analytics</strong> <span style={{ fontSize: '1.2em' }}></span>
+              </div>
+              <div style={dataCardStyle} onClick={() => handleButtonClick('/start-project')}>
+                  <strong>Knowledge Base</strong> <span style={{ fontSize: '1.2em' }}></span>
+              </div>
           </div>
-        </main>
-      </div>
-    </Section>
+      </main>
+    </div>
+</Section>
   );
 };
 

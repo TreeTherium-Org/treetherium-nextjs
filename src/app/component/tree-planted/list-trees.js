@@ -2,26 +2,38 @@ import Section from "../layouts/Section";
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '../../../firebase'; // Ensure the correct path to your firebase.js
+import { useSession } from "next-auth/react"; // Import useSession
 
 const ListTrees = () => {
     const [trees, setTrees] = useState([]);
-    const [loading, setLoading] = useState(true); // New loading state
+    const [loading, setLoading] = useState(true);
+    const { data: session } = useSession(); // Destructure session data to get the user ID
 
-    // Fetch tree data from Firestore
     useEffect(() => {
         const fetchTrees = async () => {
-            setLoading(true); // Start loading
+            setLoading(true);
+
+            // Replace this with the logic to retrieve `userId` from session
+            const userId = session?.user?.id; // Adjust as needed for your session management
+
+            if (!userId) {
+                setLoading(false);
+                return;
+            }
+
             try {
+                // Fetch trees that match the user ID
                 const treeCollection = collection(db, 'tree');
-                const treeSnapshot = await getDocs(treeCollection);
+                const q = query(treeCollection, where('userId', '==', userId));
+                const treeSnapshot = await getDocs(q);
                 const treeList = treeSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 setTrees(treeList);
             } catch (error) {
                 console.error("Error fetching trees: ", error);
             } finally {
-                setLoading(false); // End loading
+                setLoading(false);
             }
         };
         fetchTrees();
@@ -34,12 +46,11 @@ const ListTrees = () => {
                     <div className="loading-message">Loading trees...</div>
                 </div>
             </Section>
-        ); // Show loading state while fetching
+        );
     }
 
     return (
         <Section allNotification={false} searchPopup={true} title={'List of Trees'}>
-            {/* Display List of Tree start */}
             <div className="transaction-area pd-top-36">
                 <div className="container">
                     <div className="tree-gallery">
@@ -66,7 +77,6 @@ const ListTrees = () => {
                     </div>
                 </div>
             </div>
-            {/* Display List of Tree End */}
 
             <div className="btn-wrap mg-top-40 mg-bottom-40">
                 <div className="container">
