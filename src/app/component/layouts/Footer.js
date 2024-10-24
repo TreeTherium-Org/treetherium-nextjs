@@ -3,26 +3,35 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react"; // Import useSession
 
 const Footer = () => {
-  const [sessionId, setSessionId] = useState(null);
+  const { data: session } = useSession(); // Destructure session data
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    // Fetch the session ID from sessionStorage or wherever you store it
-    const storedId = localStorage.getItem("userId");
-    setSessionId(storedId);
-  }, []);
-
   const handleProfileClick = (e) => {
     e.preventDefault();
-    if (!sessionId) {
+    // Check if session exists and if the user ID is present
+    if (!session?.user?.id) {
       setShowModal(true); // Show the modal if no session ID
     } else {
       router.push("/accountprofile"); // Redirect to account profile if logged in
     }
   };
+
+  useEffect(() => {
+    if (showModal) {
+      // Redirect to sign in after 3 seconds if the modal is shown
+      const timer = setTimeout(() => {
+        setShowModal(false); // Hide the modal
+        router.push("/signin"); // Redirect to sign in
+      }, 3000);
+
+      // Cleanup the timer on unmount
+      return () => clearTimeout(timer);
+    }
+  }, [showModal, router]);
 
   return (
     <>
@@ -34,7 +43,7 @@ const Footer = () => {
               style={{ width: "100%", padding: "0", margin: "0", listStyle: "none" }}
             >
               <li className="text-center">
-                <Link href="/" className="home-clicked">
+                <Link href="/home" className="home-clicked">
                   <i className="fa fa-home" style={{ fontSize: "20px", color: "#4F3738" }} />
                   <p style={{ margin: "0", color: "#4F3738" }}>Home</p>
                 </Link>
@@ -69,19 +78,11 @@ const Footer = () => {
         </span>
       </div>
 
-      {/* Modal */}
+      {/* Modal for not logged in */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <p>User not logged in yet. Please log in to access your profile.</p>
-            <button className="btn btn-primary" onClick={() => setShowModal(false)}>
-              Close
-            </button>
-            <Link href="/signin">
-              <button className="btn btn-secondary" onClick={() => setShowModal(false)}>
-                Go to Sign In
-              </button>
-            </Link>
+            <p>You are not logged in yet. Redirecting to sign in...</p>
           </div>
         </div>
       )}
@@ -106,24 +107,6 @@ const Footer = () => {
           text-align: center;
           max-width: 400px;
           width: 100%;
-        }
-        .modal-content p {
-          margin-bottom: 20px;
-        }
-        .btn {
-          padding: 10px 15px;
-          border: none;
-          border-radius: 5px;
-          margin: 5px;
-          cursor: pointer;
-        }
-        .btn-primary {
-          background-color: #4F3738;
-          color: white;
-        }
-        .btn-secondary {
-          background-color: #6c757d;
-          color: white;
         }
       `}</style>
     </>

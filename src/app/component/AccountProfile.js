@@ -3,21 +3,32 @@ import Section from '../component/layouts/Section';
 import Link from "next/link";
 import { auth, db } from '../../firebase';
 import { doc, getDoc } from "firebase/firestore";
+import { useSession, signOut } from "next-auth/react"; // Import useSession and signOut
+import { useRouter } from "next/router";
 
 const AccountProfile = () => {
   const [userData, setUserData] = useState(null);
-  const userId = localStorage.getItem("userId"); // Retrieve user ID from localStorage
-  console.log(userId);
+  const { data: session, status } = useSession(); // Destructure session data
+  const router = useRouter();
+  const userId = session?.user?.id; // Retrieve user ID from the session object
+
 
   useEffect(() => {
+    // Redirect to home if user is not authenticated
+    if (status === "unauthenticated") {
+      router.push("/home");
+    }
+  }, [status, router]);
+
+
+  useEffect(() => {
+    
     const fetchUserData = async () => {
       if (userId) {
         try {
           const docRef = doc(db, "users", userId);
-          console.log("Fetching document with ID:", userId); // Log the document ID
           const docSnap = await getDoc(docRef);
-          console.log("Document snapshot:", docSnap); // Log the document snapshot
-    
+
           if (docSnap.exists()) {
             setUserData(docSnap.data());
           } else {
@@ -28,13 +39,23 @@ const AccountProfile = () => {
         }
       }
     };
-    
+
     fetchUserData();
   }, [userId]);
 
   if (!userData) {
     return <div>Loading...</div>;
   }
+
+  const handleLogout = async () => {
+    try {
+      await signOut(); // Sign out the user using next-auth
+      router.push("/home"); // Redirect to the home page (or login page) using useRouter
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
 
   return (
     <Section allNotification={false} searchPopup={true} title="Account Profile">
@@ -43,14 +64,17 @@ const AccountProfile = () => {
           <div className="profile-card">
             <div className="profile-header">
               <img
-                src={userData.profilePictureUrl || `/assets/img/user.png`}
+                src={userData.profileImageUrl || `/assets/img/user.png`}
                 alt="Profile"
                 className="profile-image"
               />
               <h5 className="profile-name">{userData.username}</h5>
+              <p>"{userData.motto ||"Your Life's Motto"}"</p>
+              <p>{userData.country || "Country"}</p>
             </div>
 
             <div className="profile-details">
+              
               <div className="detail-item">
                 <label>Your Email</label>
                 <div className="input-box">
@@ -64,17 +88,27 @@ const AccountProfile = () => {
                 </div>
               </div>
               <div className="detail-item">
-                <label>Joined Date</label>
+                <label>Registration Date</label>
                 <div className="input-box">
-                  <span>{userData.joinedDate || "Unknown"}</span>
+                  <span>  {userData.createdAt
+                    ? new Date(userData.createdAt.seconds * 1000).toLocaleDateString()
+                    : "Unknown"}</span>
                 </div>
               </div>
             </div>
 
-            <div className="profile-actions">
-              <Link href="/user-setting" className="btn btn-purple">
-                Edit Profile
-              </Link>
+            <div className="form-actions">
+            <button className="btn-edit">
+                <Link
+                  href="/usersetting"
+                  style={{ color: '#fff' }} // Inline style for top padding
+                >
+                  Edit Profile
+                </Link>
+              </button>
+              <button className="btn-logout" onClick={handleLogout}>
+                Log Out
+              </button>
             </div>
           </div>
         </div>
@@ -100,8 +134,8 @@ const AccountProfile = () => {
         }
 
         .profile-image {
-          width: 80px; /* Set image size */
-          height: 80px; /* Set image size */
+          width: 100px; /* Set image size */
+          height: 100px; /* Set image size */
           border-radius: 50%; /* Circular image */
           border: 4px solid #4F3738; /* Border color */
           background-color: #f0f0f0; /* Placeholder background */
@@ -138,25 +172,39 @@ const AccountProfile = () => {
           border-radius: 8px; /* Rounded corners for input box */
           padding: 15px; /* Padding for input box */
           background-color: #f9f9f9; /* Background color for input box */
+          overflow: hidden; /* Hide overflow */
+          word-wrap: break-word; /* Ensure long words break */
+          max-height: 100px; /* Optional: Limit height */
         }
 
-        .profile-actions {
-          margin-top: 20px; /* Space above actions */
-          text-align: center; /* Center align actions */
+
+        .form-actions {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 20px;
         }
 
-        .btn-primary {
-          background-color: #4F3738; /* Button background color */
-          color: white; /* Button text color */
-          padding: 10px 20px; /* Button padding */
-          border-radius: 5px; /* Rounded button */
-          text-decoration: none; /* No underline */
-          transition: background-color 0.3s; /* Smooth transition */
+        .btn-edit, .btn-logout {
+          flex: 1;
+          padding: 10px;
+          border-radius: 8px;
+          font-weight: bold;
+          cursor: pointer;
+          border: none;
+          margin: 0 5px;
         }
 
-        .btn-primary:hover {
-          background-color: #3e2c2d; /* Darker shade on hover */
+        .btn-edit {
+          background-color: #778B28;
+          color: #fff;
         }
+
+        .btn-logout {
+          background-color: #4F3738;
+          color: #fff;
+        }
+
+
       `}</style>
     </Section>
   );

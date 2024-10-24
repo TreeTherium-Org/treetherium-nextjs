@@ -4,8 +4,10 @@ import Section from "../layouts/Section";
 import { db, storage } from "../../../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { useSession } from "next-auth/react"; // Import useSession
 
 export default function UploadForm() {
+  const { data: session } = useSession(); // Destructure session data to get the user ID
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -74,23 +76,31 @@ export default function UploadForm() {
         },
         async () => {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          await addDoc(collection(db, "tree"), {
-            title: formData.title,
-            description: formData.description,
-            location: formData.location,
-            imageUrl: downloadURL,
-            timestamp: new Date(),
-          });
 
-          setFormData({
-            title: "",
-            description: "",
-            location: "",
-            image: null,
-          });
-          setIsUploading(false);
-          setUploadProgress(0);
-          router.push("/list-trees");
+          // Ensure that the session and user ID are available before adding the document
+          if (session?.user?.id) {
+            await addDoc(collection(db, "tree"), {
+              userId: session.user.id, // Include the user's ID
+              title: formData.title,
+              description: formData.description,
+              location: formData.location,
+              imageUrl: downloadURL,
+              timestamp: new Date(),
+            });
+
+            setFormData({
+              title: "",
+              description: "",
+              location: "",
+              image: null,
+            });
+            setIsUploading(false);
+            setUploadProgress(0);
+            router.push("/list-trees");
+          } else {
+            setError("User ID not found. Please sign in again.");
+            setIsUploading(false);
+          }
         }
       );
     } catch (error) {
@@ -101,11 +111,7 @@ export default function UploadForm() {
   };
 
   return (
-    <Section
-      allNotification={false}
-      searchPopup={false}
-      title={"Upload A Tree"}
-    >
+    <Section allNotification={false} searchPopup={false} title={"Upload A Tree"}>
       <div className="transaction-area pd-top-36">
         <div className="container">
           <h3 className="form-title">

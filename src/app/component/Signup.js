@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react'; // Add this import
 import Section from '../component/layouts/Section.js';
-import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 
 const Signup = () => {
@@ -20,68 +21,80 @@ const Signup = () => {
         if (name === 'password') setPassword(value);
     };
 
-    const signUp = async (e) => {
+    const checkUserExists = async (uid) => {
+        const userDocRef = doc(collection(db, "users"), uid);
+        const userDoc = await getDoc(userDocRef);
+        return userDoc.exists();
+    };
+
+    const signUpWithEmail = async (e) => {
         e.preventDefault();
         try {
+            // Create user in Firebase
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const userDocRef = doc(collection(db, "users"), userCredential.user.uid);
-            await setDoc(userDocRef, {
-                uid: userCredential.user.uid,
+            const userExists = await checkUserExists(userCredential.user.uid);
+            
+            if (!userExists) {
+                // Only save to Firestore if user doesn't exist
+                const userDocRef = doc(collection(db, "users"), userCredential.user.uid);
+                await setDoc(userDocRef, {
+                    uid: userCredential.user.uid,
+                    email: userCredential.user.email,
+                    username: username,
+                    createdAt: new Date(),
+                });
+            }
+    
+            // Create NextAuth session
+            const result = await signIn('credentials', {
+                userId: userCredential.user.uid,
                 email: userCredential.user.email,
                 username: username,
+                redirect: false,
             });
-
-            localStorage.setItem("userId", user.uid); // Store as plain string
-
-            router.push('/home'); // Redirect to the home page
+    
+            if (result.error) {
+                throw new Error(result.error);
+            }
+    
+            router.push('/home');
         } catch (error) {
             console.error('Error signing up: ', error);
             setError(error.message);
         }
     };
-
-    const connectPhantomWallet = async () => {
-        try {
-            if (window.solana && window.solana.isPhantom) {
-                const provider = window.solana;
-                const response = await provider.connect();
-                const publicKey = provider.publicKey?.toString();
-                if (publicKey) {
-                    console.log('Connected to Phantom Wallet with public key:', publicKey);
-                    const userDocRef = doc(collection(db, 'users'), publicKey);
-                    await setDoc(userDocRef, {
-                        walletAddress: publicKey,
-                        username, // Store the provided username
-                    });
-                    localStorage.setItem(publicKey);
-                    router.push('/home');
-                } else {
-                    throw new Error('Public key is null.');
-                }
-            } else {
-                throw new Error('Phantom Wallet is not installed.');
-            }
-        } catch (error) {
-            console.error('Error connecting to Phantom Wallet:', error);
-            setError(error.message);
-        }
-    };
-
+    
     const handleProviderSignIn = async (provider) => {
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
-            const userDocRef = doc(collection(db, "users"), user.uid);
-
-            await setDoc(userDocRef, {
-                uid: user.uid,
+            const userExists = await checkUserExists(user.uid);
+            
+            if (!userExists) {
+                // Only save to Firestore if user doesn't exist
+                const userDocRef = doc(collection(db, "users"), user.uid);
+                await setDoc(userDocRef, {
+                    uid: user.uid,
+                    email: user.email,
+                    username: user.displayName || username,
+                    createdAt: new Date(),
+                    provider: provider.providerId
+                });
+            }
+    
+            // Create NextAuth session
+            const nextAuthResult = await signIn('credentials', {
+                userId: user.uid,
                 email: user.email,
                 username: user.displayName || username,
-                createdAt: new Date(),
-                provider: provider.providerId
+                provider: provider.providerId,
+                redirect: false,
             });
-
-            localStorage.setItem("userId", user.uid); // Store as plain string
+    
+            if (nextAuthResult.error) {
+                throw new Error(nextAuthResult.error);
+            }
+    
             router.push('/home');
         } catch (error) {
             console.error('Error signing in with provider:', error);
@@ -90,7 +103,50 @@ const Signup = () => {
     };
 
     const googleProvider = new GoogleAuthProvider();
-    const facebookProvider = new FacebookAuthProvider();
+
+    const connectPhantomWallet = async () => {
+        try {
+            const { solana } = window;
+            if (solana && solana.isPhantom) {
+                // Connect to Phantom wallet
+                const response = await solana.connect();
+                const walletAddress = response.publicKey.toString();
+                const userExists = await checkUserExists(walletAddress);
+                
+                if (!userExists) {
+                    // Only save to Firestore if user doesn't exist
+                    const userDocRef = doc(collection(db, "users"), walletAddress);
+                    await setDoc(userDocRef, {
+                        uid: walletAddress,
+                        username: username || `Phantom_${walletAddress.slice(0, 6)}`,
+                        provider: 'Phantom',
+                        createdAt: new Date(),
+                        walletAddress: walletAddress,
+                    });
+                }
+    
+                // Create NextAuth session
+                const nextAuthResult = await signIn('credentials', {
+                    userId: walletAddress,
+                    username: username || `Phantom_${walletAddress.slice(0, 6)}`,
+                    provider: 'Phantom',
+                    walletAddress: walletAddress,
+                    redirect: false,
+                });
+    
+                if (nextAuthResult.error) {
+                    throw new Error(nextAuthResult.error);
+                }
+    
+                router.push('/home');
+            } else {
+                throw new Error("Phantom Wallet not found. Please install it.");
+            }
+        } catch (error) {
+            console.error('Error connecting to Phantom Wallet:', error);
+            setError(error.message);
+        }
+    };
 
     return (
         <Section allNotification={false} searchPopup={true} title="Register">
@@ -100,7 +156,7 @@ const Signup = () => {
 
             <div className="signin-area mg-bottom-35">
                 <div className="container">
-                    <form className="contact-form-inner" onSubmit={signUp}>
+                    <form className="contact-form-inner" onSubmit={signUpWithEmail}>
                         <label className="single-input-wrap">
                             <span>User Name*</span>
                             <input
