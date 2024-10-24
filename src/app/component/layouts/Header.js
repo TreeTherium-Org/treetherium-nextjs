@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 
-const Header = (props) => {
+const Header = ({ title, toggleNavbar }) => {
   return (
     <>
       {/* Top area with logo and menu icon */}
@@ -18,17 +18,19 @@ const Header = (props) => {
         </div>
 
         {/* Menu Icon */}
-        <div className="menu-icon">
+        <div 
+          className="menu-icon" 
+          onClick={toggleNavbar}
+          style={{ cursor: 'pointer' }}
+        >
           <i className="fa fa-bars" style={{ color: "#778B28", fontSize: "24px" }} />
         </div>
       </div>
 
       {/* Banner with page title */}
       <div className="header-banner" style={{ backgroundColor: "#778B28", padding: "10px 0", textAlign: "center" }}>
-
         <div className="page-name" style={{ color: "#fff", fontWeight: "bold", fontSize: "18px" }}>
-
-          {props.title}
+          {title}
         </div>
       </div>
     </>

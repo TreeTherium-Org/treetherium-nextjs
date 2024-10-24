@@ -1094,103 +1094,153 @@ ul {
         border-radius: 50%; }
 
 /************ navbar style *************/
-.ba-navbar {
-  width: 370px;
+.overlay {
   position: fixed;
-  left: -370px;
   top: 0;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 8;
+}
+
+.ba-navbar {
+  width: 300px;
+  position: fixed;
+  left: -300px;
+  top: 0;
   transition: 0.5s;
   z-index: 9;
-  background: #f6f6f6;
+  background: #ffffff;
   height: 100vh;
-  overflow-y: scroll; }
-  .ba-navbar .ba-navbar-user {
-    padding: 35px 20px;
-    position: relative;
-    background: #fff;
-    margin-bottom: 20px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center; }
-    .ba-navbar .ba-navbar-user .thumb {
-      margin-right: 10px; }
-    .ba-navbar .ba-navbar-user .menu-close {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%);
-      display: inline-block;
-      height: 30px;
-      width: 30px;
-      line-height: 30px;
-      text-align: center;
-      background: #fafafa;
-      border-radius: 50%;
-      color: #6236ff;
-      cursor: pointer; }
-    .ba-navbar .ba-navbar-user p {
-      margin-bottom: 0; }
-  .ba-navbar .ba-add-balance-title {
-    margin: 0 20px;
-    padding: 16px 20px 15px 20px; }
-    .ba-navbar .ba-add-balance-title h5 {
-      color: #292929; }
-    .ba-navbar .ba-add-balance-title.style-two {
-      margin-top: 20px; }
-  .ba-navbar .ba-main-menu {
-    border-top: 1px solid #ececec;
-    margin-top: 20px;
-    padding: 20px; }
-    .ba-navbar .ba-main-menu h5 {
-      margin-bottom: 20px; }
-    .ba-navbar .ba-main-menu ul {
-      margin: 0;
-      padding: 0;
-      margin-bottom: 38px; }
-      .ba-navbar .ba-main-menu ul li {
-        display: block;
-        list-style: none;
-        margin-bottom: 13px; }
-        .ba-navbar .ba-main-menu ul li a {
-          position: relative;
-          padding-left: 25px;
-          display: block;
-          -webkit-transition: all 0.3s ease-in;
-          -o-transition: all 0.3s ease-in;
-          transition: all 0.3s ease-in; }
-          .ba-navbar .ba-main-menu ul li a:before {
-            content: '';
-            position: absolute;
-            width: 15px;
-            height: 2px;
-            left: 0;
-            top: 10px;
-            background: #7c00cf; }
-          .ba-navbar .ba-main-menu ul li a:after {
-            content: '\f105';
-            position: absolute;
-            right: 0;
-            top: 0;
-            font-family: fontAwesome; }
-          .ba-navbar .ba-main-menu ul li a:hover {
-            color: #7c00cf; }
-            .ba-navbar .ba-main-menu ul li a:hover:after {
-              color: #7c00cf; }
-    .ba-navbar .ba-main-menu .btn {
-      width: 100%;
-      font-weight: 400; }
-  .ba-navbar.ba-navbar-show {
-    left: 0;
-    -webkit-transition: 0.5s;
-    -o-transition: 0.5s;
-    transition: 0.5s; }
+  overflow-y: auto;
+  border-radius: 0 20px 20px 0;
+}
+
+.ba-navbar-show {
+  left: 0;
+  transition: 0.5s;
+}
+
+.ba-navbar-user {
+  padding: 20px;
+  background: #f7f7f7;
+  display: flex;
+  align-items: center;
+  flex-direction: column; 
+  text-align: center;
+}
+
+.ba-navbar-user .thumb {
+  margin-bottom: 15px;
+  border-radius: 50%; 
+  overflow: hidden; 
+  width: 120px; 
+  height: 120px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ba-navbar-user h5 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.ba-navbar-user p {
+  margin: 0;
+  color: #7a7a7a;
+  font-size: 16px;
+}
+
+.menu-close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background: #e4e4e4;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px; /* Increase icon size */
+}
+
+.ba-navbar {
+  width: 300px;
+  position: fixed;
+  left: -300px;
+  top: 0;
+  transition: 0.5s;
+  z-index: 9;
+  background: #ffffff;
+  height: 100vh;
+  overflow-y: auto;
+  border-radius: 0 20px 20px 0;
+}
+
+.ba-navbar-show {
+  left: 0;
+  transition: 0.5s;
+}
+
+.ba-main-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.ba-main-menu ul li {
+  margin-bottom: 15px;
+}
+
+.ba-main-menu ul li a {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 18px; /* Make the label text bigger */
+  font-weight: bold; /* Make the label text bold */
+}
+
+.ba-main-menu ul li a i {
+  margin-right: 15px;
+  font-size: 24px; /* Increase icon size */
+  color: #4F3738;
+}
+
+.ba-main-menu ul li a:hover {
+  color: #4F3738;
+}
+
+.ba-logout {
+  margin-top: auto;
+  padding: 20px;
+  border-top: 1px solid #e4e4e4;
+}
+
+.ba-logout a {
+  display: flex;
+  align-items: center;
+  color: #d9534f;
+  text-decoration: none;
+  padding: 15px 0;
+  font-size: 18px; /* Make the label text bigger */
+  font-weight: bold; /* Make the label text bold */
+}
+
+.ba-logout a i {
+  margin-right: 15px;
+  font-size: 24px; /* Increase icon size */
+  color: #d9534f;
+}
+
+
 
 /*---------------------------------------------------
   ## Search Popup

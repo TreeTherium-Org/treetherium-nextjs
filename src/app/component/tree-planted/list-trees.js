@@ -23,6 +23,8 @@ const ListTrees = () => {
                 return;
             }
 
+            console.log(userId);
+
             try {
                 // Fetch trees that match the user ID
                 const treeCollection = collection(db, 'tree');
