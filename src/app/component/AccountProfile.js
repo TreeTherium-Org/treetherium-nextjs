@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Section from '../component/layouts/Section';
+import Section from "../component/layouts/Section";
 import Link from "next/link";
-import { auth, db } from '../../firebase';
+import { auth, db } from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useSession, signOut } from "next-auth/react"; // Import useSession and signOut
 import { useRouter } from "next/router";
@@ -13,7 +13,6 @@ const AccountProfile = () => {
   const userId = session?.user?.id; // Retrieve user ID from the session object
 
   useEffect(() => {
-    
     const fetchUserData = async () => {
       if (userId) {
         try {
@@ -47,7 +46,6 @@ const AccountProfile = () => {
 };
 
 
-
   return (
     <Section allNotification={false} searchPopup={true} title="Account Profile">
       <div className="profile-area">
@@ -60,12 +58,11 @@ const AccountProfile = () => {
                 className="profile-image"
               />
               <h5 className="profile-name">{userData.username}</h5>
-              <p>"{userData.motto ||"Your Life's Motto"}"</p>
+              <p>&quot;{userData.motto || "Your Life's Motto"}&quot;</p>
               <p>{userData.country || "Country"}</p>
             </div>
 
             <div className="profile-details">
-              
               <div className="detail-item">
                 <label>Your Email</label>
                 <div className="input-box">
@@ -75,24 +72,31 @@ const AccountProfile = () => {
               <div className="detail-item">
                 <label>Wallet Address</label>
                 <div className="input-box">
-                  <span>{userData.walletAddress || "No wallet address provided."}</span>
+                  <span>
+                    {userData.walletAddress || "No wallet address provided."}
+                  </span>
                 </div>
               </div>
               <div className="detail-item">
                 <label>Registration Date</label>
                 <div className="input-box">
-                  <span>  {userData.createdAt
-                    ? new Date(userData.createdAt.seconds * 1000).toLocaleDateString()
-                    : "Unknown"}</span>
+                  <span>
+                    {" "}
+                    {userData.createdAt
+                      ? new Date(
+                          userData.createdAt.seconds * 1000
+                        ).toLocaleDateString()
+                      : "Unknown"}
+                  </span>
                 </div>
               </div>
             </div>
 
             <div className="form-actions">
-            <button className="btn-edit">
+              <button className="btn-edit">
                 <Link
                   href="/usersetting"
-                  style={{ color: '#fff' }} // Inline style for top padding
+                  style={{ color: "#fff" }} // Inline style for top padding
                 >
                   Edit Profile
                 </Link>
@@ -128,14 +132,14 @@ const AccountProfile = () => {
           width: 100px; /* Set image size */
           height: 100px; /* Set image size */
           border-radius: 50%; /* Circular image */
-          border: 4px solid #4F3738; /* Border color */
+          border: 4px solid #4f3738; /* Border color */
           background-color: #f0f0f0; /* Placeholder background */
         }
 
         .profile-name {
           margin: 10px 0 5px; /* Margin for spacing */
           font-size: 1.5em; /* Name font size */
-          color: #4F3738; /* Text color */
+          color: #4f3738; /* Text color */
         }
 
         .profile-role {
@@ -154,7 +158,7 @@ const AccountProfile = () => {
         .detail-item label {
           display: block; /* Make the label a block element */
           font-weight: bold; /* Bold text for the label */
-          color: #4F3738; /* Label text color */
+          color: #4f3738; /* Label text color */
           margin-bottom: 5px; /* Space below the label */
         }
 
@@ -168,14 +172,14 @@ const AccountProfile = () => {
           max-height: 100px; /* Optional: Limit height */
         }
 
-
         .form-actions {
           display: flex;
           justify-content: space-between;
           margin-top: 20px;
         }
 
-        .btn-edit, .btn-logout {
+        .btn-edit,
+        .btn-logout {
           flex: 1;
           padding: 10px;
           border-radius: 8px;
@@ -186,16 +190,14 @@ const AccountProfile = () => {
         }
 
         .btn-edit {
-          background-color: #778B28;
+          background-color: #778b28;
           color: #fff;
         }
 
         .btn-logout {
-          background-color: #4F3738;
+          background-color: #4f3738;
           color: #fff;
         }
-
-
       `}</style>
     </Section>
   );
