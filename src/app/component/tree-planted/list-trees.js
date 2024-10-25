@@ -59,7 +59,7 @@ const ListTrees = () => {
   }
 
   return (
-    <Section allNotification={false} searchPopup={true} title={"List of Trees"}>
+    <Section allNotification={false} searchPopup={true} title={"My Trees"}>
       <div className="transaction-area pd-top-36">
         <div className="container">
           <div className="tree-gallery">
@@ -74,7 +74,9 @@ const ListTrees = () => {
                         width={300}
                         height={300}
                         objectFit="cover"
+                        style={{ borderRadius: '20px' }} 
                       />
+
                     </div>
                     <h4 className="tree-title">
                       {tree.title || "Unnamed Tree"}
@@ -91,11 +93,12 @@ const ListTrees = () => {
 
       <div className="btn-wrap mg-top-40 mg-bottom-40">
         <div className="container">
-          <Link href="/trees-form" className="btn-large btn-blue w-100">
+          <Link href="/trees-form" className="add-tree-button">
             Add new tree <i className="fa fa-angle-double-right" />
           </Link>
         </div>
       </div>
+
     </Section>
   );
 };

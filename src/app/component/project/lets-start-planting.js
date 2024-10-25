@@ -147,8 +147,27 @@ const cardStyle = {
   alignItems: "center",
   textAlign: "center",
   cursor: "pointer",
-  fontSize: "1.2em",
 };
+
+/*
+const cardStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  textAlign: 'center',
+  cursor: 'pointer',
+  border: '1px solid #c1b3a8',
+  backgroundColor: '#f7f4f1',
+  borderRadius: '10px',
+  padding: '20px',
+  boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)',
+  height: '270px',
+  justifyContent: 'center',
+  gap: '10px'
+};
+*/
+
+
 
 const imageShadowStyle = "0px 4px 10px rgba(0, 0, 0, 0.2)";
 

@@ -627,7 +627,7 @@ ul {
 
 .btn-blue {
   color: #fff;
-  background: #A3A830; }
+  background: #778B28; }
 
 .btn-red {
   background: #f9376c;
@@ -1247,9 +1247,6 @@ ul {
 .ba-auth-button.logged-out a {
   color: #778B28; /* Sign in button color */
 }
-
-
-
 
 /*---------------------------------------------------
   ## Search Popup
@@ -4624,11 +4621,11 @@ span.badge-pulse-orange {
 }
 
 .btn-large {
-  background-color: #A3A830; /* Custom blue color */
+  background-color: #778B28; /* Custom blue color */
   color: white; /* White text color */
   border: none; /* Remove border */
   border-radius: 5px; /* Slightly rounded corners */
-  font-size: 1.2rem; /* Increase font size */
+  font-size: 1.3rem; /* Increase font size */
   cursor: pointer; /* Pointer cursor on hover */
   transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
@@ -4699,12 +4696,13 @@ span.badge-pulse-orange {
 }
 
 .btn-submit {
-  background: #A3A830;
+  background: #778B28;
   color: #fff;
+  height: 52px;
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
-  font-size: 1rem;
+  font-size: 20px;
   cursor: pointer;
   transition: background 0.3s ease;
   width: 100%;
@@ -4722,11 +4720,6 @@ span.badge-pulse-orange {
   .form-title {
       font-size: 1.1rem;
   }
-
-  .btn-submit {
-      font-size: 0.9rem;
-      padding: 8px 16px;
-  }
 }
 
 .card {
@@ -4737,7 +4730,7 @@ span.badge-pulse-orange {
 }
 
 .card-img-top {
-  height: 300px; /* Adjust height as necessary */
+  height: 264px; /* Adjust height as necessary */
   object-fit: cover; /* Ensures the image covers the area */
 }
 
@@ -4776,4 +4769,38 @@ span.badge-pulse-orange {
 
 .tree-title {
   margin-top: 20px;
+}
+
+.add-tree-button {
+  display: inline-flex;              /* Use inline-flex for button */
+  align-items: center;               /* Center icon and text vertically */
+  justify-content: center;           /* Center text horizontally */
+  width: 300px;                     /* Set width to 300px */
+  height: 52px;                     /* Set height to 52px */
+  background-color: #778B28;        /* Background color */
+  color: white;                     /* Text color */
+  text-decoration: none;             /* Remove underline from link */
+  border-radius: 5px;               /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.add-tree-button:hover {
+  background-color: #5a4848;        /* Darker shade on hover */
+}
+
+.tree-image{
+  border-radius: 20px;
+}
+
+.view-tree-button {
+  display: inline-flex;              /* Use inline-flex for button */
+  align-items: center;               /* Center icon and text vertically */
+  justify-content: center;           /* Center text horizontally */
+  width: 100%;                     /* Set width to 300px */
+  height: 52px;                     /* Set height to 52px */
+  background-color: #778B28;        /* Background color */
+  color: white;                     /* Text color */
+  text-decoration: none;             /* Remove underline from link */
+  border-radius: 5px;               /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
 }

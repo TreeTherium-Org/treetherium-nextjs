@@ -4,11 +4,32 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../../firebase'; // Ensure the correct path to your firebase.js
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+
+const containerStyle = {
+    width: '100%',
+    height: '400px',
+};
 
 const TreeDetails = () => {
     const router = useRouter();
     const { id } = router.query; // Get the tree ID from the query parameters
     const [tree, setTree] = useState(null);
+    const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 });
+    const [locationName, setLocationName] = useState(''); // State to hold the location name
+
+    // Function to fetch address from latitude and longitude
+    const fetchLocationName = async (lat, lng) => {
+        const apiKey = 'AIzaSyCIV9YVytAARkQZ1mLhzaauyJZqRC3anhc'; // Replace with your actual API key
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`);
+        const data = await response.json();
+        if (data.status === "OK" && data.results.length > 0) {
+            setLocationName(data.results[0].formatted_address); // Set the location name
+        } else {
+            console.error("Geocoding failed: ", data.status);
+            setLocationName("Location not found");
+        }
+    };
 
     // Fetch tree details from Firestore
     useEffect(() => {
@@ -18,7 +39,11 @@ const TreeDetails = () => {
                     const treeDoc = doc(db, 'tree', id);
                     const treeSnapshot = await getDoc(treeDoc);
                     if (treeSnapshot.exists()) {
-                        setTree({ id: treeSnapshot.id, ...treeSnapshot.data() });
+                        const treeData = { id: treeSnapshot.id, ...treeSnapshot.data() };
+                        setTree(treeData);
+                        const [lat, lng] = treeData.location ? treeData.location.split(',').map(Number) : [0, 0];
+                        setMapCenter({ lat, lng }); // Set map center based on tree location
+                        fetchLocationName(lat, lng); // Fetch location name
                     } else {
                         console.error("No such tree!");
                     }
@@ -36,7 +61,7 @@ const TreeDetails = () => {
 
     return (
         <Section allNotification={false} searchPopup={true} title={'Tree Details'}>
-            {/*start fetch data*/}
+            {/* Start fetch data */}
             <div className="transaction-area pd-top-36">
                 <div className="container">
                     <div className="card">
@@ -46,20 +71,31 @@ const TreeDetails = () => {
                             alt="Tree Image"
                         />
                         <div className="card-body">
-                            <h5 className="card-title">{tree.title || 'Unnamed Tree'}</h5> {/* Displaying the tree name as the title */}
-                            <div className="divider" style={{ margin: '10px 0', height: '1px', backgroundColor: '#ccc' }} /> {/* Partition between image and text */}
+                            <h5 className="card-title">{tree.title || 'Unnamed Tree'}</h5>
+                            <div className="divider" style={{ margin: '10px 0', height: '1px', backgroundColor: '#ccc' }} />
                             <p className="card-text"><strong>Description:</strong> {tree.description || 'No description available.'}</p>
-                            <p className="card-text"><strong>Location:</strong> {tree.location || 'No location available.'}</p>
+                            <p className="card-text"><strong>Location:</strong> {locationName || 'Loading location...'}</p>
+                            <div className="map-container" style={{ marginTop: '20px' }}>
+                                <LoadScript googleMapsApiKey="AIzaSyCIV9YVytAARkQZ1mLhzaauyJZqRC3anhc">
+                                    <GoogleMap
+                                        mapContainerStyle={containerStyle}
+                                        center={mapCenter}
+                                        zoom={10}
+                                    >
+                                        <Marker position={mapCenter} />
+                                    </GoogleMap>
+                                </LoadScript>
+                            </div>
                         </div>
                     </div>
                     <div className="btn-wrap mg-top-40">
-                        <Link href="/list-trees" className="btn-large btn-blue w-100">
+                        <Link href="/list-trees" className="view-tree-button">
                             View All Trees
                         </Link>
                     </div>
                 </div>
             </div>
-            {/* transaction End */}
+            {/* Transaction End */}
         </Section>
     );
 };

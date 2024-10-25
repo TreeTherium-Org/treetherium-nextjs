@@ -5,6 +5,7 @@ import { db, storage } from "../../../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useSession } from "next-auth/react"; // Import useSession
+import LocationPicker from "./LocationPicker"; // Import the LocationPicker component
 
 export default function UploadForm() {
   const { data: session } = useSession(); // Destructure session data to get the user ID
@@ -44,6 +45,13 @@ export default function UploadForm() {
       return "All fields are required.";
     }
     return null;
+  };
+
+  const handleLocationChange = (location) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      location: location,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -114,9 +122,7 @@ export default function UploadForm() {
     <Section allNotification={false} searchPopup={false} title={"Upload A Tree"}>
       <div className="transaction-area pd-top-36">
         <div className="container">
-          <h3 className="form-title">
-            &quot;Let Us Know About Your Tree&quot;
-          </h3>
+          <h3 className="form-title">&quot;Let Us Know About Your Tree&quot;</h3>
           <div className="form-image">
             <img
               src="/assets/img/hands-tree-2.jpg"
@@ -144,7 +150,7 @@ export default function UploadForm() {
                   placeholder="Enter species"
                 />
               </div>
-
+  
               <div className="form-group">
                 <label htmlFor="description">Description</label>
                 <textarea
@@ -157,21 +163,12 @@ export default function UploadForm() {
                   placeholder="Enter description"
                 />
               </div>
-
+  
               <div className="form-group">
                 <label htmlFor="location">Location</label>
-                <input
-                  type="text"
-                  name="location"
-                  id="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  required
-                  className="form-control"
-                  placeholder="Enter location"
-                />
+                <LocationPicker onLocationChange={handleLocationChange} />
               </div>
-
+  
               <div className="form-group">
                 <label htmlFor="image">Image of the Tree</label>
                 <input
@@ -184,13 +181,13 @@ export default function UploadForm() {
                   className="form-control"
                 />
               </div>
-
+  
               {isUploading && (
                 <div className="form-group">
                   <p>Uploading: {Math.round(uploadProgress)}%</p>
                 </div>
               )}
-
+  
               <div className="btn-wrap">
                 <button
                   type="submit"
