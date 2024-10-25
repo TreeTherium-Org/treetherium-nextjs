@@ -33,7 +33,7 @@ const Signup = () => {
             // Create user in Firebase
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const userExists = await checkUserExists(userCredential.user.uid);
-            
+
             if (!userExists) {
                 // Only save to Firestore if user doesn't exist
                 const userDocRef = doc(collection(db, "users"), userCredential.user.uid);
@@ -44,7 +44,7 @@ const Signup = () => {
                     createdAt: new Date(),
                 });
             }
-    
+
             // Create NextAuth session
             const result = await signIn('credentials', {
                 userId: userCredential.user.uid,
@@ -52,24 +52,24 @@ const Signup = () => {
                 username: username,
                 redirect: false,
             });
-    
+
             if (result.error) {
                 throw new Error(result.error);
             }
-    
+
             router.push('/home');
         } catch (error) {
             console.error('Error signing up: ', error);
             setError(error.message);
         }
     };
-    
+
     const handleProviderSignIn = async (provider) => {
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
             const userExists = await checkUserExists(user.uid);
-            
+
             if (!userExists) {
                 // Only save to Firestore if user doesn't exist
                 const userDocRef = doc(collection(db, "users"), user.uid);
@@ -81,7 +81,7 @@ const Signup = () => {
                     provider: provider.providerId
                 });
             }
-    
+
             // Create NextAuth session
             const nextAuthResult = await signIn('credentials', {
                 userId: user.uid,
@@ -90,11 +90,11 @@ const Signup = () => {
                 provider: provider.providerId,
                 redirect: false,
             });
-    
+
             if (nextAuthResult.error) {
                 throw new Error(nextAuthResult.error);
             }
-    
+
             router.push('/home');
         } catch (error) {
             console.error('Error signing in with provider:', error);
@@ -112,32 +112,30 @@ const Signup = () => {
                 const response = await solana.connect();
                 const walletAddress = response.publicKey.toString();
                 const userExists = await checkUserExists(walletAddress);
-                
+
                 if (!userExists) {
                     // Only save to Firestore if user doesn't exist
                     const userDocRef = doc(collection(db, "users"), walletAddress);
                     await setDoc(userDocRef, {
-                        uid: walletAddress,
                         username: username || `Phantom_${walletAddress.slice(0, 6)}`,
                         provider: 'Phantom',
                         createdAt: new Date(),
                         walletAddress: walletAddress,
                     });
                 }
-    
+
                 // Create NextAuth session
                 const nextAuthResult = await signIn('credentials', {
-                    userId: walletAddress,
                     username: username || `Phantom_${walletAddress.slice(0, 6)}`,
                     provider: 'Phantom',
                     walletAddress: walletAddress,
                     redirect: false,
                 });
-    
+
                 if (nextAuthResult.error) {
                     throw new Error(nextAuthResult.error);
                 }
-    
+
                 router.push('/home');
             } else {
                 throw new Error("Phantom Wallet not found. Please install it.");
@@ -198,19 +196,19 @@ const Signup = () => {
                     </form>
                     {error && <p className="error">{error}</p>}
                     <div className="social-buttons">
-                        <button onClick={connectPhantomWallet} className="social-button btn-phantom-wallet">
-                            <img
-                                src="https://s5-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/073/700/original/1200x1200.png?1712005160"
-                                alt="Phantom Wallet"
-                            />
-                            Sign up with Phantom Wallet
-                        </button>
                         <button onClick={() => handleProviderSignIn(googleProvider)} className="social-button btn-google">
                             <img
                                 src="https://theplace2b.com.au/wp-content/uploads/2020/09/178-1783296_g-transparent-circle-google-logo.png"
                                 alt="Google"
                             />
                             Sign up with Google
+                        </button>
+                        <button onClick={connectPhantomWallet} className="social-button btn-phantom-wallet">
+                            <img
+                                src="https://s5-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/073/700/original/1200x1200.png?1712005160"
+                                alt="Phantom Wallet"
+                            />
+                            Sign up with Phantom Wallet
                         </button>
                     </div>
                 </div>

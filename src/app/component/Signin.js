@@ -98,7 +98,6 @@ const Signin = () => {
 
                 // Create NextAuth session
                 const nextAuthResult = await signIn('credentials', {
-                    userId: walletAddress,
                     provider: 'Phantom',
                     walletAddress: walletAddress,
                     redirect: false,

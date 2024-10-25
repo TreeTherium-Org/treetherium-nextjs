@@ -1209,36 +1209,45 @@ ul {
 }
 
 .ba-main-menu ul li a i {
-  margin-right: 15px;
-  font-size: 24px; /* Increase icon size */
-  color: #4F3738;
+    margin-right: 15px;
+    font-size: 24px; /* Increase icon size */
+    color: #4F3738;
+    width: 30px; /* Fixed width to align icons */
+    text-align: center; /* Center the icon within the container */
 }
 
 .ba-main-menu ul li a:hover {
   color: #4F3738;
 }
 
-.ba-logout {
+.ba-auth-button {
   margin-top: auto;
   padding: 20px;
   border-top: 1px solid #e4e4e4;
 }
 
-.ba-logout a {
+.ba-auth-button a, .ba-auth-button .link {
   display: flex;
   align-items: center;
-  color: #d9534f;
   text-decoration: none;
   padding: 15px 0;
   font-size: 18px; /* Make the label text bigger */
   font-weight: bold; /* Make the label text bold */
 }
 
-.ba-logout a i {
+.ba-auth-button a i, .ba-auth-button .link i {
   margin-right: 15px;
   font-size: 24px; /* Increase icon size */
-  color: #d9534f;
 }
+
+.ba-auth-button.logged-in a {
+  color: #d9534f; /* Logout button color */
+}
+
+.ba-auth-button.logged-out a {
+  color: #778B28; /* Sign in button color */
+}
+
 
 
 
@@ -2130,8 +2139,7 @@ ul {
   z-index: 9;
   bottom: 0;
   left: 0;
-  background: #778B28;
-  border-top: 1px solid #DCDCE9; }
+  background: #778B28; }
   .footer-bottom ul {
     margin: 0;
     padding: 0; }
