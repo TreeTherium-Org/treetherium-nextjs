@@ -13,13 +13,6 @@ const AccountProfile = () => {
   const userId = session?.user?.id; // Retrieve user ID from the session object
 
   useEffect(() => {
-    // Redirect to home if user is not authenticated
-    if (status === "unauthenticated") {
-      router.push("/home");
-    }
-  }, [status, router]);
-
-  useEffect(() => {
     const fetchUserData = async () => {
       if (userId) {
         try {
@@ -46,12 +39,12 @@ const AccountProfile = () => {
 
   const handleLogout = async () => {
     try {
-      await signOut(); // Sign out the user using next-auth
-      router.push("/home"); // Redirect to the home page (or login page) using useRouter
+        await signOut({ callbackUrl: "/signin" });
     } catch (error) {
-      console.error("Error logging out:", error);
+        console.error("Error logging out:", error);
     }
-  };
+};
+
 
   return (
     <Section allNotification={false} searchPopup={true} title="Account Profile">

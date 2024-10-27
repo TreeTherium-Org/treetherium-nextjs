@@ -3,18 +3,20 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react"; // Ensure you're using next-auth for session management
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 import { db } from "@/firebase"; // Adjust the path as necessary for your firebase config
 import { doc, getDoc } from "firebase/firestore";
 
 const Navbar = ({ isOpen, onClose }) => {
     const { data: session } = useSession();
     const [userData, setUserData] = useState(null);
+    const router = useRouter();
 
     useEffect(() => {
         const fetchUserData = async () => {
             if (session?.user?.id) {
-                const userDoc = doc(db, "users", session.user.id); // Assuming "users" is your collection
+                const userDoc = doc(db, "users", session.user.id);
                 const userSnapshot = await getDoc(userDoc);
 
                 if (userSnapshot.exists()) {
@@ -31,8 +33,7 @@ const Navbar = ({ isOpen, onClose }) => {
     // Function to handle logout
     const handleLogout = async () => {
         try {
-            await signOut(); // Sign out the user using next-auth
-            router.push("/Signin"); // Redirect to the home page (or login page) using useRouter
+            await signOut({ callbackUrl: "/signin" });
         } catch (error) {
             console.error("Error logging out:", error);
         }
@@ -41,9 +42,7 @@ const Navbar = ({ isOpen, onClose }) => {
     return (
         <>
             {/* Overlay */}
-            {isOpen && (
-                <div className="overlay" onClick={onClose} />
-            )}
+            {isOpen && <div className="overlay" onClick={onClose} />}
 
             {/* Navbar */}
             <div className={`ba-navbar ${isOpen ? "ba-navbar-show" : ""}`}>
@@ -53,15 +52,15 @@ const Navbar = ({ isOpen, onClose }) => {
                     </div>
                     <div className="thumb">
                         <Image
-                            src={userData?.profileImageUrl || "/assets/img/user.png"} // Use fetched user image or fallback
+                            src={userData?.profileImageUrl || "/assets/img/user.png"}
                             alt="user"
                             width={120}
                             height={120}
                         />
                     </div>
                     <div className="details">
-                        <h5>{userData?.username || "Username"}</h5> {/* Display fetched user name */}
-                        <p>{userData?.country || "Country"}</p> {/* Display fetched user role or default */}
+                        <h5>{userData?.username || "Username"}</h5>
+                        <p>{userData?.country || "Country"}</p>
                     </div>
                 </div>
 
@@ -80,21 +79,15 @@ const Navbar = ({ isOpen, onClose }) => {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/knowledge-base">
-                                <i className="fa fa-book" />
-                                <span>Knowledge Base</span>
-                            </Link>
-                        </li>
-                        <li>
                             <Link href="/analytics">
                                 <i className="fa fa-bar-chart" />
                                 <span>Analytics</span>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/usersetting">
-                                <i className="fa fa-cogs" />
-                                <span>Setting</span>
+                            <Link href="/knowledge-base">
+                                <i className="fa fa-book" />
+                                <span>Knowledge Base</span>
                             </Link>
                         </li>
                         <li>
@@ -106,17 +99,24 @@ const Navbar = ({ isOpen, onClose }) => {
                     </ul>
                 </div>
 
-                <div className="ba-logout">
-                    <a
-                        href="#"
-                        onClick={(e) => {
-                            e.preventDefault(); // Prevent the default anchor behavior
-                            handleLogout(); // Call handleLogout function
-                        }}
-                    >
-                        <i className="fa fa-sign-out" />
-                        <span>Log out</span>
-                    </a>
+                <div className={`ba-auth-button ${session ? "logged-in" : "logged-out"}`}>
+                    {session ? (
+                        <a
+                            href="#"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleLogout();
+                            }}
+                        >
+                            <i className="fa fa-sign-out" />
+                            <span>Log out</span>
+                        </a>
+                    ) : (
+                        <Link href="/signin">
+                            <i className="fa fa-sign-in" />
+                            <span>Sign in / Register</span>
+                        </Link>
+                    )}
                 </div>
             </div>
         </>
