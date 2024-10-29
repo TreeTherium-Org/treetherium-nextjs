@@ -33,7 +33,7 @@ const MyForestPage = () => {
                                 alt="My Projects"
                                 width={100}
                                 height={100}
-                                style={{ borderRadius: '50%' }}
+                                style={{ borderRadius: '20px' }}
                             />
                         </div>
                         <p style={projectTextStyle}>My Projects</p>
@@ -103,7 +103,7 @@ const questionStyle = {
     marginBottom: '20px',
     fontSize: '18px',
     color: '#4F4F4F',
-    fontWeight: 'bold',
+    fontWeight: '400',
 };
 
 const buttonGroupStyle = {
@@ -126,7 +126,17 @@ const cardStyle = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    textAlign: 'center',
     cursor: 'pointer',
+    border: '1px solid #c1b3a8',
+    backgroundColor: '#f7f4f1',
+    borderRadius: '10px',
+    paddingLeft: '30px',
+    paddingRight: '30px',
+    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)',
+    height: '180px',
+    justifyContent: 'center',
+    gap: '10px'
 };
 
 const circleStyle = {
@@ -144,6 +154,7 @@ const projectTextStyle = {
     fontSize: '16px',
     color: '#4F4F4F',
     fontWeight: 'bold',
+    marginBottom: '10px',
 };
 
 const footerStyle = {

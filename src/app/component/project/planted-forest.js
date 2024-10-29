@@ -48,16 +48,16 @@ const MyPlantedForest = () => {
                 <main style={mainStyle}>
                     <div style={dataGridStyle}>
                         <div style={dataCardStyle}>
-                            <strong>My Projects:</strong> <span style={{ fontSize: '1.2em' }}><strong>0.0</strong></span>
+                            <strong>My Projects:</strong> <span style={{ fontSize: '1em' }}><strong>0.0</strong></span>
                         </div>
                         <div style={dataCardStyle}>
-                            <strong>My Trees:</strong> <span style={{ fontSize: '1.2em' }}><strong>0.0</strong></span>
+                            <strong>My Trees:</strong> <span style={{ fontSize: '1em' }}><strong>0.0</strong></span>
                         </div>
                         <div style={dataCardStyle}>
-                            <strong>Carbon Sequestration:</strong> <span style={{ fontSize: '1.2em' }}><strong>0.00 Tons</strong></span>
+                            <strong>Carbon Sequestration:</strong> <span style={{ fontSize: '1em' }}><strong>0.00 Tons</strong></span>
                         </div>
                         <div style={dataCardStyle}>
-                            <strong>Oxygen Produced:</strong> <span style={{ fontSize: '1.2em' }}><strong>0.00 Liters</strong></span>
+                            <strong>Oxygen Produced:</strong> <span style={{ fontSize: '1em' }}><strong>0.00 Liters</strong></span>
                         </div>
                     </div>
                     <div style={buttonGridStyle}>
@@ -67,8 +67,7 @@ const MyPlantedForest = () => {
                                 alt="Single Tree"
                                 width={100}
                                 height={100}
-                                marginBottom={20}
-                                style={{ borderRadius: '20%', marginBottom: '20px' }}
+                                style={{ borderRadius: '20%' }}
                             />
                             <p>Plant a Tree</p>
                         </div>
@@ -78,9 +77,9 @@ const MyPlantedForest = () => {
                                 alt="Tree Planting Project"
                                 width={100}
                                 height={100}
-                                style={{ borderRadius: '20%', marginBottom: '20px' }}
+                                style={{ borderRadius: '20%' }}
                             />
-                            <p>Start a Project</p>
+                            <p>Start A Project</p>
                         </div>
                     </div>
                 </main>
@@ -152,6 +151,7 @@ const dataCardStyle = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    gap: '10px'
 };
 
 
@@ -170,10 +170,11 @@ const buttonCardStyle = {
     border: '1px solid #c1b3a8',
     backgroundColor: '#f7f4f1',
     borderRadius: '10px',
-    padding: '20px',
+    padding: '15px',
     boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow for consistency
-    height: '200px', // Adjust as needed for visual consistency with the data cards
+    height: '172px', // Adjust as needed for visual consistency with the data cards
     justifyContent: 'center',
+    fontWeight: "bold",
     gap: '10px', // Space between the image and text
 };
 

@@ -45,7 +45,7 @@ const LetsStartPlanting = () => {
     >
       <div style={containerStyle}>
         <header style={headerStyle}>
-          <h3 className="form-title">&quot;Let&apos;s Start Planting&quot;</h3>
+          <h3 className="form-title">&quot;What Are You Planting Today?&quot;</h3>
           <div style={buttonGroupStyle}>
             <div
               onClick={() => handleButtonClick("list-trees")}
@@ -137,8 +137,9 @@ const buttonGroupStyle = {
   display: "flex",
   flexDirection: "column",
   gap: "20px",
-  marginTop: "10px",
+  marginTop: "25px",
   alignItems: "center",
+  fontWeight: '400'
 };
 
 const cardStyle = {

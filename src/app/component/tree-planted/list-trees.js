@@ -62,6 +62,13 @@ const ListTrees = () => {
     <Section allNotification={false} searchPopup={true} title={"My Trees"}>
       <div className="transaction-area pd-top-36">
         <div className="container">
+          <div className="btn-wrap mg-bottom-40">
+            <div className="container">
+              <Link href="/trees-form" className="add-tree-button">
+                Add new tree  <i className="fa fa-angle-double-right icon-spacing" />
+              </Link>
+            </div>
+          </div>
           <div className="tree-gallery">
             {trees.length > 0 ? (
               trees.map((tree) => (
@@ -73,14 +80,14 @@ const ListTrees = () => {
                         alt={tree.title || "Unnamed Tree"}
                         width={300}
                         height={300}
-                        objectFit="cover"
-                        style={{ borderRadius: '20px' }} 
+                        objectFit="cover"     // Ensures image covers area without stretching
+                        style={{ borderRadius: '20px' }}
                       />
-
                     </div>
-                    <h4 className="tree-title">
+
+                    <h5 className="tree-title">
                       {tree.title || "Unnamed Tree"}
-                    </h4>
+                    </h5>
                   </Link>
                 </div>
               ))
@@ -88,14 +95,6 @@ const ListTrees = () => {
               <div>No trees found.</div>
             )}
           </div>
-        </div>
-      </div>
-
-      <div className="btn-wrap mg-top-40 mg-bottom-40">
-        <div className="container">
-          <Link href="/trees-form" className="add-tree-button">
-            Add new tree <i className="fa fa-angle-double-right" />
-          </Link>
         </div>
       </div>
 

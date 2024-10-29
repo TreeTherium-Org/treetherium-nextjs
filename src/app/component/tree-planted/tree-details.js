@@ -75,7 +75,7 @@ const TreeDetails = () => {
                             <div className="divider" style={{ margin: '10px 0', height: '1px', backgroundColor: '#ccc' }} />
                             <p className="card-text"><strong>Description:</strong> {tree.description || 'No description available.'}</p>
                             <p className="card-text"><strong>Location:</strong> {locationName || 'Loading location...'}</p>
-                            <div className="map-container" style={{ marginTop: '20px' }}>
+                            {/* <div className="map-container" style={{ marginTop: '20px' }}>
                                 <LoadScript googleMapsApiKey="AIzaSyCIV9YVytAARkQZ1mLhzaauyJZqRC3anhc">
                                     <GoogleMap
                                         mapContainerStyle={containerStyle}
@@ -85,7 +85,7 @@ const TreeDetails = () => {
                                         <Marker position={mapCenter} />
                                     </GoogleMap>
                                 </LoadScript>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="btn-wrap mg-top-40">
