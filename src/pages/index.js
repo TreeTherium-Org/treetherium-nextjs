@@ -5,24 +5,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import Section from "/src/app/component/layouts/Section.js";
-import StartupScreen from "/src/app/component/StartupScreen.js"; // Import the StartupScreen component
+import Link from 'next/link';
 
 export default function App() {
   const [showModal, setShowModal] = useState(true); // State to control modal visibility
-  const images = [
-    { src: "/assets/img/home-page.png", alt: "Image 1" },
-    { src: "/assets/img/home-page.png", alt: "Image 2" },
-    { src: "/assets/img/home-page.png", alt: "Image 3" },
-  ];
   const router = useRouter();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowModal(false); // Hide the modal after 3 seconds
-    }, 3000);
-    return () => clearTimeout(timer); // Cleanup the timer if the component unmounts
-  }, []);
+
 
   //Function to handle button click to redirect pages
   const handleButtonClick = (route) => {
@@ -30,74 +19,44 @@ export default function App() {
   };
 
   return (
-    <Section allNotification={false} searchPopup={true} title={"Welcome"}>
-      {/* Modal for StartupScreen */}
-      {showModal && (
-        <div style={modalOverlayStyle}>
-          <div style={modalContentStyle}>
-            <StartupScreen />
-          </div>
+    <div>
+      {/* Top area with logo and menu icon */}
+      <div className="header-top" style={{ padding: "30px 30px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        {/* Logo */}
+        <div className="header-logo">
+          <img
+            src="/assets/img/TT-Logo.png" 
+            alt="Logo"
+            style={{ borderRadius: "50%", width: "82px", height: "82px" }} 
+          />
         </div>
-      )}
-
-      {/* Landing Page Content */}
+      </div>
       <div style={containerStyle}>
-        <header style={headerStyle}>
-          <h1 style={titleStyle}>Tokenizing Tree Planting Worldwide</h1>
-          <h3 style={titleStyle}>
-            Create A <span style={subtitleStyle}>Greener</span> World Together
-          </h3>
+        <header style={{ ...headerStyle, marginTop: 20, marginBottom: 30 }}>
+          <div style={{ width: '121vw', height: '35vh', position: 'relative', left: '60%', transform: 'translateX(-50%)', overflow: 'hidden' }}>  
+            <Image
+              src="/assets/img/home-page.png"
+              alt="Everyone Can Grow A Tree"
+              layout="fill"               // Use `layout="fill"` to make the image fill the container
+              objectFit="cover"           // Ensures the image scales and covers the container
+            />
+          </div>
         </header>
-        <main style={mainStyle}>
-          <div className="section-title">
-            <h3 style={stepTitleStyle}>Step by step how to use this app</h3>
-          </div>
-
-          {/* Swiper Component */}
-          <div style={imageContainerStyle}>
-            <Swiper
-              spaceBetween={30}
-              slidesPerView={3}
-              pagination={{ clickable: true }}
-              loop={true}
-            >
-              {images.map((image, index) => (
-                <SwiperSlide key={index}>
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    width={500}
-                    height={500}
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      borderRadius: "8px",
-                    }}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-
-          <button
-            className="btn btn-purple"
-            onClick={() => handleButtonClick("/signup")}
-          >
-            Register / Login
-          </button>
-
-          <div style={cardContainerStyle}>
-            <div style={dataCardStyle}>
-              <strong>Vision/Mission</strong>
+        <main>
+          <div style={{ display: "flex", justifyContent: "center"}}><h1 style={{ fontSize: '1.7em', marginTop: 80 }} ><strong>Welcome To Treetherium</strong></h1></div>
+          <div style={{ display: "flex", justifyContent: "center"}}><h5 style={{ fontSize: '1em', marginTop : 30 }}>"Create A Greener World Together"</h5></div>
+          <div className="btn-wrap mg-top-40 mg-bottom-40">
+                <div className="container">
+                    <Link href="/projects-form" className="btn-large w-10" style={buttonStyle}>
+                        Add new project <i className="fa fa-angle-double-right" />
+                    </Link>
+                </div>
             </div>
-          </div>
         </main>
       </div>
-    </Section>
+    </div>
   );
 }
-
-// Modal Styles
 
 // Modal Styles
 const modalOverlayStyle = {
@@ -123,16 +82,14 @@ const modalContentStyle = {
   alignItems: "center",
 };
 
-// Other Landing Page Styles (from your existing code)
+// Other Landing Page Styles
 const containerStyle = {
   display: "flex",
   flexDirection: "column",
-  height: "81vh",
-  padding: "20px",
+  height: "100vh",
   backgroundColor: "#ebf6e2",
 };
 
-// Other existing styles (headerStyle, titleStyle, etc.) remain unchanged.
 
 const headerStyle = {
   textAlign: "center",
@@ -172,17 +129,19 @@ const imageContainerStyle = {
 };
 
 const buttonStyle = {
-  backgroundColor: "#4CAF50", // Green color for eco-friendly theme
+  backgroundColor: "#778B28", // Green color for eco-friendly theme
   color: "white",
-  padding: "15px 20px",
+  padding: "1px 20x",
   fontSize: "1.2em",
   borderRadius: "8px",
   border: "none",
   cursor: "pointer",
-  marginTop: "20px",
+  marginTop: "10px",
+  lineHeight: "50px",
   textAlign: "center",
   width: "80%", // Full width button
   maxWidth: "300px", // Restrict the button size on larger screens
+  height: "51.58px",
 };
 
 const cardContainerStyle = {
