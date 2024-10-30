@@ -57,30 +57,30 @@ const Home = () => {
               <Image
                     src="/assets/img/My Forest.jpg"
                     alt="Tree Planting Project"
-                    width={90}
-                    height={90}
+                    width={109}
+                    height={109}
                     style={{ borderRadius: '20%' }}
                   />
-                  <strong>My Forest</strong> 
+                  <strong style={textStyle}>My Forest</strong> 
               </div>
               <div style={buttonCardStyle} onClick={() => handleButtonClick('/analytics')}>
                 <Image
                       src="/assets/img/Analytics.jpg"
                       alt="Single Tree"
-                      width={90}
-                      height={90}
+                      width={109}
+                      height={109}
                       style={{ borderRadius: '20%' }}
                   />
-                  <strong>Analytics</strong> 
+                  <strong style={textStyle}>Analytics</strong> 
               </div>
               <div style={buttonCardStyle} onClick={() => handleButtonClick('/start-project')}>
-              <Image
-                                src="/assets/img/Knowledge Base.jpg"
-                                alt="Single Tree"
-                                width={90}
-                                height={90}
-                                style={{ borderRadius: '20%' }}
-                            />
+                <Image
+                      src="/assets/img/Knowledge Base.jpg"
+                      alt="Single Tree"
+                      width={109}
+                      height={109}
+                      style={{ borderRadius: '20%' }}
+                  />
                   <strong style={textStyle}>Knowledge Base</strong> 
               </div>
           </div>
@@ -148,14 +148,15 @@ const buttonCardStyle = {
   border: '2px solid #c1b3a8',
   backgroundColor: '#f7f4f1',
   borderRadius: '20px',
-  padding: '15px',
   boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow for consistency
-  height: '150px', // Adjust as needed for visual consistency with the data cards
+  height: '172px', // Adjust as needed for visual consistency with the data cards
+  width: '100%' ,
   justifyContent: 'center',
-  gap: '5px', // Space between the image and text
+  gap: '10px', // Space between the image and text
+  //transform: 'translateX(-7%)',
 };
 
 const textStyle = {
-  fontSize: '1em', // Adjust if needed to fit within button width
+  fontSize: '0.938em', // Adjust if needed to fit within button width
   whiteSpace: 'nowrap', // Prevents text wrapping
 };
