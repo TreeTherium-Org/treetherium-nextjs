@@ -62,10 +62,10 @@ const ListTrees = () => {
     <Section allNotification={false} searchPopup={true} title={"My Trees"}>
       <div className="transaction-area pd-top-36">
         <div className="container">
-          <div className="btn-wrap mg-bottom-40">
+          <div className="btn-wrap mg-bottom-60">
             <div className="container">
               <Link href="/trees-form" className="add-tree-button">
-                Add new tree  <i className="fa fa-angle-double-right icon-spacing" />
+                Add New Tree  <i className="fa fa-angle-double-right icon-spacing" />
               </Link>
             </div>
           </div>
@@ -80,7 +80,6 @@ const ListTrees = () => {
                         alt={tree.title || "Unnamed Tree"}
                         width={300}
                         height={300}
-                        objectFit="cover"     // Ensures image covers area without stretching
                         style={{ borderRadius: '20px' }}
                       />
                     </div>
@@ -88,6 +87,16 @@ const ListTrees = () => {
                     <h5 className="tree-title">
                       {tree.title || "Unnamed Tree"}
                     </h5>
+                    <strong>
+                      {tree.timestamp
+                        ? new Date(tree.timestamp.seconds * 1000).toLocaleDateString("en-GB", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric"
+                        })
+                        : "Unknown"}
+                    </strong>
+
                   </Link>
                 </div>
               ))

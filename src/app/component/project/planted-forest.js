@@ -48,16 +48,16 @@ const MyPlantedForest = () => {
                 <main style={mainStyle}>
                     <div style={dataGridStyle}>
                         <div style={dataCardStyle}>
-                            <strong>My Projects:</strong> <span style={{ fontSize: '1em' }}><strong>0.0</strong></span>
+                            <strong>My Projects</strong> <span style={{ fontSize: '1em' }}><strong>0.0</strong></span>
                         </div>
                         <div style={dataCardStyle}>
-                            <strong>My Trees:</strong> <span style={{ fontSize: '1em' }}><strong>0.0</strong></span>
+                            <strong>My Trees</strong> <span style={{ fontSize: '1em' }}><strong>0.0</strong></span>
                         </div>
                         <div style={dataCardStyle}>
-                            <strong>Carbon Sequestration:</strong> <span style={{ fontSize: '1em' }}><strong>0.00 Tons</strong></span>
+                            <strong>Carbon Sequestration</strong> <span style={{ fontSize: '1em' }}><strong>0.0 Tons</strong></span>
                         </div>
                         <div style={dataCardStyle}>
-                            <strong>Oxygen Produced:</strong> <span style={{ fontSize: '1em' }}><strong>0.00 Liters</strong></span>
+                            <strong>Oxygen Produced</strong> <span style={{ fontSize: '1em' }}><strong>0.0 Liters</strong></span>
                         </div>
                     </div>
                     <div style={buttonGridStyle}>
@@ -65,21 +65,21 @@ const MyPlantedForest = () => {
                             <Image
                                 src="/assets/img/lsp/single-tree.jpeg"
                                 alt="Single Tree"
-                                width={100}
-                                height={100}
-                                style={{ borderRadius: '20%' }}
+                                width={109}
+                                height={109}
+                                style={{ borderRadius: '20%', marginTop: '20px' }}
                             />
-                            <p>Plant a Tree</p>
+                            <p style={labelStyle}>Plant A Tree</p>
                         </div>
                         <div style={buttonCardStyle} onClick={() => handleButtonClick('/start-project')}>
                             <Image
                                 src="/assets/img/lsp/many-trees.jpeg"
                                 alt="Tree Planting Project"
-                                width={100}
-                                height={100}
-                                style={{ borderRadius: '20%' }}
+                                width={109}
+                                height={109}
+                                style={{ borderRadius: '20%', marginTop: '20px' }}
                             />
-                            <p>Start A Project</p>
+                            <p style={labelStyle} >Start A Project</p>
                         </div>
                     </div>
                 </main>
@@ -144,7 +144,7 @@ const dataCardStyle = {
     borderRadius: '10px',
     padding: '20px',
     textAlign: 'center',
-    border: '1px solid  #c1b3a8',
+    border: '2px solid  #c1b3a8',
     boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow
     height: '120px', // Fixed height to ensure uniformity
     display: 'flex',
@@ -167,7 +167,7 @@ const buttonCardStyle = {
     alignItems: 'center',
     textAlign: 'center',
     cursor: 'pointer',
-    border: '1px solid #c1b3a8',
+    border: '2px solid #c1b3a8',
     backgroundColor: '#f7f4f1',
     borderRadius: '10px',
     padding: '15px',
@@ -222,3 +222,7 @@ const disconnectButtonStyle = {
     borderRadius: '5px',
     cursor: 'pointer',
 };
+
+const labelStyle = {
+    fontSize: '15px'
+}

@@ -4,21 +4,25 @@ import Section from "../layouts/Section";
 import { db, storage } from "../../../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { useSession } from "next-auth/react"; // Import useSession
-import LocationPicker from "./LocationPicker"; // Import the LocationPicker component
+import { useSession } from "next-auth/react";
+import LocationPicker from "./LocationPicker";
+import { getData } from "country-list"; // Import countries list
 
 export default function UploadForm() {
-  const { data: session } = useSession(); // Destructure session data to get the user ID
+  const { data: session } = useSession();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     location: "",
+    country: "", // Add country field
     image: null,
   });
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+
+  const countries = getData(); // Get the list of countries
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,6 +44,7 @@ export default function UploadForm() {
       !formData.title ||
       !formData.description ||
       !formData.location ||
+      !formData.country ||
       !formData.image
     ) {
       return "All fields are required.";
@@ -47,16 +52,8 @@ export default function UploadForm() {
     return null;
   };
 
-  const handleLocationChange = (location) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      location: location,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formError = validateForm();
     if (formError) {
       setError(formError);
@@ -73,8 +70,7 @@ export default function UploadForm() {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setUploadProgress(progress);
         },
         (error) => {
@@ -84,22 +80,21 @@ export default function UploadForm() {
         },
         async () => {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-
-          // Ensure that the session and user ID are available before adding the document
           if (session?.user?.id) {
             await addDoc(collection(db, "tree"), {
-              userId: session.user.id, // Include the user's ID
+              userId: session.user.id,
               title: formData.title,
               description: formData.description,
               location: formData.location,
+              country: formData.country, // Save country
               imageUrl: downloadURL,
               timestamp: new Date(),
             });
-
             setFormData({
               title: "",
               description: "",
               location: "",
+              country: "",
               image: null,
             });
             setIsUploading(false);
@@ -122,7 +117,7 @@ export default function UploadForm() {
     <Section allNotification={false} searchPopup={false} title={"Upload A Tree"}>
       <div className="transaction-area pd-top-36">
         <div className="container">
-          <h3 className="form-title">&quot;Let Us Know About Your Tree&quot;</h3>
+          <h3 className="form-title">"let us know about your tree"</h3>
           <div className="form-image">
             <img
               src="/assets/img/hands-tree-2.jpg"
@@ -150,7 +145,7 @@ export default function UploadForm() {
                   placeholder="Enter species"
                 />
               </div>
-  
+
               <div className="form-group">
                 <label htmlFor="description">Description</label>
                 <textarea
@@ -163,14 +158,42 @@ export default function UploadForm() {
                   placeholder="Enter description"
                 />
               </div>
-  
+
               <div className="form-group">
                 <label htmlFor="location">Location</label>
-                <LocationPicker onLocationChange={handleLocationChange} />
+                <input
+                  type="text"
+                  name="location"
+                  id="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  required
+                  className="form-control"
+                  placeholder="Enter location"
+                />
               </div>
-  
+
               <div className="form-group">
-                <label htmlFor="image">Image of the Tree</label>
+                <label htmlFor="country">Country</label>
+                <select
+                  name="country"
+                  id="country"
+                  value={formData.country}
+                  onChange={handleChange}
+                  required
+                  className="form-control"
+                >
+                  <option value="">Enter country</option>
+                  {countries.map((country) => (
+                    <option key={country.code} value={country.name}>
+                      {country.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="image">Image Of The Tree</label>
                 <input
                   type="file"
                   name="image"
@@ -181,13 +204,13 @@ export default function UploadForm() {
                   className="form-control"
                 />
               </div>
-  
+
               {isUploading && (
                 <div className="form-group">
                   <p>Uploading: {Math.round(uploadProgress)}%</p>
                 </div>
               )}
-  
+
               <div className="btn-wrap">
                 <button
                   type="submit"

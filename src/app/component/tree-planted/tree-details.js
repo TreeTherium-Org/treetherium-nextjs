@@ -18,18 +18,6 @@ const TreeDetails = () => {
     const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 });
     const [locationName, setLocationName] = useState(''); // State to hold the location name
 
-    // Function to fetch address from latitude and longitude
-    const fetchLocationName = async (lat, lng) => {
-        const apiKey = 'AIzaSyCIV9YVytAARkQZ1mLhzaauyJZqRC3anhc'; // Replace with your actual API key
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`);
-        const data = await response.json();
-        if (data.status === "OK" && data.results.length > 0) {
-            setLocationName(data.results[0].formatted_address); // Set the location name
-        } else {
-            console.error("Geocoding failed: ", data.status);
-            setLocationName("Location not found");
-        }
-    };
 
     // Fetch tree details from Firestore
     useEffect(() => {
@@ -41,9 +29,6 @@ const TreeDetails = () => {
                     if (treeSnapshot.exists()) {
                         const treeData = { id: treeSnapshot.id, ...treeSnapshot.data() };
                         setTree(treeData);
-                        const [lat, lng] = treeData.location ? treeData.location.split(',').map(Number) : [0, 0];
-                        setMapCenter({ lat, lng }); // Set map center based on tree location
-                        fetchLocationName(lat, lng); // Fetch location name
                     } else {
                         console.error("No such tree!");
                     }
@@ -74,7 +59,7 @@ const TreeDetails = () => {
                             <h5 className="card-title">{tree.title || 'Unnamed Tree'}</h5>
                             <div className="divider" style={{ margin: '10px 0', height: '1px', backgroundColor: '#ccc' }} />
                             <p className="card-text"><strong>Description:</strong> {tree.description || 'No description available.'}</p>
-                            <p className="card-text"><strong>Location:</strong> {locationName || 'Loading location...'}</p>
+                            <p className="card-text"><strong>Location:</strong> {tree.location || 'No location available.'}</p>
                             {/* <div className="map-container" style={{ marginTop: '20px' }}>
                                 <LoadScript googleMapsApiKey="AIzaSyCIV9YVytAARkQZ1mLhzaauyJZqRC3anhc">
                                     <GoogleMap
@@ -88,7 +73,7 @@ const TreeDetails = () => {
                             </div> */}
                         </div>
                     </div>
-                    <div className="btn-wrap mg-top-40">
+                    <div className="btn-wrap mg-top-30">
                         <Link href="/list-trees" className="view-tree-button">
                             View All Trees
                         </Link>

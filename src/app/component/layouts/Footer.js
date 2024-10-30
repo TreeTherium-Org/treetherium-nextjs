@@ -44,25 +44,25 @@ const Footer = () => {
             >
               <li className="text-center">
                 <Link href="/home" className="home-clicked">
-                  <i className="fa fa-home" style={{ fontSize: "20px", color: "#4F3738" }} />
+                  <i className="fa fa-home" style={{ fontSize: "22px", color: "#4F3738" }} />
                   <p style={{ margin: "0", color: "#4F3738" }}>Home</p>
                 </Link>
               </li>
               <li className="text-center">
                 <Link href="/menu">
-                  <i className="fa fa-bars" style={{ fontSize: "20px", color: "#4F3738" }} />
+                  <i className="fa fa-bars" style={{ fontSize: "22px", color: "#4F3738" }} />
                   <p style={{ margin: "0", color: "#4F3738" }}>Menu</p>
                 </Link>
               </li>
               <li className="text-center">
                 <Link href="/faq">
-                  <i className="fa fa-question-circle" style={{ fontSize: "20px", color: "#4F3738" }} />
+                  <i className="fa fa-question-circle" style={{ fontSize: "22px", color: "#4F3738" }} />
                   <p style={{ margin: "0", color: "#4F3738" }}>FAQ</p>
                 </Link>
               </li>
               <li className="text-center">
                 <a href="#" onClick={handleProfileClick}>
-                  <i className="fa fa-user" style={{ fontSize: "20px", color: "#4F3738" }} />
+                  <i className="fa fa-user" style={{ fontSize: "22px", color: "#4F3738" }} />
                   <p style={{ margin: "0", color: "#4F3738" }}>Profile</p>
                 </a>
               </li>

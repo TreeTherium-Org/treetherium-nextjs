@@ -175,7 +175,7 @@ const Signin = () => {
               Login
             </button>
             <Link className="forgot-btn" href="/signup">
-              Create an account
+              <span className="underline-text">Create an account</span>
             </Link>
           </form>
           {error && <p className="error">{error}</p>}
