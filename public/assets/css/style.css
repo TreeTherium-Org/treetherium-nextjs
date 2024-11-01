@@ -5896,6 +5896,11 @@ span.badge-pulse-orange {
   font-size: 1.5rem;
 }
 
+.no-tree {
+  margin-top: 50%;
+  font-size: 22px;
+}
+
 .add-tree-button {
   display: inline-flex;
   /* Use inline-flex for button */

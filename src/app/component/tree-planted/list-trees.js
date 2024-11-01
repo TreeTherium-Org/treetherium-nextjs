@@ -101,7 +101,7 @@ const ListTrees = () => {
                 </div>
               ))
             ) : (
-              <div>No trees found.</div>
+              <div className="no-tree">No trees found.</div>
             )}
           </div>
         </div>
