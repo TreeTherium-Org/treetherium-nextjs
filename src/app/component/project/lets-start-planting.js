@@ -66,7 +66,7 @@ const LetsStartPlanting = () => {
             </div>
 
             <div
-              onClick={() => handleButtonClick("/list-projects")}
+              onClick={() => handleButtonClick("/my-projects")}
               style={cardStyle}
             >
               <Image
