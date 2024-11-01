@@ -1,12 +1,21 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import StartupScreen from "/src/app/component/StartupScreen.js";
 
 const Page = () => {
   const router = useRouter();
+  const [showModal, setShowModal] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowModal(false); // Hide the modal after 3 seconds
+    }, 3000);
+    return () => clearTimeout(timer); // Cleanup the timer if the component unmounts
+  }, []);
+  
   const slides = [
     {
       id: 1,
@@ -93,64 +102,74 @@ const Page = () => {
   ];
 
   const renderLandingPage = () => (
-    <div style={ containerStyle}>
-      {/* Logo Header */}
-      <div className="header-top" style={{ padding: "30px 23px" }}>
-        <div className="header-logo">
-          <img
-            src="/assets/img/TT-Logo.png"
-            alt="Logo"
-            style={{ borderRadius: "50%", width: "82px", height: "82px" }}
-          />
-        </div>
-      </div>
-
-      {/* Image and Content Container */}
-      <div style={ headerStyle } >
-        {/* Image Section */}
-        <div style={{ width: '148vw', height: '38vh', position: 'relative', left: '60%', transform: 'translateX(-49%)', overflow: 'hidden' }}>
-          <img
-            src={slides[currentSlide].image}
-            alt="Landing Background"
-            className="w-full h-full object-cover"
-            layout="fill"
-          />
-        </div>
-
-        {/* Text and Buttons Section */}
-        <div className="flex flex-col items-center bg-[#ebf6e2] px-6" style={{ paddingTop: "113px" }}>
-          <div className="text-center w-full">
-            <h2 style={{ 
-              fontSize: '2em',
-              fontWeight: 700,
-              marginBottom: '21px',
-              textAlign: 'center'
-            }}>
-              {slides[currentSlide].title}
-            </h2>
-            <p style={{ 
-              fontSize: '1.063em', 
-              marginBottom: '38px',
-              textAlign: 'center'
-            }}>
-              {slides[currentSlide].subtitle}
-            </p>
+    <div>
+      {/* Modal for StartupScreen */}
+      {showModal && (
+        <div style={modalOverlayStyle}>
+          <div style={modalContentStyle}>
+            <StartupScreen />
           </div>
-          
-          {/* Centered Buttons */}
-          <div style={{ buttonContainerStyle }}>
-            <button
-              onClick={slides[currentSlide].primaryButton.action}
-              style={ buttonStyle }
-            >
-              {slides[currentSlide].primaryButton.text}
-            </button>
-            <button
-              onClick={slides[currentSlide].secondaryButton.action}
-              style={ buttonStyle2 }
-            >
-              {slides[currentSlide].secondaryButton.text}
-            </button>
+        </div>
+      )}
+      <div style={ containerStyle}>
+        {/* Logo Header */}
+        <div className="header-top" style={{ padding: "30px 23px" }}>
+          <div className="header-logo">
+            <img
+              src="/assets/img/TT-Logo.png"
+              alt="Logo"
+              style={{ borderRadius: "50%", width: "82px", height: "82px" }}
+            />
+          </div>
+        </div>
+
+        {/* Image and Content Container */}
+        <div style={ headerStyle } >
+          {/* Image Section */}
+          <div style={{ width: '148vw', height: '38vh', position: 'relative', left: '60%', transform: 'translateX(-49%)', overflow: 'hidden' }}>
+            <img
+              src={slides[currentSlide].image}
+              alt="Landing Background"
+              className="w-full h-full object-cover"
+              layout="fill"
+            />
+          </div>
+
+          {/* Text and Buttons Section */}
+          <div className="flex flex-col items-center bg-[#ebf6e2] px-6" style={{ paddingTop: "113px" }}>
+            <div className="text-center w-full">
+              <h2 style={{ 
+                fontSize: '2em',
+                fontWeight: 700,
+                marginBottom: '21px',
+                textAlign: 'center'
+              }}>
+                {slides[currentSlide].title}
+              </h2>
+              <p style={{ 
+                fontSize: '1.063em', 
+                marginBottom: '38px',
+                textAlign: 'center'
+              }}>
+                {slides[currentSlide].subtitle}
+              </p>
+            </div>
+            
+            {/* Centered Buttons */}
+            <div style={{ buttonContainerStyle }}>
+              <button
+                onClick={slides[currentSlide].primaryButton.action}
+                style={ buttonStyle }
+              >
+                {slides[currentSlide].primaryButton.text}
+              </button>
+              <button
+                onClick={slides[currentSlide].secondaryButton.action}
+                style={ buttonStyle2 }
+              >
+                {slides[currentSlide].secondaryButton.text}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -270,6 +289,31 @@ const Page = () => {
 
 export default Page;
 
+// Modal Styles
+const modalOverlayStyle = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  zIndex: 1000,
+};
+
+const modalContentStyle = {
+  position: "relative",
+  width: "100vw", // Full viewport width
+  height: "100vh", // Full viewport height
+  backgroundColor: "transparent", // Transparent to let the StartupScreen be visible
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+//Landing Page Styles
 const containerStyle = {
   display: "flex",
   flexDirection: "column",
@@ -302,6 +346,8 @@ const innerCardStyle = {
   borderRadius: "5px",          // Match or adjust for inner rounding
   padding: "20px 20px 0px",            // Padding inside the inner border
 };
+
+//Button Styles
 
 const buttonContainerStyle = {
   display: "flex",
