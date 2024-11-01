@@ -14,6 +14,7 @@ import { doc, getDoc, collection } from "firebase/firestore";
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberPassword, setRememberPassword] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -21,6 +22,10 @@ const Signin = () => {
     const { name, value } = e.target;
     if (name === "email") setEmail(value);
     if (name === "password") setPassword(value);
+  };
+
+  const handleRememberPasswordChange = (e) => {
+    setRememberPassword(e.target.checked);
   };
 
   const checkUserExists = async (uid) => {
@@ -43,7 +48,6 @@ const Signin = () => {
         throw new Error("User not found. Please sign up first.");
       }
 
-      // Create NextAuth session
       const result = await signIn("credentials", {
         userId: userCredential.user.uid,
         email: userCredential.user.email,
@@ -71,7 +75,6 @@ const Signin = () => {
         throw new Error("User not found. Please sign up first.");
       }
 
-      // Create NextAuth session
       const nextAuthResult = await signIn("credentials", {
         userId: user.uid,
         username: user.username,
@@ -95,7 +98,6 @@ const Signin = () => {
     try {
       const { solana } = window;
       if (solana && solana.isPhantom) {
-        // Connect to Phantom wallet
         const response = await solana.connect();
         const walletAddress = response.publicKey.toString();
         const userExists = await checkUserExists(walletAddress);
@@ -104,7 +106,6 @@ const Signin = () => {
           throw new Error("User not found in Firestore. Please sign up first.");
         }
 
-        // Create NextAuth session
         const nextAuthResult = await signIn("credentials", {
           userId: walletAddress,
           provider: "Phantom",
@@ -157,25 +158,28 @@ const Signin = () => {
                 required
               />
             </label>
+            <div className="options">
+              <label className="remember-password">
+                <input
+                  type="checkbox"
+                  checked={rememberPassword}
+                  onChange={handleRememberPasswordChange}
+                />
+                Remember Password
+              </label>
+              <Link href="/forgot-password" className="forgot-password-link">
+                Forgot Password
+              </Link>
+            </div>
             <button type="submit" className="btn btn-purple">
               Login
             </button>
             <Link className="forgot-btn" href="/signup">
-              Don&apos;t have an account? Sign up
+              <span className="underline-text">Create an account</span>
             </Link>
           </form>
           {error && <p className="error">{error}</p>}
           <div className="social-buttons">
-            <button
-              onClick={() => handleProviderSignIn(googleProvider)}
-              className="social-button btn-google"
-            >
-              <img
-                src="https://theplace2b.com.au/wp-content/uploads/2020/09/178-1783296_g-transparent-circle-google-logo.png"
-                alt="Google"
-              />
-              Sign in with Google
-            </button>
             <button
               onClick={connectPhantomWallet}
               className="social-button btn-phantom-wallet"
@@ -184,7 +188,17 @@ const Signin = () => {
                 src="https://s5-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/073/700/original/1200x1200.png?1712005160"
                 alt="Phantom Wallet"
               />
-              Sign in with Phantom Wallet
+              Login with Phantom Wallet
+            </button>
+            <button
+              onClick={() => handleProviderSignIn(googleProvider)}
+              className="social-button btn-google"
+            >
+              <img
+                src="https://theplace2b.com.au/wp-content/uploads/2020/09/178-1783296_g-transparent-circle-google-logo.png"
+                alt="Google"
+              />
+              Login with Google
             </button>
           </div>
         </div>

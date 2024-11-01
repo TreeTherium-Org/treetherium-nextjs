@@ -59,9 +59,16 @@ const ListTrees = () => {
   }
 
   return (
-    <Section allNotification={false} searchPopup={true} title={"List of Trees"}>
+    <Section allNotification={false} searchPopup={true} title={"My Trees"}>
       <div className="transaction-area pd-top-36">
         <div className="container">
+          <div className="btn-wrap mg-bottom-60">
+            <div className="container">
+              <Link href="/trees-form" className="add-tree-button">
+                Add New Tree  <i className="fa fa-angle-double-right icon-spacing" />
+              </Link>
+            </div>
+          </div>
           <div className="tree-gallery">
             {trees.length > 0 ? (
               trees.map((tree) => (
@@ -73,12 +80,23 @@ const ListTrees = () => {
                         alt={tree.title || "Unnamed Tree"}
                         width={300}
                         height={300}
-                        objectFit="cover"
+                        style={{ borderRadius: '20px' }}
                       />
                     </div>
-                    <h4 className="tree-title">
+
+                    <h5 className="tree-title">
                       {tree.title || "Unnamed Tree"}
-                    </h4>
+                    </h5>
+                    <strong>
+                      {tree.timestamp
+                        ? new Date(tree.timestamp.seconds * 1000).toLocaleDateString("en-GB", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric"
+                        })
+                        : "Unknown"}
+                    </strong>
+
                   </Link>
                 </div>
               ))
@@ -89,13 +107,6 @@ const ListTrees = () => {
         </div>
       </div>
 
-      <div className="btn-wrap mg-top-40 mg-bottom-40">
-        <div className="container">
-          <Link href="/trees-form" className="btn-large btn-blue w-100">
-            Add new tree <i className="fa fa-angle-double-right" />
-          </Link>
-        </div>
-      </div>
     </Section>
   );
 };
