@@ -236,7 +236,7 @@ const UserSetting = () => {
 
             <div className="form">
               <div className="form-group">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">User Name</label>
                 <input
                   type="text"
                   id="username"
@@ -350,7 +350,7 @@ const UserSetting = () => {
           position: absolute;
           bottom: 0;
           right: -5px;
-          background-color: #4F3738;
+          background-color: #778B28;
           color: #fff;
           border-radius: 50%;
           width: 30px;
@@ -450,11 +450,12 @@ const UserSetting = () => {
           flex: 1;
           padding: 10px;
           border-radius: 8px;
-          font-weight: bold;
+          font-weight: 500;
           cursor: pointer;
           border: none;
           margin: 0 5px;
           transition: opacity 0.2s;
+          font-size: 20px;
         }
 
         .btn-cancel {

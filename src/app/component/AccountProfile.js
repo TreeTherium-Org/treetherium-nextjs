@@ -70,7 +70,7 @@ const AccountProfile = () => {
                 </div>
               </div>
               <div className="detail-item">
-                <label>Wallet Address</label>
+                <label>Your Wallet Address</label>
                 <div className="input-box">
                   <span>
                     {userData.walletAddress || "No wallet address provided."}
@@ -85,8 +85,12 @@ const AccountProfile = () => {
                     {userData.createdAt
                       ? new Date(
                           userData.createdAt.seconds * 1000
-                        ).toLocaleDateString()
-                      : "Unknown"}
+                        ).toLocaleDateString("en-GB", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric"
+                        })
+                        : "Unknown"}
                   </span>
                 </div>
               </div>
@@ -111,7 +115,7 @@ const AccountProfile = () => {
 
       <style jsx>{`
         .profile-area {
-          padding: 40px 0;
+          padding: 55px 0;
         }
 
         .profile-card {
@@ -183,10 +187,11 @@ const AccountProfile = () => {
           flex: 1;
           padding: 10px;
           border-radius: 8px;
-          font-weight: bold;
+          font-weight: 500;
           cursor: pointer;
           border: none;
           margin: 0 5px;
+          font-size: 20px;
         }
 
         .btn-edit {
