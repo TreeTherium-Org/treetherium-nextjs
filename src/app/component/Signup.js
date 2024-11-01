@@ -185,30 +185,35 @@ const Signup = () => {
                                 required
                             />
                         </label>
-                        <div className="single-checkbox-wrap">
-                            <input type="checkbox" required />
-                            <span>Accept the Terms & Conditions</span>
+                        <div className="options">
+                            <label className="accept-terms">
+                                <input
+                                    type="checkbox"
+                                />
+                                Accept the Terms & Conditions
+                            </label>
                         </div>
                         <button type="submit" className="btn btn-purple">Register</button>
                         <Link className="forgot-btn" href="/signin">
-                            Already have an account? Go to Login
+                            Already have an account? Go to <span className="underline-text">Login</span>
                         </Link>
+
                     </form>
                     {error && <p className="error">{error}</p>}
                     <div className="social-buttons">
-                        <button onClick={() => handleProviderSignIn(googleProvider)} className="social-button btn-google">
-                            <img
-                                src="https://theplace2b.com.au/wp-content/uploads/2020/09/178-1783296_g-transparent-circle-google-logo.png"
-                                alt="Google"
-                            />
-                            Sign up with Google
-                        </button>
                         <button onClick={connectPhantomWallet} className="social-button btn-phantom-wallet">
                             <img
                                 src="https://s5-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/073/700/original/1200x1200.png?1712005160"
                                 alt="Phantom Wallet"
                             />
                             Sign up with Phantom Wallet
+                        </button>
+                        <button onClick={() => handleProviderSignIn(googleProvider)} className="social-button btn-google">
+                            <img
+                                src="https://theplace2b.com.au/wp-content/uploads/2020/09/178-1783296_g-transparent-circle-google-logo.png"
+                                alt="Google"
+                            />
+                            Sign up with Google
                         </button>
                     </div>
                 </div>

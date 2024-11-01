@@ -45,7 +45,7 @@ const LetsStartPlanting = () => {
     >
       <div style={containerStyle}>
         <header style={headerStyle}>
-          <h3 className="form-title">&quot;Let&apos;s Start Planting&quot;</h3>
+          <h3 className="form-title">&quot;what are you planting today?&quot;</h3>
           <div style={buttonGroupStyle}>
             <div
               onClick={() => handleButtonClick("list-trees")}
@@ -54,15 +54,15 @@ const LetsStartPlanting = () => {
               <Image
                 src="/assets/img/lsp/single-tree.jpeg"
                 alt="Single Tree"
-                width={150}
-                height={150}
+                width={168}
+                height={168}
                 style={{
                   borderRadius: "20%",
                   marginBottom: "10px",
                   boxShadow: imageShadowStyle,
                 }}
               />
-              <p>Single Tree</p>
+              <p style={labelStyle}>Single Tree</p>
             </div>
 
             <div
@@ -72,8 +72,8 @@ const LetsStartPlanting = () => {
               <Image
                 src="/assets/img/lsp/many-trees.jpeg"
                 alt="Tree Planting Project"
-                width={150}
-                height={150}
+                width={168}
+                height={168}
                 style={{
                   borderRadius: "20%",
                   marginBottom: "10px",
@@ -81,7 +81,7 @@ const LetsStartPlanting = () => {
                 }}
               />
 
-              <p>Tree Planting Project</p>
+              <p style={labelStyle}>Tree Planting Project</p>
             </div>
           </div>
         </header>
@@ -136,9 +136,10 @@ const headerStyle = {
 const buttonGroupStyle = {
   display: "flex",
   flexDirection: "column",
-  gap: "20px",
-  marginTop: "10px",
+  gap: "80px",
+  marginTop: "25px",
   alignItems: "center",
+  fontWeight: '400'
 };
 
 const cardStyle = {
@@ -147,8 +148,27 @@ const cardStyle = {
   alignItems: "center",
   textAlign: "center",
   cursor: "pointer",
-  fontSize: "1.2em",
 };
+
+/*
+const cardStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  textAlign: 'center',
+  cursor: 'pointer',
+  border: '1px solid #c1b3a8',
+  backgroundColor: '#f7f4f1',
+  borderRadius: '10px',
+  padding: '20px',
+  boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)',
+  height: '270px',
+  justifyContent: 'center',
+  gap: '10px'
+};
+*/
+
+
 
 const imageShadowStyle = "0px 4px 10px rgba(0, 0, 0, 0.2)";
 
@@ -195,3 +215,7 @@ const disconnectButtonStyle = {
   borderRadius: "5px",
   cursor: "pointer",
 };
+
+const labelStyle = {
+  fontSize: '18px'
+}
