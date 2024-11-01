@@ -37,8 +37,8 @@ Version: 1.0.0
   --paragraph-color: #4F3738;
   --light-green: #A3A830;
   --dark-green: #778B28;
-  --heading-font: 'Poppins', sans-serif;
-  --body-font: 'Poppins', sans-serif; }
+  --heading-font: 'Roboto', sans-serif;
+  --body-font: 'Roboto', sans-serif; }
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -1050,7 +1050,7 @@ ul {
   .header-area .page-name {
     margin-top: 5px;
     color: #4F3738;
-    font-family: 'Poppins'; }
+    font-family: 'Roboto'; }
     
   .header-area .header-search {
     margin-top: 5px;
