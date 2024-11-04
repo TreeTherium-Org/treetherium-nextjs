@@ -334,9 +334,7 @@ const cardStyle = {
   borderRadius: "5px" ,
   border: "none",
   width: "391px",
-  marginTop: "21px",
-  marginBottom: "25px",
-  margin: "auto",
+  margin: "21px 20px 25px 13px",
 };
 
 const innerCardStyle = {

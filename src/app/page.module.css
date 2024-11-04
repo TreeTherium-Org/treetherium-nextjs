@@ -132,6 +132,7 @@
 
   .loadingText {
     font-size: 1.5rem; /* Adjust loading text size on smaller screens */
+    top: 40%;
   }
 }
 
