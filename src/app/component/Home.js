@@ -73,7 +73,7 @@ const Home = () => {
                   />
                   <strong style={textStyle}>Analytics</strong> 
               </div>
-              <div style={buttonCardStyle} onClick={() => handleButtonClick('/start-project')}>
+              <div style={buttonCardStyle} onClick={() => handleButtonClick('/knowledge-base')}>
                 <Image
                       src="/assets/img/Knowledge Base.jpg"
                       alt="Single Tree"
