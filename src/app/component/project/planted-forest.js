@@ -71,7 +71,7 @@ const MyPlantedForest = () => {
                             />
                             <p style={labelStyle}>Plant A Tree</p>
                         </div>
-                        <div style={buttonCardStyle} onClick={() => handleButtonClick('/start-project')}>
+                        <div style={buttonCardStyle} onClick={() => handleButtonClick('/my-projects')}>
                             <Image
                                 src="/assets/img/lsp/many-trees.jpeg"
                                 alt="Tree Planting Project"
