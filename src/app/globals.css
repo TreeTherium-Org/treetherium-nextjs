@@ -5134,7 +5134,7 @@ span.badge-pulse-orange {
  * TOOLTIP
  */
 .tooltip-inner {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Roboto';
   font-size: 1rem;
   font-weight: 600;
   max-width: 200px;
@@ -9314,7 +9314,7 @@ span.badge-pulse-orange {
 }
 
 html {
-    font-family: sans-serif;
+    font-family: 'Roboto';
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -9478,7 +9478,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: monospace, monospace;
+    font-family: 'Roboto';
     font-size: 1em
 }
 
@@ -9813,7 +9813,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+    font-family: 'Roboto'
 }
 
 code {
