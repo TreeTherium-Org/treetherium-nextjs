@@ -1,8 +1,10 @@
+//LATEST LANDING PAGE
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import StartupScreen from "/src/app/component/StartupScreen.js";
+import styles from './LandingPage.module.css';
 
 const Page = () => {
   const router = useRouter();
@@ -102,8 +104,7 @@ const Page = () => {
   ];
 
   const renderLandingPage = () => (
-    <div>
-      {/* Modal for StartupScreen */}
+    <div className={styles.container}>
       {showModal && (
         <div style={modalOverlayStyle}>
           <div style={modalContentStyle}>
@@ -111,65 +112,46 @@ const Page = () => {
           </div>
         </div>
       )}
-      <div style={ containerStyle}>
-        {/* Logo Header */}
-        <div className="header-top" style={{ padding: "30px 23px" }}>
-          <div className="header-logo">
-            <img
-              src="/assets/img/TT-Logo.png"
-              alt="Logo"
-              style={{ borderRadius: "50%", width: "82px", height: "82px" }}
-            />
-          </div>
+      <div className={styles.header}>
+        <div className={styles.headerLogo}>
+          <img
+            src="/assets/img/TT-Logo.png"
+            alt="Logo"
+            className={styles.headerLogo}
+          />
+        </div>
+      </div>
+
+      <div style={headerStyle}>
+        <div className={styles.imageContainer}>
+          <img
+            src={slides[currentSlide].image}
+            alt="Landing Background"
+            className={styles.image}
+          />
         </div>
 
-        {/* Image and Content Container */}
-        <div style={ headerStyle } >
-          {/* Image Section */}
-          <div style={{ width: '148vw', height: '38vh', position: 'relative', left: '60%', transform: 'translateX(-49%)', overflow: 'hidden' }}>
-            <img
-              src={slides[currentSlide].image}
-              alt="Landing Background"
-              className="w-full h-full object-cover"
-              layout="fill"
-            />
-          </div>
+        <div className={styles.textContainer}>
+          <h2 className={styles.title}>
+            {slides[currentSlide].title}
+          </h2>
+          <p className={styles.subtitle}>
+            {slides[currentSlide].subtitle}
+          </p>
 
-          {/* Text and Buttons Section */}
-          <div className="flex flex-col items-center bg-[#ebf6e2] px-6" style={{ paddingTop: "113px" }}>
-            <div className="text-center w-full">
-              <h2 style={{ 
-                fontSize: '2em',
-                fontWeight: 700,
-                marginBottom: '21px',
-                textAlign: 'center'
-              }}>
-                {slides[currentSlide].title}
-              </h2>
-              <p style={{ 
-                fontSize: '1.063em', 
-                marginBottom: '38px',
-                textAlign: 'center'
-              }}>
-                {slides[currentSlide].subtitle}
-              </p>
-            </div>
-            
-            {/* Centered Buttons */}
-            <div style={{ buttonContainerStyle }}>
-              <button
-                onClick={slides[currentSlide].primaryButton.action}
-                style={ buttonStyle }
-              >
-                {slides[currentSlide].primaryButton.text}
-              </button>
-              <button
-                onClick={slides[currentSlide].secondaryButton.action}
-                style={ buttonStyle2 }
-              >
-                {slides[currentSlide].secondaryButton.text}
-              </button>
-            </div>
+          <div className={styles.buttonContainer}>
+            <button
+              onClick={slides[currentSlide].primaryButton.action}
+              className={styles.button}
+            >
+              {slides[currentSlide].primaryButton.text}
+            </button>
+            <button
+              onClick={slides[currentSlide].secondaryButton.action}
+              className={styles.buttonSecondary}
+            >
+              {slides[currentSlide].secondaryButton.text}
+            </button>
           </div>
         </div>
       </div>
@@ -205,77 +187,69 @@ const Page = () => {
   );
 
   const renderOnboardingStep = () => (
-    <div className="min-h-screen bg-[#ebf6e2]">
-      <div className="header-top" style={{ padding: "30px 23px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div className="header-logo">
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <div className={styles.headerLogo}>
           <img
             src="/assets/img/TT-Logo.png"
             alt="Logo"
-            style={{ borderRadius: "50%", width: "82px", height: "82px" }}
+            className={styles.headerLogo}
           />
         </div>
       </div>
 
-      <div className="px-6 py-4">
-        <div className="relative h-[50vh] mb-8">
+      <div className={styles.imageContainer1}>
           <img
-            src={slides[currentSlide].image}
-            alt={slides[currentSlide].title}
-            className="w-full h-full object-cover rounded-lg"
-            style={{ height: "290px", marginBottom: "21px" }}
+              src={slides[currentSlide].image}
+              alt={slides[currentSlide].title}
+              className={styles.image1}
           />
-        </div>
+      </div>
 
-        <div className="card" style={cardStyle}>
-          <div className="card-body" style={innerCardStyle}>
-             {/* Title */}
-            <div className="card-title">
-              <h2 style={{ fontSize: '1.5em', fontWeight: 500 }}>{slides[currentSlide].title}</h2>
-              {/* Partition between image and text */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div className="divider" style={{ margin: '4px 18px 18px', width: '351px', height: '5px', borderRadius: '50px', backgroundColor: '#E7E1EE' }} />
-              </div>
-               {/* Subtitle */}
-              <div style={{ padding: '0px 15px'}}>
-                {slides[currentSlide].subtitle.map((paragraph, index) => (
-                  <p key={index} style={{ fontSize: '1em', letterSpacing: '0.02em', lineHeight: "1.3", marginBottom: index === slides[currentSlide].subtitle.length - 1 ? '0px' : '32px' }}>
-                    {paragraph}
+      <div className={styles.card}>
+        <div className={styles.innerCard}>
+          <div className={styles.cardTitle}>
+              <h2>{slides[currentSlide].title}</h2>
+          </div>
+          <div className={styles.divider} />
+          <div>
+              {slides[currentSlide].subtitle.map((paragraph, index) => (
+                  <p key={index} className={styles.subtitleParagraph}>
+                      {paragraph}
                   </p>
-                ))}
-              </div>
-            </div>
+              ))}
           </div>
         </div>
-
-        <div className="container" style={{ display: "flex", flexDirection: 'row', justifyContent: "center", gap: "182px"}}>
-          <button
-            onClick={slides[currentSlide].primaryButton.action}
-            style={buttonStyle3}
-          >
-            {slides[currentSlide].primaryButton.text}
-          </button>
-          
-          <button
-            onClick={slides[currentSlide].secondaryButton.action}
-            style={buttonStyle4}
-          >
-            {slides[currentSlide].secondaryButton.text}
-          </button>
-        </div>
-
-        <div className="flex justify-center items-center gap-2 mb-8 h-16 p-4">
-          {[1, 2, 3].map((_, index) => (
-            <div
-              key={index}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === currentSlide - 1 ? 'w-8 bg-[#778B28]' : 'w-2 bg-gray-300'
-              }`}
-            />
-          ))}
-        </div>
       </div>
-    </div>
-  );
+
+      <div className={styles.buttonContainer1}>
+          <button
+              onClick={slides[currentSlide].primaryButton.action}
+              className={styles.buttonTertiary}
+          >
+              {slides[currentSlide].primaryButton.text}
+          </button>
+
+          <button
+              onClick={slides[currentSlide].secondaryButton.action}
+              className={styles.buttonQuartery}
+          >
+              {slides[currentSlide].secondaryButton.text}
+          </button>
+      </div>
+
+      <div className={styles.progressIndicator}>
+          {[1, 2, 3].map((_, index) => (
+              <div
+                  key={index}
+                  className={`${styles.indicator} ${
+                      index === currentSlide - 1 ? styles.active : styles.inactive
+                  }`}
+              />
+          ))}
+      </div>
+  </div>
+);
 
   // Determine which layout to render
   if (currentSlide === 0) {
@@ -330,11 +304,12 @@ const headerStyle = {
 const cardStyle = {
   display: "flex",
   flexDirection: "column",
+  flexWrap: "wrap",
   alignItems: "center",
   borderRadius: "5px" ,
   border: "none",
   width: "391px",
-  margin: "21px 20px 25px 13px",
+  margin: "21px 20px 25px",
 };
 
 const innerCardStyle = {
@@ -420,3 +395,5 @@ const buttonStyle4 = {
   maxWidth: "93px",
   height: "51.58px",
 };
+
+
