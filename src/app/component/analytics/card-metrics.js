@@ -25,6 +25,24 @@ const TREECirculatingData = [
     { day: 'Saturday', create: 34 },
 ];
 
+const RoundedBar = (props) => {
+    const { x, y, width, height } = props;
+    const radius = 10; // Adjust this value for more or less rounding
+    return (
+        <g>
+            <rect
+                x={x}
+                y={y}
+                width={width}
+                height={height}
+                rx={radius}
+                ry={radius}
+                fill={props.fill}
+            />
+        </g>
+    );
+};
+
 
 // Card component that renders total metric and a small bar chart
 const MetricCard = ({ title, metric, data, fill }) => {
@@ -32,8 +50,8 @@ const MetricCard = ({ title, metric, data, fill }) => {
         <div style={cardStyle}>
             {/* Card Header */}
             <div style={headerStyle}>
-                <h2>{title}</h2>
-                <p style={{ fontSize: '24px', margin: 0 }}>{metric}</p>
+                <h5 style={{ fontWeight: '400' }}>{title}</h5>
+                <p style={{ fontSize: '30px', margin: 0 }}>{metric}</p>
             </div>
 
             {/* Small Bar Chart */}
@@ -42,10 +60,9 @@ const MetricCard = ({ title, metric, data, fill }) => {
                     <BarChart data={data}>
                         <XAxis dataKey="day" tick={false} /> {/* Hides the X-axis labels */}
                         <Tooltip />
-                        <Bar dataKey="create" fill={fill} />
+                        <Bar dataKey="create" shape={(props) => <RoundedBar {...props} fill={fill} />} />
                     </BarChart>
                 </ResponsiveContainer>
-
             </div>
         </div>
     );
@@ -57,7 +74,7 @@ const SideBySideCards = () => {
         <div style={containerStyle}>
             {/* NFT Created Card */}
             <MetricCard
-                title="Total NFT Created"
+                title="Total NFT's Created"
                 metric={NFTCreatedData.reduce((acc, curr) => acc + curr.create, 0).toLocaleString()}
                 data={NFTCreatedData}
                 fill="#778B28"
@@ -65,7 +82,7 @@ const SideBySideCards = () => {
 
             {/* TREE Circulating Card */}
             <MetricCard
-                title="TREE Circulating"
+                title="$TREE Circulating"
                 metric={TREECirculatingData.reduce((acc, curr) => acc + curr.create, 0).toLocaleString()}
                 data={TREECirculatingData}
                 fill="#A3A830"
@@ -78,35 +95,25 @@ const SideBySideCards = () => {
 // Styles
 const containerStyle = {
     display: 'flex',
-    flexWrap: 'wrap', // Enable wrapping
-    justifyContent: 'space-between', // Space between cards
-    gap: '10px', // Space between cards
-    margin: '20px',
+    flexWrap: 'wrap', 
+    justifyContent: 'space-between', 
+    gap: '13px', 
+    margin: '40px 50px 0 50px',
 };
 
 const cardStyle = {
-    flex: '1 1 48%', // Each card takes around 48% of the container width
-    padding: '20px',
-    borderRadius: '10px',
+    flex: '1 1 48%', 
+    padding: '10px',
+    paddingTop: '50px',
+    paddingBottom: '50px',
+    borderRadius: '20px',
     boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
     backgroundColor: '#fff',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    boxSizing: 'border-box', // Ensure padding doesn't affect the card size
-    minWidth: '150px', // Set a minimum width to ensure proper display on very small screens
-};
-
-// Optional media queries (for minor adjustments on very small screens)
-const responsiveStyle = {
-    '@media(max-width: 480px)': {
-        containerStyle: {
-            gap: '5px', // Reduce gap on very small screens
-        },
-        cardStyle: {
-            flex: '1 1 100%', // Each card takes full width on ultra-small screens
-        },
-    },
+    boxSizing: 'border-box', 
+    minWidth: '150px', 
 };
 
 
