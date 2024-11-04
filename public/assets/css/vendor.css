@@ -3646,8 +3646,7 @@
     --breakpoint-md: 768px;
     --breakpoint-lg: 992px;
     --breakpoint-xl: 1200px;
-    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+    --font-family: Roboto;
 }
 
 *,
@@ -3657,7 +3656,7 @@
 }
 
 html {
-    font-family: sans-serif;
+    font-family: 'Roboto';
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -3821,7 +3820,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: monospace, monospace;
+    font-family: 'Roboto';
     font-size: 1em
 }
 
@@ -4156,7 +4155,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+    font-family: 'Roboto'
 }
 
 code {
@@ -9777,7 +9776,7 @@ button.close {
     z-index: 1060;
     display: block;
     max-width: 276px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
     line-height: 1.5;
@@ -14959,7 +14958,7 @@ body .ui-tooltip {
 }
 
 .ui-widget {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto';
     font-size: 1em
 }
 
@@ -14971,7 +14970,7 @@ body .ui-tooltip {
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto';
     font-size: 1em
 }
 

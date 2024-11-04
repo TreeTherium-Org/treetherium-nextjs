@@ -11,11 +11,19 @@ import {
 import { auth, db } from "../../firebase";
 import { doc, getDoc, collection } from "firebase/firestore";
 
+// Full-Screen Loader Component
+const FullScreenLoader = () => (
+  <div className="full-screen-loader">
+    <div className="loading"></div>
+  </div>
+);
+
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberPassword, setRememberPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false); // Loading state
   const router = useRouter();
 
   const handleInputChange = (e) => {
@@ -36,12 +44,10 @@ const Signin = () => {
 
   const signInWithEmail = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
+    setError(null); // Clear previous errors
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const userExists = await checkUserExists(userCredential.user.uid);
 
       if (!userExists) {
@@ -62,10 +68,14 @@ const Signin = () => {
     } catch (error) {
       console.error("Error signing in:", error);
       setError(error.message);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   const handleProviderSignIn = async (provider) => {
+    setLoading(true); // Start loading
+    setError(null); // Clear previous errors
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
@@ -77,7 +87,6 @@ const Signin = () => {
 
       const nextAuthResult = await signIn("credentials", {
         userId: user.uid,
-        username: user.username,
         email: user.email,
         provider: provider.providerId,
         redirect: false,
@@ -91,10 +100,14 @@ const Signin = () => {
     } catch (error) {
       console.error("Error signing in with provider:", error);
       setError(error.message);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   const connectPhantomWallet = async () => {
+    setLoading(true); // Start loading
+    setError(null); // Clear previous errors
     try {
       const { solana } = window;
       if (solana && solana.isPhantom) {
@@ -124,86 +137,91 @@ const Signin = () => {
     } catch (error) {
       console.error("Error connecting to Phantom Wallet:", error);
       setError(error.message);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   const googleProvider = new GoogleAuthProvider();
 
   return (
-    <Section allNotification={false} searchPopup={true} title="Login">
-      <div className="logo-container">
-        <h3></h3>
-      </div>
+    <>
+      {loading && <FullScreenLoader />}
+      <Section allNotification={false} searchPopup={true} title="Login">
+        <div className="logo-container">
+          <h3></h3>
+        </div>
 
-      <div className="signin-area mg-bottom-35">
-        <div className="container">
-          <form className="contact-form-inner" onSubmit={signInWithEmail}>
-            <label className="single-input-wrap">
-              <span>Email Address*</span>
-              <input
-                type="email"
-                name="email"
-                value={email}
-                onChange={handleInputChange}
-                required
-              />
-            </label>
-            <label className="single-input-wrap">
-              <span>Password*</span>
-              <input
-                type="password"
-                name="password"
-                value={password}
-                onChange={handleInputChange}
-                required
-              />
-            </label>
-            <div className="options">
-              <label className="remember-password">
+        <div className="signin-area mg-bottom-35">
+          <div className="container">
+            <form className="contact-form-inner" onSubmit={signInWithEmail}>
+              <label className="single-input-wrap">
+                <span>Email Address*</span>
                 <input
-                  type="checkbox"
-                  checked={rememberPassword}
-                  onChange={handleRememberPasswordChange}
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={handleInputChange}
+                  required
                 />
-                Remember Password
               </label>
-              <Link href="/forgot-password" className="forgot-password-link">
-                Forgot Password
+              <label className="single-input-wrap">
+                <span>Password*</span>
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={handleInputChange}
+                  required
+                />
+              </label>
+              <div className="options">
+                <label className="remember-password">
+                  <input
+                    type="checkbox"
+                    checked={rememberPassword}
+                    onChange={handleRememberPasswordChange}
+                  />
+                  Remember Password
+                </label>
+                <Link href="/forgot-password" className="forgot-password-link">
+                  Forgot Password
+                </Link>
+              </div>
+              <button type="submit" className="btn btn-purple">
+                Login
+              </button>
+              <Link className="forgot-btn" href="/signup">
+                <span className="underline-text">Create an account</span>
               </Link>
+            </form>
+            {error && <p className="error">{error}</p>}
+            <div className="social-buttons">
+              <button
+                onClick={connectPhantomWallet}
+                className="social-button btn-phantom-wallet"
+              >
+                <img
+                  src="https://s5-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/073/700/original/1200x1200.png?1712005160"
+                  alt="Phantom Wallet"
+                />
+                Login with Phantom Wallet
+              </button>
+              <button
+                onClick={() => handleProviderSignIn(googleProvider)}
+                className="social-button btn-google"
+              >
+                <img
+                  src="https://theplace2b.com.au/wp-content/uploads/2020/09/178-1783296_g-transparent-circle-google-logo.png"
+                  alt="Google"
+                />
+                Login with Google
+              </button>
             </div>
-            <button type="submit" className="btn btn-purple">
-              Login
-            </button>
-            <Link className="forgot-btn" href="/signup">
-              <span className="underline-text">Create an account</span>
-            </Link>
-          </form>
-          {error && <p className="error">{error}</p>}
-          <div className="social-buttons">
-            <button
-              onClick={connectPhantomWallet}
-              className="social-button btn-phantom-wallet"
-            >
-              <img
-                src="https://s5-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/073/700/original/1200x1200.png?1712005160"
-                alt="Phantom Wallet"
-              />
-              Login with Phantom Wallet
-            </button>
-            <button
-              onClick={() => handleProviderSignIn(googleProvider)}
-              className="social-button btn-google"
-            >
-              <img
-                src="https://theplace2b.com.au/wp-content/uploads/2020/09/178-1783296_g-transparent-circle-google-logo.png"
-                alt="Google"
-              />
-              Login with Google
-            </button>
           </div>
         </div>
-      </div>
-    </Section>
+      </Section>
+    </>
   );
 };
 
