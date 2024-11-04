@@ -97,9 +97,8 @@ const containerStyle = {
     display: 'flex',
     flexWrap: 'wrap', 
     justifyContent: 'space-between', 
-    gap: '10px', 
-    marginTop: '20px',
-    margin: '60px'
+    gap: '13px', 
+    margin: '40px 50px 0 50px',
 };
 
 const cardStyle = {
@@ -107,7 +106,7 @@ const cardStyle = {
     padding: '10px',
     paddingTop: '50px',
     paddingBottom: '50px',
-    borderRadius: '10px',
+    borderRadius: '20px',
     boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
     backgroundColor: '#fff',
     display: 'flex',
