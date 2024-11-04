@@ -70,7 +70,8 @@ export default function UploadForm() {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setUploadProgress(progress);
         },
         (error) => {
@@ -114,10 +115,16 @@ export default function UploadForm() {
   };
 
   return (
-    <Section allNotification={false} searchPopup={false} title={"Upload A Tree"}>
+    <Section
+      allNotification={false}
+      searchPopup={false}
+      title={"Upload A Tree"}
+    >
       <div className="transaction-area pd-top-36">
         <div className="container">
-          <h3 className="form-title">"let us know about your tree"</h3>
+          <h3 className="form-title">
+            &quot;let us know about your tree&quot;
+          </h3>
           <div className="form-image">
             <img
               src="/assets/img/hands-tree-2.jpg"
