@@ -52,15 +52,36 @@ const Home = () => {
         </div>
       </header>
       <main style={mainStyle}>
-          <div style={dataGridStyle}>
-              <div style={dataCardStyle} onClick={() => handleButtonClick('/my-forest')}>
-                  <strong>My Forest</strong> <span style={{ fontSize: '1.2em' }}></span>
+          <div style={buttonGridStyle}>
+              <div style={buttonCardStyle} onClick={() => handleButtonClick('/my-forest')}>
+              <Image
+                    src="/assets/img/My Forest.jpg"
+                    alt="Tree Planting Project"
+                    width={109}
+                    height={109}
+                    style={{ borderRadius: '20%' }}
+                  />
+                  <strong style={textStyle}>My Forest</strong> 
               </div>
-              <div style={dataCardStyle} onClick={() => handleButtonClick('/analytics')}>
-                  <strong>Analytics</strong> <span style={{ fontSize: '1.2em' }}></span>
+              <div style={buttonCardStyle} onClick={() => handleButtonClick('/analytics')}>
+                <Image
+                      src="/assets/img/Analytics.jpg"
+                      alt="Single Tree"
+                      width={109}
+                      height={109}
+                      style={{ borderRadius: '20%' }}
+                  />
+                  <strong style={textStyle}>Analytics</strong> 
               </div>
-              <div style={dataCardStyle} onClick={() => handleButtonClick('/start-project')}>
-                  <strong>Knowledge Base</strong> <span style={{ fontSize: '1.2em' }}></span>
+              <div style={buttonCardStyle} onClick={() => handleButtonClick('/knowledge-base')}>
+                <Image
+                      src="/assets/img/Knowledge Base.jpg"
+                      alt="Single Tree"
+                      width={109}
+                      height={109}
+                      style={{ borderRadius: '20%' }}
+                  />
+                  <strong style={textStyle}>Knowledge Base</strong> 
               </div>
           </div>
       </main>
@@ -100,7 +121,7 @@ const dataGridStyle = {
 
 const dataCardStyle = {
   backgroundColor: '#f7f4f1', // Light brown
-  borderRadius: '10px',
+  borderRadius: '20px',
   padding: '20px',
   textAlign: 'center',
   border: '1px solid #c1b3a8', // Brown
@@ -110,4 +131,32 @@ const dataCardStyle = {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
+};
+
+const buttonGridStyle = {
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr', // Two columns to match the layout of the data cards
+  gap: '20px', // Adjusts spacing between the buttons
+};
+
+const buttonCardStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  textAlign: 'center',
+  cursor: 'pointer',
+  border: '2px solid #c1b3a8',
+  backgroundColor: '#f7f4f1',
+  borderRadius: '20px',
+  boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Light shadow for consistency
+  height: '172px', // Adjust as needed for visual consistency with the data cards
+  width: '100%' ,
+  justifyContent: 'center',
+  gap: '10px', // Space between the image and text
+  //transform: 'translateX(-7%)',
+};
+
+const textStyle = {
+  fontSize: '0.938em', // Adjust if needed to fit within button width
+  whiteSpace: 'nowrap', // Prevents text wrapping
 };

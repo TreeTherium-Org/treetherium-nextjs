@@ -1,21 +1,15 @@
-"use client";
+//LATEST LANDING PAGE
+'use client';
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import Section from "/src/app/component/layouts/Section.js";
-import StartupScreen from "/src/app/component/StartupScreen.js"; // Import the StartupScreen component
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import StartupScreen from "/src/app/component/StartupScreen.js";
+import styles from './LandingPage.module.css';
 
-export default function App() {
-  const [showModal, setShowModal] = useState(true); // State to control modal visibility
-  const images = [
-    { src: "/assets/img/home-page.png", alt: "Image 1" },
-    { src: "/assets/img/home-page.png", alt: "Image 2" },
-    { src: "/assets/img/home-page.png", alt: "Image 3" },
-  ];
+const Page = () => {
   const router = useRouter();
+  const [showModal, setShowModal] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,15 +17,94 @@ export default function App() {
     }, 3000);
     return () => clearTimeout(timer); // Cleanup the timer if the component unmounts
   }, []);
+  
+  const slides = [
+    {
+      id: 1,
+      title: "Welcome To Treetherium",
+      subtitle: '"create a greener world together"',
+      image: "/assets/img/home-page.png",
+      isLanding: true,
+      primaryButton: {
+        text: "Let's Get Started",
+        action: () => setCurrentSlide(1)
+      },
+      secondaryButton: {
+        text: "I Have An Account",
+        action: () => setCurrentSlide(4) // Go to login/register page
+      }
+    },
+    {
+      id: 2,
+      title: "Plant A Tree",
+      subtitle: [
+        "Start your journey by planting a tree with TreeTherium! Choose a project, pick your tree type, and join a global effort to make the planet greener. Each tree you plant makes a real difference. You can even track the tree’s growth and see its positive impact over time.",
+        "Planting a tree is quick, easy, and helps build a livable world for everyone.",
+        "Ready to start? Just follow the steps in our app to plant your first tree and support a greener planet today!"
+      ],
+      image: "/assets/img/plant-trees-today- (13).jpg",
+      primaryButton: {
+        text: "Skip",
+        action: () => setCurrentSlide(4)
+      },
+      secondaryButton: {
+        text: "Next",
+        action: () => setCurrentSlide(2) // Go to login/register page
+      }
+    },
+    {
+      id: 3,
+      title: "Tokenize The Tree",
+      subtitle: [
+        "After planting a tree, you can tokenize it! Tokenizing means giving your tree a unique digital identity. Based on it’s geographical location. This identity is stored on the blockchain, making it easy to track and keep secure.",
+        "Tokenizing your trees shows you are part of the TreeTherium community and supports tree-planting programs worldwide.",
+        "Just follow the instructions in the app to tokenize your tree and watch its progress digitally grow. Now, your tree is officially part of a global network of trees helping the environment!"
+      ],
+      image: "/assets/img/hands-tree.jpg",
+      primaryButton: {
+        text: "Back",
+        action: () => setCurrentSlide(1)
+      },
+      secondaryButton: {
+        text: "Next",
+        action: () => setCurrentSlide(3)
+      }
+    },
+    {
+      id: 4,
+      title: "Monetize & Save The Planet",
+      subtitle: [
+        "Now, you can turn your tree’s growth into value! By tokenizing, you create potential earnings that grow as your tree grows. Each tree helps save the planet and can earn value over time.",
+        "You can view the benefits your tree creates in the app and see how it contributes to global sustainability.",
+        "This is a simple way to both save the planet and gain rewards. With TreeTherium, your tree is a smart way to help the earth while enjoying long-term benefits!"
+      ],
+      image: "/assets/img/hands-tree-2.jpg",
+      primaryButton: {
+        text: "Back",
+        action: () => setCurrentSlide(2)
+      },
+      secondaryButton: {
+        text: "Done",
+        action: () => setCurrentSlide(4)
+      }
+    },
+    {
+      id: 5,
+      title: "Tokenizing Tree Planting Worldwide",
+      isLoginRegister: true,
+      primaryButton: {
+        text: "Login",
+        action: () => router.push('/signin')
+      },
+      secondaryButton: {
+        text: "Register",
+        action: () => router.push('/signup')
+      }
+    }
+  ];
 
-  //Function to handle button click to redirect pages
-  const handleButtonClick = (route) => {
-    router.push(route);
-  };
-
-  return (
-    <Section allNotification={false} searchPopup={true} title={"Welcome"}>
-      {/* Modal for StartupScreen */}
+  const renderLandingPage = () => (
+    <div className={styles.container}>
       {showModal && (
         <div style={modalOverlayStyle}>
           <div style={modalContentStyle}>
@@ -39,65 +112,165 @@ export default function App() {
           </div>
         </div>
       )}
+      <div className={styles.header}>
+        <div className={styles.headerLogo}>
+          <img
+            src="/assets/img/TT-Logo.png"
+            alt="Logo"
+            className={styles.headerLogo}
+          />
+        </div>
+      </div>
 
-      {/* Landing Page Content */}
-      <div style={containerStyle}>
-        <header style={headerStyle}>
-          <h1 style={titleStyle}>Tokenizing Tree Planting Worldwide</h1>
-          <h3 style={titleStyle}>
-            Create A <span style={subtitleStyle}>Greener</span> World Together
-          </h3>
-        </header>
-        <main style={mainStyle}>
-          <div className="section-title">
-            <h3 style={stepTitleStyle}>Step by step how to use this app</h3>
-          </div>
+      <div style={headerStyle}>
+        <div className={styles.imageContainer}>
+          <img
+            src={slides[currentSlide].image}
+            alt="Landing Background"
+            className={styles.image}
+          />
+        </div>
 
-          {/* Swiper Component */}
-          <div style={imageContainerStyle}>
-            <Swiper
-              spaceBetween={30}
-              slidesPerView={3}
-              pagination={{ clickable: true }}
-              loop={true}
+        <div className={styles.textContainer}>
+          <h2 className={styles.title}>
+            {slides[currentSlide].title}
+          </h2>
+          <p className={styles.subtitle}>
+            {slides[currentSlide].subtitle}
+          </p>
+
+          <div className={styles.buttonContainer}>
+            <button
+              onClick={slides[currentSlide].primaryButton.action}
+              className={styles.button}
             >
-              {images.map((image, index) => (
-                <SwiperSlide key={index}>
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    width={500}
-                    height={500}
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      borderRadius: "8px",
-                    }}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+              {slides[currentSlide].primaryButton.text}
+            </button>
+            <button
+              onClick={slides[currentSlide].secondaryButton.action}
+              className={styles.buttonSecondary}
+            >
+              {slides[currentSlide].secondaryButton.text}
+            </button>
           </div>
+        </div>
+      </div>
+    </div>
+  );
 
+  const renderLoginRegister = () => (
+    <div className={styles.loginRegisterContainer}>
+      <div className={styles.formWrapper}>
+        <div className={styles.formWrapper2}>
+          <img
+              src="/assets/img/TT-Logo.png"
+              alt="Logo"
+              className={styles.logo}
+          />
+          <h2 className={styles.title1}>{slides[currentSlide].title}</h2>
+        </div>
+        <div className={styles.buttonContainer3}>
+            <button
+                onClick={slides[currentSlide].primaryButton.action}
+                className={styles.button}
+            >
+                {slides[currentSlide].primaryButton.text}
+            </button>
+            <button
+                onClick={slides[currentSlide].secondaryButton.action}
+                className={styles.buttonSecondary}
+            >
+                {slides[currentSlide].secondaryButton.text}
+            </button>
+        </div>
+        <div className={styles.buttonContainer2}>
           <button
-            className="btn btn-purple"
-            onClick={() => handleButtonClick("/signup")}
+              onClick={() => setCurrentSlide(3)}
+              className={styles.buttonTertiary}
           >
-            Register / Login
+              Back
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderOnboardingStep = () => (
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <div className={styles.headerLogo}>
+          <img
+            src="/assets/img/TT-Logo.png"
+            alt="Logo"
+            className={styles.headerLogo}
+          />
+        </div>
+      </div>
+
+      <div className={styles.imageContainer1}>
+          <img
+              src={slides[currentSlide].image}
+              alt={slides[currentSlide].title}
+              className={styles.image1}
+          />
+      </div>
+
+      <div className={styles.card}>
+        <div className={styles.innerCard}>
+          <div className={styles.cardTitle}>
+              <h2>{slides[currentSlide].title}</h2>
+          </div>
+          <div className={styles.divider} />
+          <div>
+              {slides[currentSlide].subtitle.map((paragraph, index) => (
+                  <p key={index} className={styles.subtitleParagraph}>
+                      {paragraph}
+                  </p>
+              ))}
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.buttonContainer1}>
+          <button
+              onClick={slides[currentSlide].primaryButton.action}
+              className={styles.buttonTertiary}
+          >
+              {slides[currentSlide].primaryButton.text}
           </button>
 
-          <div style={cardContainerStyle}>
-            <div style={dataCardStyle}>
-              <strong>Vision/Mission</strong>
-            </div>
-          </div>
-        </main>
+          <button
+              onClick={slides[currentSlide].secondaryButton.action}
+              className={styles.buttonQuartery}
+          >
+              {slides[currentSlide].secondaryButton.text}
+          </button>
       </div>
-    </Section>
-  );
-}
 
-// Modal Styles
+      <div className={styles.progressIndicator}>
+          {[1, 2, 3].map((_, index) => (
+              <div
+                  key={index}
+                  className={`${styles.indicator} ${
+                      index === currentSlide - 1 ? styles.active : styles.inactive
+                  }`}
+              />
+          ))}
+      </div>
+  </div>
+);
+
+  // Determine which layout to render
+  if (currentSlide === 0) {
+    return renderLandingPage();
+  } else if (currentSlide === 4) {
+    return renderLoginRegister();
+  } else {
+    return renderOnboardingStep();
+  }
+};
+
+export default Page;
 
 // Modal Styles
 const modalOverlayStyle = {
@@ -123,87 +296,113 @@ const modalContentStyle = {
   alignItems: "center",
 };
 
-// Other Landing Page Styles (from your existing code)
+//Landing Page Styles
 const containerStyle = {
   display: "flex",
   flexDirection: "column",
-  height: "81vh",
-  padding: "20px",
+  height: "100vh",
   backgroundColor: "#ebf6e2",
 };
-
-// Other existing styles (headerStyle, titleStyle, etc.) remain unchanged.
 
 const headerStyle = {
   textAlign: "center",
   marginTop: "20px",
+  marginBottom: "30px",
 };
 
-const titleStyle = {
-  fontSize: "1.1em", // Larger title for emphasis
-  fontWeight: "bold",
-  color: "#4F3738",
-};
-
-const subtitleStyle = {
-  fontSize: "1.1em", // Larger subtitle for readability
-  color: "#6b8e23", // Lighter green
-};
-
-const stepTitleStyle = {
-  fontSize: "1.1em",
-  textAlign: "center",
-  marginBottom: "10px",
-};
-
-const mainStyle = {
-  flex: 1,
-  padding: "20px",
+const cardStyle = {
   display: "flex",
   flexDirection: "column",
-  gap: "20px",
-  alignItems: "center", // Center-align content
+  flexWrap: "wrap",
+  alignItems: "center",
+  borderRadius: "5px" ,
+  border: "none",
+  width: "391px",
+  margin: "21px 20px 25px",
 };
 
-const imageContainerStyle = {
+const innerCardStyle = {
   width: "100%",
+  height: "100%",
+  border: "2px solid #D9D9D9",  // Inner border color
+  borderRadius: "5px",          // Match or adjust for inner rounding
+  padding: "20px 20px 0px",            // Padding inside the inner border
+};
+
+//Button Styles
+
+const buttonContainerStyle = {
   display: "flex",
-  justifyContent: "center", // Center-align the image
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "11px",
+  width: "100%",
 };
 
 const buttonStyle = {
-  backgroundColor: "#4CAF50", // Green color for eco-friendly theme
+  backgroundColor: "#778B28", 
   color: "white",
-  padding: "15px 20px",
-  fontSize: "1.2em",
+  padding: "1px 20px",
+  fontSize: "1.25em",
+  fontWeight: 700,
   borderRadius: "8px",
   border: "none",
   cursor: "pointer",
-  marginTop: "20px",
+  lineHeight: "50px",
   textAlign: "center",
-  width: "80%", // Full width button
-  maxWidth: "300px", // Restrict the button size on larger screens
-};
-
-const cardContainerStyle = {
   width: "100%",
-  display: "flex",
-  justifyContent: "center",
-  marginTop: "20px",
+  maxWidth: "340px",
+  height: "51.58px",
 };
 
-const dataCardStyle = {
-  backgroundColor: "#f7f4f1",
-  borderRadius: "2px",
-  padding: "20px",
+const buttonStyle2 = {
+  backgroundColor: "#FFFF", 
+  color: "#778B28",
+  padding: "1px 20px",
+  fontSize: "1.25em",
+  fontWeight: 700,
+  borderRadius: "8px",
+  border: "1px solid #778B28",
+  marginTop: "11px",
+  cursor: "pointer",
+  lineHeight: "50px",
   textAlign: "center",
-  border: "1px solid #c1b3a8",
-  boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
-  height: "120px",
-  width: "80%",
-  maxWidth: "300px", // Ensure the card doesn't get too large
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
+  width: "100%",
+  maxWidth: "340px",
+  height: "51.58px",
 };
+
+const buttonStyle3 = {
+  backgroundColor: "#FFFF", 
+  color: "#778B28",
+  padding: "1px 20px",
+  fontSize: "1.25em",
+  fontWeight: 700,
+  borderRadius: "8px",
+  border: "1px solid #778B28",
+  cursor: "pointer",
+  lineHeight: "50px",
+  textAlign: "center",
+  width: "100%",
+  maxWidth: "93px",
+  height: "51.58px",
+};
+
+
+const buttonStyle4 = {
+  backgroundColor: "#778B28", 
+  color: "white",
+  padding: "1px 20px",
+  fontSize: "1.25em",
+  fontWeight: 700,
+  borderRadius: "8px",
+  border: "none",
+  cursor: "pointer",
+  lineHeight: "50px",
+  textAlign: "center",
+  width: "100%",
+  maxWidth: "93px",
+  height: "51.58px",
+};
+
+
