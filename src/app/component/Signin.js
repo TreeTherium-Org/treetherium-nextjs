@@ -184,7 +184,7 @@ const Signin = () => {
                   />
                   Remember Password
                 </label>
-                <Link href="/forgot-password" className="forgot-password-link">
+                <Link href="/lostpassword" className="forgot-password-link">
                   Forgot Password
                 </Link>
               </div>
