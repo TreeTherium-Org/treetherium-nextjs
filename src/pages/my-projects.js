@@ -1,4 +1,4 @@
-import ListProjects from '../../src/app/component/project/list-projects';
+import ListProjects from '../app/component/project/my-projects';
 
 export default function ListProjectsPage() {
   return (

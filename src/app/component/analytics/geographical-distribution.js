@@ -32,7 +32,7 @@ const GeographicalDistribution = () => {
 
   return (
     <div style={styles.card}>
-      <h2 style={styles.cardTitle}>Geographical Tree Planted</h2>
+      <h2 style={styles.cardTitle}>Tree Planted Globally</h2>
       <div style={styles.chartContainer}>
         <Chart
           chartType="GeoChart"
@@ -74,14 +74,16 @@ const styles = {
     border: '1px solid #ccc',
     borderRadius: '8px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-    margin: '20px',
+    margin: '20px 20px 110px 20px',
     padding: '20px',
     backgroundColor: '#ffffff',
+
   },
   cardTitle: {
     margin: '0 0 20px',
-    fontSize: '1.5em',
+    fontSize: '20px',
     textAlign: 'center',
+    fontWeight:'400'
   },
   chartContainer: {
     width: '100%',

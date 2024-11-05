@@ -78,7 +78,7 @@ const TotalTreePlanted = () => {
     // Card styling
     const cardStyle = {
         backgroundColor: '#fff',
-        borderRadius: '10px',
+        borderRadius: '20px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         padding: '20px',
         margin: '20px auto', // This centers the card and adds top and bottom margin
@@ -89,8 +89,8 @@ const TotalTreePlanted = () => {
     
 
     const headerStyle = {
-        fontSize: '1.5rem',
-        fontWeight: '600',
+        fontSize: '20px',
+        fontWeight: '400',
         marginBottom: '20px',
         textAlign: 'center',
     };
@@ -98,7 +98,7 @@ const TotalTreePlanted = () => {
     return (
         <div style={cardStyle}>
             {/* Header */}
-            <div style={headerStyle}>Total Tree Planted</div>
+            <div style={headerStyle}>Total Trees Planted</div>
 
             {/* Buttons to switch between week, month, and year */}
             <div style={{ marginBottom: '20px', textAlign: 'center' }}>

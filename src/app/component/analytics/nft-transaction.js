@@ -17,7 +17,7 @@ const CustomPieChart = () => {
   // Card styling
   const cardStyle = {
     backgroundColor: '#fff',
-    borderRadius: '10px',
+    borderRadius: '20px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     padding: '20px',
     margin: '20px auto',
@@ -25,8 +25,8 @@ const CustomPieChart = () => {
   };
 
   const headerStyle = {
-    fontSize: '1.5rem',
-    fontWeight: '600',
+    fontSize: '20px',
+    fontWeight: '400',
     marginBottom: '20px',
     textAlign: 'center',
   };
@@ -34,7 +34,7 @@ const CustomPieChart = () => {
   return (
     <div style={cardStyle}>
       {/* Header */}
-      <div style={headerStyle}>NFT Transaction</div>
+      <div style={headerStyle}>NFT Transactions</div>
 
       {/* Pie Chart */}
       <ResponsiveContainer width="100%" height={300}>
