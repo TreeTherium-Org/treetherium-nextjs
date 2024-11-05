@@ -60,7 +60,7 @@ const Page = () => {
         "Tokenizing your trees shows you are part of the TreeTherium community and supports tree-planting programs worldwide.",
         "Just follow the instructions in the app to tokenize your tree and watch its progress digitally grow. Now, your tree is officially part of a global network of trees helping the environment!"
       ],
-      image: "hands-tree.jpg",
+      image: "/assets/img/hands-tree.jpg",
       primaryButton: {
         text: "Back",
         action: () => setCurrentSlide(1)
@@ -78,7 +78,7 @@ const Page = () => {
         "You can view the benefits your tree creates in the app and see how it contributes to global sustainability.",
         "This is a simple way to both save the planet and gain rewards. With TreeTherium, your tree is a smart way to help the earth while enjoying long-term benefits!"
       ],
-      image: "hands-tree-2.jpg",
+      image: "/assets/img/hands-tree-2.jpg",
       primaryButton: {
         text: "Back",
         action: () => setCurrentSlide(2)
@@ -159,27 +159,36 @@ const Page = () => {
   );
 
   const renderLoginRegister = () => (
-    <div className="min-h-screen bg-[#ebf6e2] flex flex-col items-center justify-center p-6">
-      <div className="w-full max-w-md text-center">
-        <img
-          src="/assets/img/TT-Logo.png"
-          alt="Logo"
-          className="mx-auto mb-8"
-          style={{ width: "150px", height: "150px" }}
-        />
-        <h2 className="text-2xl font-bold mb-8">{slides[currentSlide].title}</h2>
-        <div className="flex flex-col gap-4">
+    <div className={styles.loginRegisterContainer}>
+      <div className={styles.formWrapper}>
+        <div className={styles.formWrapper2}>
+          <img
+              src="/assets/img/TT-Logo.png"
+              alt="Logo"
+              className={styles.logo}
+          />
+          <h2 className={styles.title1}>{slides[currentSlide].title}</h2>
+        </div>
+        <div className={styles.buttonContainer3}>
+            <button
+                onClick={slides[currentSlide].primaryButton.action}
+                className={styles.button}
+            >
+                {slides[currentSlide].primaryButton.text}
+            </button>
+            <button
+                onClick={slides[currentSlide].secondaryButton.action}
+                className={styles.buttonSecondary}
+            >
+                {slides[currentSlide].secondaryButton.text}
+            </button>
+        </div>
+        <div className={styles.buttonContainer2}>
           <button
-            onClick={slides[currentSlide].primaryButton.action}
-            style={buttonStyle}
+              onClick={() => setCurrentSlide(3)}
+              className={styles.buttonTertiary}
           >
-            {slides[currentSlide].primaryButton.text}
-          </button>
-          <button
-            onClick={slides[currentSlide].secondaryButton.action}
-            style={buttonStyle2}
-          >
-            {slides[currentSlide].secondaryButton.text}
+              Back
           </button>
         </div>
       </div>

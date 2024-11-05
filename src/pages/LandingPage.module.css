@@ -6,6 +6,41 @@
     height: 100vh;
     background-color: #ebf6e2;
   }
+
+/* Container for the login/register */
+.loginRegisterContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ebf6e2;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 20px 0;
+}
+
+/* Wrapper for the form content */
+.formWrapper {
+  width: 100%;
+  max-width: 400px; /* Adjusted max width for desktop */
+  text-align: center;
+}
+
+.formWrapper2 {
+  width: 100%;
+  max-width: 400px; 
+  text-align: center;
+  align-items: center; /* Ensure center alignment within */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Logo styling for Login / Register */
+.logo {
+  width: 150px;
+  height: 150px;
+  margin: 0 0;
+}
+
 /* Header for Landing Page */
   .header {
     display: flex;
@@ -68,7 +103,7 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin: 21px 20px 25px;
+    margin: 21px 20px 26px;
   }
 
   .innerCardStyle {
@@ -79,15 +114,14 @@
     padding: 20px 20px 0px;           
   }
 
-  .card-title h2 {
-    font-size: 2em;
-    font-weight: 700;
+  .cardTitle h2 {
+    font-size: 1.5em;
+    font-weight: 500;
     text-align: left;
   }
 
   .divider {
     width: 100%;
-    max-width: 351px;
     height: 5px;
     margin: 4px 0px 18px;
     border-radius: 50px;
@@ -111,15 +145,6 @@
     text-align: center;
     padding-top: 90px;
   }
-
-  .title1 {
-    flex-wrap: wrap;
-    font-size: 2em;
-    font-weight: 700;
-    margin-top: 80;
-    text-align: center;
-    padding-top: 90px;
-  }
   
   .subtitle {
     font-size: 1.063em;
@@ -127,8 +152,17 @@
     text-align: center;
   }
 
+/* Title styling for Login / Register*/
+.title1 {
+  font-size: 1.5em;
+  font-weight: 500;
+  color: #4F3738;
+  text-align: center;
+  padding-top: 30%;
+  padding-bottom: 30%;
+}
   /* Subtitle Paragraphs for Onboarding Steps*/
-.subtitle-paragraph {
+.subtitleParagraph {
     padding: 0 15px;
     font-size: 1em;
     letter-spacing: 0.02em;
@@ -137,7 +171,7 @@
 }
 
 /* Remove extra margin on last paragraph */
-.subtitle-paragraph:last-child {
+.subtitleParagraph:last-child {
     margin-bottom: 0;
 }
   
@@ -155,7 +189,20 @@
     flex-direction: row;
     justify-content: center;
     gap: 182px;
-    margin: 20px 0;
+    margin: 20px 0 0;
+}
+
+.buttonContainer2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+
+.buttonContainer3 {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 0 20px 60% ;
 }
   
   .button {
@@ -242,6 +289,7 @@
     height: 10px;
     border-radius: 100px;
     transition: all 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .indicator.active {
@@ -249,11 +297,15 @@
 }
 
 .indicator.inactive {
-    background-color: #d3d3d3;
+    background-color: #ffffff;
 }
 
   /* Responsive Styles */
   @media (max-width: 768px) {
+    .formWrapper {
+      max-width: 90%; /* Adjust max width for mobile */
+  }
+
     .imageContainer {
         height: 30vh; /* Adjust height on smaller screens */
         width: 125vw;
@@ -267,8 +319,8 @@
       font-size: 2em;
     }
 
-    .title1 {
-        font-size: 2em;
+    .card-title h2 {
+      font-size: 1.5em;
     }
     
     .subtitle {
@@ -288,4 +340,11 @@
       font-size: 1.25em;
     }
 
+  }
+
+  @media (min-width: 430px) {
+    .title1 {
+      white-space: nowrap;        /* Prevents text wrapping */
+
+    }
   }
