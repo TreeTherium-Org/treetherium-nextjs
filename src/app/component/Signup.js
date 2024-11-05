@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
@@ -21,7 +21,21 @@ const Signup = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [acceptTerms, setAcceptTerms] = useState(false); // Checkbox state
+    const [modal, setModal] = useState(false);
     const router = useRouter();
+
+    useEffect(() => {
+        if (modal) {
+            document.body.classList.add('active-modal');
+        } else {
+            document.body.classList.remove('active-modal');
+        }
+
+        // Cleanup function to remove the class if the component unmounts
+        return () => {
+            document.body.classList.remove('active-modal');
+        };
+    }, [modal]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -29,6 +43,11 @@ const Signup = () => {
         if (name === 'email') setEmail(value);
         if (name === 'password') setPassword(value);
     };
+
+    const toggleModal = () => {
+        setModal(!modal);
+      };
+    
 
     const handleCheckboxChange = (e) => {
         setAcceptTerms(e.target.checked);
@@ -208,14 +227,39 @@ const Signup = () => {
                             </label>
                             <div className="options">
                                 <label className="accept-terms">
-                                    <input
-                                        type="checkbox"
-                                        checked={acceptTerms}
-                                        onChange={handleCheckboxChange}
-                                    />
-                                    Accept the Terms & Conditions
+                                    <input type="checkbox" />
+                                    Accept the{" "}
+                                    <a
+                                        href="#"
+                                        className="text-blue-600 hover:underline"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            toggleModal();
+                                        }}
+                                    >
+                                        Terms & Conditions
+                                    </a>
                                 </label>
                             </div>
+                                {modal && (
+                                    <div style={styles.modal}>
+                                        <div onClick={toggleModal} style={styles.overlay}></div>
+                                        <div style={styles.modalContent}>
+                                            <h2 style={styles.titleModal}>Terms & Condition</h2>
+                                            <p style={styles.paragraphModal}>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+                                            perferendis suscipit officia recusandae, eveniet quaerat assumenda
+                                            id fugit, dignissimos maxime non natus placeat illo iusto!
+                                            Sapiente dolorum id maiores dolores? Illum pariatur possimus
+                                            quaerat ipsum quos molestiae rem aspernatur dicta tenetur. Sunt
+                                            placeat tempora vitae enim incidunt porro fuga ea.
+                                            </p>
+                                            <button onClick={toggleModal} style={styles.btnModal}>
+                                            CLOSE
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
                             <button type="submit" className="btn btn-purple" disabled={!acceptTerms}>Register</button>
                             <Link className="forgot-btn" href="/signin">
                                 Already have an account? Go to <span className="underline-text">Login</span>
@@ -246,3 +290,67 @@ const Signup = () => {
 };
 
 export default Signup;
+
+const styles = {
+    body: {
+        activeModal: {
+            overflowY: 'hidden',
+        },
+    },
+    titleModal: {
+        fontSize: '1.5em',
+        fontWeight: 700,
+        color: '#4F3738',
+    },
+    paragraphModal: {
+        fontSize: '1em',
+        fontWeight: 500,
+        color: '#4F3738',
+    },
+    btnModal: {
+        backgroundColor: '#778B28',
+        color: '#fff',
+        padding: '1px 20px',
+        fontSize: '1.25em',
+        fontWeight: '500',
+        borderRadius: '8px',
+        border: 'none',
+        cursor: 'pointer',
+        lineHeight: '50px',
+        textAlign: 'center',
+        width: '100%',
+        maxWidth: '93px', /* Maximum button width */
+        height: 'auto', /* Automatic height */
+        minHeight: '51.58px', /* Minimum height */
+    },
+    modal: {
+        width: '100vw',
+        height: '100vh',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        position: 'fixed',
+    },
+    overlay: {
+        background: '#fff',
+    },
+    modalContent: {
+        position: 'absolute',
+        top: '40%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        lineHeight: 1.4,
+        background: '#f1f1f1',
+        padding: '14px 28px',
+        borderRadius: '8px',
+        maxWidth: '600px',
+        minWidth: '300px',
+    },
+    closeModal: {
+        position: 'absolute',
+        top: '10px',
+        right: '10px',
+        padding: '5px 7px',
+    },
+};
