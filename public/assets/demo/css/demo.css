@@ -61,7 +61,7 @@
     font-weight: 600;
     margin-bottom: 20px;
     color: #474747;
-    font-family: "Roboto", sans-serif;
+    font-family: "Roboto";
 }
 
 .bemo-banner .section-title p {
@@ -116,7 +116,7 @@
 }
 
 .demo-feature .section-title .entry-title {
-    font-family: "Roboto", sans-serif;
+    font-family: "Roboto";
 }
 
 .demo-feature .media {
@@ -279,7 +279,7 @@
     box-shadow: 0.877px 1.798px 15px 0px rgba(0, 0, 0, 0.1);
     font-size: 20px;
     padding: 7px 0;
-    font-family: HelveticaNeueLight;
+    font-family: 'Ro';
     color: #252525;
 }
 

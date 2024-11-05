@@ -29,7 +29,7 @@ const Header = ({ title, toggleNavbar }) => {
 
       {/* Banner with page title */}
       <div className="header-banner" style={{ backgroundColor: "#778B28", padding: "10px 0", textAlign: "center" }}>
-        <div className="page-name" style={{ color: "#fff", fontWeight: "bold", fontSize: "18px" }}>
+        <div className="page-name" style={{ color: "#fff", fontWeight: "500", fontSize: "18px" }}>
           {title}
         </div>
       </div>
