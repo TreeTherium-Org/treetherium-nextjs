@@ -24,7 +24,7 @@ const Page = () => {
       id: 1,
       title: "Welcome To Treetherium",
       subtitle: '"create a greener world together"',
-      image: "/assets/img/home-page.png",
+      image: "/assets/img/landing-home.png",
       isLanding: true,
       primaryButton: {
         text: "Let's Get Started",
@@ -43,7 +43,7 @@ const Page = () => {
         "Planting a tree is quick, easy, and helps build a livable world for everyone.",
         "Ready to start? Just follow the steps in our app to plant your first tree and support a greener planet today!"
       ],
-      image: "/assets/img/plant-trees-today- (13).png",
+      image: "/assets/img/step-1.png",
       primaryButton: {
         text: "Skip",
         action: () => setCurrentSlide(4)
@@ -61,7 +61,7 @@ const Page = () => {
         "Tokenizing your trees shows you are part of the TreeTherium community and supports tree-planting programs worldwide.",
         "Just follow the instructions in the app to tokenize your tree and watch its progress digitally grow. Now, your tree is officially part of a global network of trees helping the environment!"
       ],
-      image: "/assets/img/hands-tree.png",
+      image: "/assets/img/step-2.png",
       primaryButton: {
         text: "Back",
         action: () => setCurrentSlide(1)
@@ -79,7 +79,7 @@ const Page = () => {
         "You can view the benefits your tree creates in the app and see how it contributes to global sustainability.",
         "This is a simple way to both save the planet and gain rewards. With TreeTherium, your tree is a smart way to help the earth while enjoying long-term benefits!"
       ],
-      image: "/assets/img/hands-tree-2.png",
+      image: "/assets/img/step-3.png",
       primaryButton: {
         text: "Back",
         action: () => setCurrentSlide(2)
