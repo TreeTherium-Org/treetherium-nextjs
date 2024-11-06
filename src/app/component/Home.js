@@ -43,7 +43,7 @@ const Home = () => {
       <header style={{ ...headerStyle, padding: 0, marginTop: 30, marginBottom: 30 }}>
         <div style={{ width: '100vw', position: 'relative', left: '50%', transform: 'translateX(-50%)', overflow: 'hidden' }}>  {/* Full viewport width */}
           <Image
-            src="/assets/img/home-page.png"
+            src="/assets/img/landing-home.png"
             alt="Everyone Can Grow A Tree"
             width={2000}             // Set a large enough width for the image
             height={600}             // Adjust the height according to your needs
@@ -56,7 +56,7 @@ const Home = () => {
           <div style={buttonGridStyle}>
               <div style={buttonCardStyle} onClick={() => handleButtonClick('/my-forest')}>
               <Image
-                    src="/assets/img/My Forest.jpg"
+                    src="/assets/img/my-forest.jpg"
                     alt="Tree Planting Project"
                     width={109}
                     height={109}
@@ -67,7 +67,7 @@ const Home = () => {
               </div>
               <div style={buttonCardStyle} onClick={() => handleButtonClick('/analytics')}>
                 <Image
-                      src="/assets/img/Analytics.jpg"
+                      src="/assets/img/analytics.jpg"
                       alt="Single Tree"
                       width={109}
                       height={109}
@@ -78,7 +78,7 @@ const Home = () => {
               </div>
               <div style={buttonCardStyle} onClick={() => handleButtonClick('/knowledge-base')}>
                 <Image
-                      src="/assets/img/Knowledge Base.jpg"
+                      src="/assets/img/knowledge-base.jpg"
                       alt="Single Tree"
                       width={109}
                       height={109}

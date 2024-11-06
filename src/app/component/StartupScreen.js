@@ -6,7 +6,7 @@ const StartupScreen = () => {
   return (
     <div className={styles.startupPage}>
       <Image
-        src="/assets/img/Startup Page.png" 
+        src="/assets/img/startup.png" 
         alt="Loading"
         layout="fill" 
         objectFit="cover" 
