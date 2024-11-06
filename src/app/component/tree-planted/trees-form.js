@@ -127,7 +127,7 @@ export default function UploadForm() {
           </h3>
           <div className="form-image">
             <img
-              src="/assets/img/hands-tree-2.jpg"
+              src="/assets/img/step-3.png"
               alt="Tree illustration"
               className="illustration-image"
             />
