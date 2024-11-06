@@ -6,16 +6,22 @@ export const authOptions = {
     providers: [
         CredentialsProvider({
             name: 'Firebase',
-            credentials: {},
+            credentials: {
+                userId: { label: "User ID", type: "text" },
+                email: { label: "Email", type: "text" },
+                username: { label: "Username", type: "text" },
+                provider: { label: "Provider", type: "text" },
+                walletAddress: { label: "Wallet Address", type: "text" }, // Add wallet address here
+            },
             authorize: async (credentials) => {
                 if (credentials.userId) {
-                    // Create user object with all possible fields
+                    // Create a user object with all possible fields
                     return {
                         id: credentials.userId,
                         email: credentials.email || '',
                         name: credentials.username || '',
                         provider: credentials.provider || '',
-                        walletAddress: credentials.walletAddress || '', // Add wallet address
+                        walletAddress: credentials.walletAddress || '',
                     };
                 }
                 return null;
