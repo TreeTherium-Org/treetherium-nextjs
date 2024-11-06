@@ -42,6 +42,42 @@ const Signin = () => {
     return userDoc.exists();
   };
 
+  const handleFirebaseError = (error) => {
+    switch (error.code) {
+      case 'auth/user-not-found':
+        setError("No account found with this email. Please sign up first.");
+        break;
+      case 'auth/wrong-password':
+        setError("Incorrect password. Please try again.");
+        break;
+      case 'auth/invalid-email':
+        setError("Invalid email format. Please enter a valid email.");
+        break;
+      case 'auth/invalid-credential':
+        setError("The email/password provided are not valid. Please try again.");
+        break;
+      case 'auth/user-disabled':
+        setError("This account has been disabled. Please contact support.");
+        break;
+      case 'auth/too-many-requests':
+        setError("Too many login attempts. Please try again later.");
+        break;
+      case 'auth/popup-closed-by-user':
+        setError("The sign-in popup was closed. Please try again.");
+        break;
+      case 'auth/network-request-failed':
+        setError("Network error. Please check your internet connection.");
+        break;
+      case 'auth/cancelled-popup-request':
+        setError("Multiple sign-in attempts detected. Please complete the first sign-in attempt.");
+        break;
+      default:
+        setError(error.message || "An unexpected error occurred. Please try again.");
+        break;
+    }
+    console.error('Firebase Error:', error);
+  };
+
   const signInWithEmail = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading
@@ -66,8 +102,7 @@ const Signin = () => {
 
       router.push("/home");
     } catch (error) {
-      console.error("Error signing in:", error);
-      setError(error.message);
+      handleFirebaseError(error);
     } finally {
       setLoading(false); // Stop loading
     }
@@ -98,8 +133,7 @@ const Signin = () => {
 
       router.push("/home");
     } catch (error) {
-      console.error("Error signing in with provider:", error);
-      setError(error.message);
+      handleFirebaseError(error);
     } finally {
       setLoading(false); // Stop loading
     }
@@ -135,8 +169,7 @@ const Signin = () => {
         throw new Error("Phantom Wallet not found. Please install it.");
       }
     } catch (error) {
-      console.error("Error connecting to Phantom Wallet:", error);
-      setError(error.message);
+      handleFirebaseError(error);
     } finally {
       setLoading(false); // Stop loading
     }
@@ -155,6 +188,7 @@ const Signin = () => {
         <div className="signin-area mg-bottom-35">
           <div className="container">
             <form className="contact-form-inner" onSubmit={signInWithEmail}>
+              {error && <p className="error-message">{error}</p>}
               <label className="single-input-wrap">
                 <span>Email Address*</span>
                 <input
@@ -195,7 +229,6 @@ const Signin = () => {
                 <span className="underline-text">Create an account</span>
               </Link>
             </form>
-            {error && <p className="error">{error}</p>}
             <div className="social-buttons">
               <button
                 onClick={connectPhantomWallet}

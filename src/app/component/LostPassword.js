@@ -23,7 +23,7 @@ export default function ForgotPassword() {
   
     return (
       <div style={styles.outerContainer}>
-        <button style={styles.backButton}><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        <button style={styles.backButton}><a href="/signin" style={styles.loginLink}><i class="fa fa-arrow-left" aria-hidden="true"></i></a></button>
         <div style={styles.innerContainer}>
           <h2 style={styles.title}>Forget Password</h2>
           <form onSubmit={handleForgotPassword} style={styles.form}>
@@ -40,7 +40,7 @@ export default function ForgotPassword() {
           {message && <p style={styles.message}>{message}</p>}
           {error && <p style={styles.error}>{error}</p>}
           <p style={styles.loginText}>
-            Already have an account? <a href="/login" style={styles.loginLink}>Log In</a>
+            Already have an account? <a href="/signin" style={styles.loginLink}>Log In</a>
           </p>
         </div>
       </div>
@@ -55,14 +55,16 @@ export default function ForgotPassword() {
       height: '100vh',
       width: '100%',
       padding: '20px',
-      fontFamily: 'Arial, sans-serif',
+      fontFamily: 'Roboto',
       position: 'relative',
+      color: ''
     },
     backButton: {
       position: 'absolute',
       top: '20px',
       left: '20px',
       fontSize: '1.5rem',
+      color: '#4F3738',
       backgroundColor: 'transparent',
       border: 'none',
       cursor: 'pointer',
@@ -98,7 +100,7 @@ export default function ForgotPassword() {
     button: {
       width: '100%',
       padding: '15px',
-      backgroundColor: '#778B28', // Light green color for the button
+      backgroundColor: '#778B28',
       color: '#fff',
       fontSize: '1rem',
       borderRadius: '8px',
@@ -107,7 +109,7 @@ export default function ForgotPassword() {
       marginBottom: '20px',
     },
     message: {
-      color: '#32CD32', // Success message in green
+      color: '#4F3738', 
       marginTop: '10px',
       textAlign: 'center',
     },
@@ -122,7 +124,7 @@ export default function ForgotPassword() {
       marginTop: '20px',
     },
     loginLink: {
-      color: '#32CD32',
+      color: '#4F3738',
       textDecoration: 'none',
     },
   };
