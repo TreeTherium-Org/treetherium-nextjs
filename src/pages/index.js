@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import StartupScreen from "/src/app/component/StartupScreen.js";
 import styles from './LandingPage.module.css';
+import Image from 'next/image';
 
 const Page = () => {
   const router = useRouter();
@@ -42,7 +43,7 @@ const Page = () => {
         "Planting a tree is quick, easy, and helps build a livable world for everyone.",
         "Ready to start? Just follow the steps in our app to plant your first tree and support a greener planet today!"
       ],
-      image: "/assets/img/plant-trees-today- (13).jpg",
+      image: "/assets/img/plant-trees-today- (13).png",
       primaryButton: {
         text: "Skip",
         action: () => setCurrentSlide(4)
@@ -60,7 +61,7 @@ const Page = () => {
         "Tokenizing your trees shows you are part of the TreeTherium community and supports tree-planting programs worldwide.",
         "Just follow the instructions in the app to tokenize your tree and watch its progress digitally grow. Now, your tree is officially part of a global network of trees helping the environment!"
       ],
-      image: "/assets/img/hands-tree.jpg",
+      image: "/assets/img/hands-tree.png",
       primaryButton: {
         text: "Back",
         action: () => setCurrentSlide(1)
@@ -78,7 +79,7 @@ const Page = () => {
         "You can view the benefits your tree creates in the app and see how it contributes to global sustainability.",
         "This is a simple way to both save the planet and gain rewards. With TreeTherium, your tree is a smart way to help the earth while enjoying long-term benefits!"
       ],
-      image: "/assets/img/hands-tree-2.jpg",
+      image: "/assets/img/hands-tree-2.png",
       primaryButton: {
         text: "Back",
         action: () => setCurrentSlide(2)
@@ -114,20 +115,26 @@ const Page = () => {
       )}
       <div className={styles.header}>
         <div className={styles.headerLogo}>
-          <img
+          <Image
             src="/assets/img/TT-Logo.png"
             alt="Logo"
+            width={500}
+            height={500}
             className={styles.headerLogo}
+            priority={true}
           />
         </div>
       </div>
 
       <div style={headerStyle}>
         <div className={styles.imageContainer}>
-          <img
+          <Image
             src={slides[currentSlide].image}
             alt="Landing Background"
+            width={500}
+            height={500}
             className={styles.image}
+            priority={true}
           />
         </div>
 
@@ -162,10 +169,13 @@ const Page = () => {
     <div className={styles.loginRegisterContainer}>
       <div className={styles.formWrapper}>
         <div className={styles.formWrapper2}>
-          <img
+          <Image
               src="/assets/img/TT-Logo.png"
               alt="Logo"
+              width={500}
+              height={500}
               className={styles.logo}
+              priority={true}
           />
           <h2 className={styles.title1}>{slides[currentSlide].title}</h2>
         </div>
@@ -185,7 +195,7 @@ const Page = () => {
         </div>
         <div className={styles.buttonContainer2}>
           <button
-              onClick={() => setCurrentSlide(3)}
+              onClick={() => setCurrentSlide(0)}
               className={styles.buttonTertiary}
           >
               Back
@@ -199,19 +209,25 @@ const Page = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.headerLogo}>
-          <img
+          <Image
             src="/assets/img/TT-Logo.png"
             alt="Logo"
+            width={500}
+            height={500}
             className={styles.headerLogo}
+            priority={true}
           />
         </div>
       </div>
 
       <div className={styles.imageContainer1}>
-          <img
+          <Image
               src={slides[currentSlide].image}
               alt={slides[currentSlide].title}
+              width={500}
+              height={500}
               className={styles.image1}
+              priority={true}
           />
       </div>
 

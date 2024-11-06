@@ -11,6 +11,7 @@ const StartupScreen = () => {
         layout="fill" 
         objectFit="cover" 
         className={styles.startupImage}
+        priority={true}
       />
       <p className={styles.loadingText}>Loading...</p>
     </div>

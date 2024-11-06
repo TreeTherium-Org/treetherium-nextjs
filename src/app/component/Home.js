@@ -48,6 +48,7 @@ const Home = () => {
             width={2000}             // Set a large enough width for the image
             height={600}             // Adjust the height according to your needs
             style={{ width: '100%', height: 'auto' }}  // Ensure the image fills the container
+            priority={true}
           />
         </div>
       </header>
@@ -60,6 +61,7 @@ const Home = () => {
                     width={109}
                     height={109}
                     style={{ borderRadius: '20%' }}
+                    priority={true}
                   />
                   <strong style={textStyle}>My Forest</strong> 
               </div>
@@ -70,6 +72,7 @@ const Home = () => {
                       width={109}
                       height={109}
                       style={{ borderRadius: '20%' }}
+                      priority={true}
                   />
                   <strong style={textStyle}>Analytics</strong> 
               </div>
@@ -80,6 +83,7 @@ const Home = () => {
                       width={109}
                       height={109}
                       style={{ borderRadius: '20%' }}
+                      priority={true}
                   />
                   <strong style={textStyle}>Knowledge Base</strong> 
               </div>
