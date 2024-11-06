@@ -231,7 +231,7 @@ const Signup = () => {
                                     Accept the{" "}
                                     <a
                                         href="#"
-                                        className="text-blue-600 hover:underline"
+                                        className="text-blue-600 underline-text"
                                         onClick={(e) => {
                                             e.preventDefault();
                                             toggleModal();
@@ -241,25 +241,37 @@ const Signup = () => {
                                     </a>
                                 </label>
                             </div>
-                                {modal && (
-                                    <div style={styles.modal}>
-                                        <div onClick={toggleModal} style={styles.overlay}></div>
-                                        <div style={styles.modalContent}>
-                                            <h2 style={styles.titleModal}>Terms & Condition</h2>
-                                            <p style={styles.paragraphModal}>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-                                            perferendis suscipit officia recusandae, eveniet quaerat assumenda
-                                            id fugit, dignissimos maxime non natus placeat illo iusto!
-                                            Sapiente dolorum id maiores dolores? Illum pariatur possimus
-                                            quaerat ipsum quos molestiae rem aspernatur dicta tenetur. Sunt
-                                            placeat tempora vitae enim incidunt porro fuga ea.
-                                            </p>
-                                            <button onClick={toggleModal} style={styles.btnModal}>
-                                            CLOSE
-                                            </button>
-                                        </div>
+                            {modal && (
+                                <div style={styles.modal}>
+                                    <div onClick={toggleModal} style={styles.overlay}></div>
+                                    <div style={styles.modalContent}>
+                                        <h2 style={styles.titleModal}>Terms & Conditions</h2>
+                                        <h3 style={styles.sectionTitle}>App & Crypto</h3>
+                                        <p style={styles.paragraphModal}>
+                                            Using the TreeTherium app is at your own risk. We prioritize your safety, but remember: your keys, your wallet. Keep your information secure, and be cautious. TreeTherium will never ask you to send money or crypto to us or anyone claiming to represent us – stay vigilant against scams.
+                                        </p>
+
+                                        <h3 style={styles.sectionTitle}>Tree Planting</h3>
+                                        <p style={styles.paragraphModal}>
+                                            Please only plant trees with permission from the landowner. Respecting property rights is essential for a positive impact. When possible, choose indigenous species for planting. Native trees benefit the local ecosystem and are more sustainable in the long run.
+                                        </p>
+
+                                        <h3 style={styles.sectionTitle}>Community</h3>
+                                        <p style={styles.paragraphModal}>
+                                            Our community thrives on kindness and respect. Be friendly and supportive to others and to nature. Invite friends who share our vision of a greener future.
+                                        </p>
+
+                                        <h3 style={styles.sectionTitle}>Data</h3>
+                                        <p style={styles.paragraphModal}>
+                                            Your privacy is important. Any personal data is encrypted and will not be shared. Tree data, however, may be shared with forestry departments, universities, scientists, and research institutes to support research and conservation efforts.
+                                        </p>
+
+                                        <button onClick={toggleModal} style={styles.btnModal}>
+                                            I Agree
+                                        </button>
                                     </div>
-                                )}
+                                </div>
+                            )}
                             <button type="submit" className="btn btn-purple" disabled={!acceptTerms}>Register</button>
                             <Link className="forgot-btn" href="/signin">
                                 Already have an account? Go to <span className="underline-text">Login</span>
@@ -301,6 +313,12 @@ const styles = {
         fontSize: '1.5em',
         fontWeight: 700,
         color: '#4F3738',
+        marginBottom: '15px',
+    },
+    sectionTitle: {
+        fontSize: '1.2em',
+        fontWeight: 700,
+        color: '#4F3738',
     },
     paragraphModal: {
         fontSize: '1em',
@@ -311,6 +329,7 @@ const styles = {
         backgroundColor: '#778B28',
         color: '#fff',
         padding: '1px 20px',
+        margin: '10px 0 10px',
         fontSize: '1.25em',
         fontWeight: '500',
         borderRadius: '8px',
@@ -319,7 +338,7 @@ const styles = {
         lineHeight: '50px',
         textAlign: 'center',
         width: '100%',
-        maxWidth: '93px', /* Maximum button width */
+        maxWidth: '130px', /* Maximum button width */
         height: 'auto', /* Automatic height */
         minHeight: '51.58px', /* Minimum height */
     },
@@ -331,13 +350,19 @@ const styles = {
         right: 0,
         bottom: 0,
         position: 'fixed',
+        zIndex: 999,
     },
     overlay: {
-        background: '#fff',
+        background: 'rgba(49, 49, 49, 0.8)',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
     },
     modalContent: {
         position: 'absolute',
-        top: '40%',
+        top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         lineHeight: 1.4,
@@ -346,6 +371,8 @@ const styles = {
         borderRadius: '8px',
         maxWidth: '600px',
         minWidth: '300px',
+        maxHeight: '80vh', // Limits height to 80% of viewport height
+        overflowY: 'auto', // Makes content scrollable if needed
     },
     closeModal: {
         position: 'absolute',
