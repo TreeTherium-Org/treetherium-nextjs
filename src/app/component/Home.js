@@ -56,7 +56,7 @@ const Home = () => {
           <div style={buttonGridStyle}>
               <div style={buttonCardStyle} onClick={() => handleButtonClick('/my-forest')}>
               <Image
-                    src="/assets/img/my-forest.jpg"
+                    src="/assets/img/my-forest.png"
                     alt="Tree Planting Project"
                     width={109}
                     height={109}
@@ -67,7 +67,7 @@ const Home = () => {
               </div>
               <div style={buttonCardStyle} onClick={() => handleButtonClick('/analytics')}>
                 <Image
-                      src="/assets/img/analytics.jpg"
+                      src="/assets/img/analytics.png"
                       alt="Single Tree"
                       width={109}
                       height={109}
@@ -78,7 +78,7 @@ const Home = () => {
               </div>
               <div style={buttonCardStyle} onClick={() => handleButtonClick('/knowledge-base')}>
                 <Image
-                      src="/assets/img/knowledge-base.jpg"
+                      src="/assets/img/knowledge-base.png"
                       alt="Single Tree"
                       width={109}
                       height={109}

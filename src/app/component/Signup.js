@@ -22,6 +22,7 @@ const Signup = () => {
     const [loading, setLoading] = useState(false);
     const [acceptTerms, setAcceptTerms] = useState(false); // Checkbox state
     const [modal, setModal] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -44,14 +45,30 @@ const Signup = () => {
         if (name === 'password') setPassword(value);
     };
 
-    const toggleModal = () => {
-        setModal(!modal);
-      };
-    
-
-    const handleCheckboxChange = (e) => {
-        setAcceptTerms(e.target.checked);
+    const handleAgreeClick = () => {
+        // Open the modal without setting `acceptTerms` to true
+        setIsModalOpen(true);
     };
+
+    const handleOutsideClick = (e) => {
+        // Close the modal if clicked outside the modal content
+        if (e.target.id === 'modalOverlay') {
+            setIsModalOpen(false);
+        }
+    };
+
+    const toggleModal = (shouldAccept = false) => {
+        setModal(!modal);
+        if (shouldAccept) {
+            setAcceptTerms(true);
+        }
+    };
+
+    const handleAcceptTerms = () => {
+        // Set acceptTerms to true and close the modal when "Accept" inside the modal is clicked
+        setAcceptTerms(true);
+        setIsModalOpen(false);
+      };
 
     const checkUserExists = async (uid) => {
         try {
@@ -312,30 +329,63 @@ const Signup = () => {
                                     <input
                                         type="checkbox"
                                         checked={acceptTerms}
-                                        onChange={handleCheckboxChange}
+                                        onChange={(e) => setAcceptTerms(e.target.checked)}
                                     />
-                                    Accept the<span className="underline-text">Terms & Conditions</span>
+                                    <span style={{ display: 'inline' }}>
+                                        Accept the {" "}
+                                        <a
+                                            href="#"
+                                            className="underline-text"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleAgreeClick();
+                                            }}
+                                        >
+                                            Terms & Conditions
+                                        </a>
+                                    </span>
                                 </label>
                             </div>
-                                {modal && (
-                                    <div style={styles.modal}>
-                                        <div onClick={toggleModal} style={styles.overlay}></div>
-                                        <div style={styles.modalContent}>
-                                            <h2 style={styles.titleModal}>Terms & Condition</h2>
-                                            <p style={styles.paragraphModal}>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-                                            perferendis suscipit officia recusandae, eveniet quaerat assumenda
-                                            id fugit, dignissimos maxime non natus placeat illo iusto!
-                                            Sapiente dolorum id maiores dolores? Illum pariatur possimus
-                                            quaerat ipsum quos molestiae rem aspernatur dicta tenetur. Sunt
-                                            placeat tempora vitae enim incidunt porro fuga ea.
-                                            </p>
-                                            <button onClick={toggleModal} style={styles.btnModal}>
-                                            CLOSE
+                            {isModalOpen && (
+                                <div style={styles.modal}>
+                                    <div id="modalOverlay" onClick={handleOutsideClick} style={styles.overlay}></div>
+                                    <div style={styles.modalContent}>
+                                        <h2 style={styles.titleModal}>Terms & Conditions</h2>
+                                        <h3 style={styles.sectionTitle}>App & Crypto</h3>
+                                        <p style={styles.paragraphModal}>
+                                            Using the TreeTherium app is at your own risk. We prioritize your safety, but remember: your keys, your wallet. Keep your information secure, and be cautious. TreeTherium will never ask you to send money or crypto to us or anyone claiming to represent us – stay vigilant against scams.
+                                        </p>
+
+                                        <h3 style={styles.sectionTitle}>Tree Planting</h3>
+                                        <p style={styles.paragraphModal}>
+                                            Please only plant trees with permission from the landowner. Respecting property rights is essential for a positive impact. When possible, choose indigenous species for planting. Native trees benefit the local ecosystem and are more sustainable in the long run.
+                                        </p>
+
+                                        <h3 style={styles.sectionTitle}>Community</h3>
+                                        <p style={styles.paragraphModal}>
+                                            Our community thrives on kindness and respect. Be friendly and supportive to others and to nature. Invite friends who share our vision of a greener future.
+                                        </p>
+
+                                        <h3 style={styles.sectionTitle}>Data</h3>
+                                        <p style={styles.paragraphModal}>
+                                            Your privacy is important. Any personal data is encrypted and will not be shared. Tree data, however, may be shared with forestry departments, universities, scientists, and research institutes to support research and conservation efforts.
+                                        </p>
+                                        <div style={styles.btn}>
+                                            <button style={styles.btnAgree}  onClick={handleAcceptTerms}>
+                                                I Agree
+                                            </button>
+                                            <button style={styles.btnDisagree}>
+                                                <Link
+                                                href="/"
+                                                style={{ color: "#fff" }}
+                                                >
+                                                I Disagree
+                                                </Link>
                                             </button>
                                         </div>
                                     </div>
-                                )}
+                                </div>
+                            )}
                             <button type="submit" className="btn btn-purple" disabled={!acceptTerms}>Register</button>
                             <Link className="forgot-btn" href="/signin">
                                 Already have an account? Go to <span className="underline-text">Login</span>
@@ -376,27 +426,45 @@ const styles = {
         fontSize: '1.5em',
         fontWeight: 700,
         color: '#4F3738',
+        marginBottom: '15px',
+    },
+    sectionTitle: {
+        fontSize: '1.2em',
+        fontWeight: 700,
+        color: '#4F3738',
     },
     paragraphModal: {
         fontSize: '1em',
         fontWeight: 500,
         color: '#4F3738',
     },
-    btnModal: {
-        backgroundColor: '#778B28',
-        color: '#fff',
-        padding: '1px 20px',
-        fontSize: '1.25em',
-        fontWeight: '500',
+    btn: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginTop: '20px',
+    },
+    btnAgree: {
+        flex: 1,
+        padding: '10px',
         borderRadius: '8px',
-        border: 'none',
+        fontWeight: 500,
         cursor: 'pointer',
-        lineHeight: '50px',
-        textAlign: 'center',
-        width: '100%',
-        maxWidth: '93px', /* Maximum button width */
-        height: 'auto', /* Automatic height */
-        minHeight: '51.58px', /* Minimum height */
+        border: 'none',
+        margin: '0 5px',
+        fontSize: '20px',
+        backgroundColor: '#778b28',
+        color: '#fff',
+    },
+    btnDisagree: {
+      flex: 1,
+      padding: '10px',
+      borderRadius: '8px',
+      fontWeight: 500,
+      cursor: 'pointer',
+      border: 'none',
+      margin: '0 5px',
+      fontSize: '20px',
+      backgroundColor: '#4f3738',
     },
     modal: {
         width: '100vw',
@@ -406,13 +474,19 @@ const styles = {
         right: 0,
         bottom: 0,
         position: 'fixed',
+        zIndex: 999,
     },
     overlay: {
-        background: '#fff',
+        background: 'rgba(49, 49, 49, 0.8)',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
     },
     modalContent: {
         position: 'absolute',
-        top: '40%',
+        top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         lineHeight: 1.4,
@@ -421,6 +495,8 @@ const styles = {
         borderRadius: '8px',
         maxWidth: '600px',
         minWidth: '300px',
+        maxHeight: '80vh', // Limits height to 80% of viewport height
+        overflowY: 'auto', // Makes content scrollable if needed
     },
     closeModal: {
         position: 'absolute',
