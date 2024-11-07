@@ -13,10 +13,17 @@ const Page = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowModal(false); // Hide the modal after 3 seconds
-    }, 3000);
-    return () => clearTimeout(timer); // Cleanup the timer if the component unmounts
+    const hasSeenModal = localStorage.getItem('hasSeenModal');
+    if (!hasSeenModal) {
+      setShowModal(true);
+      const timer = setTimeout(() => {
+        setShowModal(false);
+        localStorage.setItem('hasSeenModal', 'true'); // Set flag in storage
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowModal(false);
+    }
   }, []);
   
   const slides = [

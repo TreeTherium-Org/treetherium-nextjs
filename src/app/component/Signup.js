@@ -22,6 +22,7 @@ const Signup = () => {
     const [loading, setLoading] = useState(false);
     const [acceptTerms, setAcceptTerms] = useState(false); // Checkbox state
     const [modal, setModal] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -44,14 +45,30 @@ const Signup = () => {
         if (name === 'password') setPassword(value);
     };
 
-    const toggleModal = () => {
-        setModal(!modal);
-      };
-    
-
-    const handleCheckboxChange = (e) => {
-        setAcceptTerms(e.target.checked);
+    const handleAgreeClick = () => {
+        // Open the modal without setting `acceptTerms` to true
+        setIsModalOpen(true);
     };
+
+    const handleOutsideClick = (e) => {
+        // Close the modal if clicked outside the modal content
+        if (e.target.id === 'modalOverlay') {
+            setIsModalOpen(false);
+        }
+    };
+
+    const toggleModal = (shouldAccept = false) => {
+        setModal(!modal);
+        if (shouldAccept) {
+            setAcceptTerms(true);
+        }
+    };
+
+    const handleAcceptTerms = () => {
+        // Set acceptTerms to true and close the modal when "Accept" inside the modal is clicked
+        setAcceptTerms(true);
+        setIsModalOpen(false);
+      };
 
     const checkUserExists = async (uid) => {
         const userDocRef = doc(collection(db, "users"), uid);
@@ -227,23 +244,29 @@ const Signup = () => {
                             </label>
                             <div className="options">
                                 <label className="accept-terms">
-                                    <input type="checkbox" />
-                                    Accept the{" "}
-                                    <a
-                                        href="#"
-                                        className="text-blue-600 underline-text"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            toggleModal();
-                                        }}
-                                    >
-                                        Terms & Conditions
-                                    </a>
+                                    <input
+                                        type="checkbox"
+                                        checked={acceptTerms}
+                                        onChange={(e) => setAcceptTerms(e.target.checked)}
+                                    />
+                                    <span style={{ display: 'inline' }}>
+                                        Accept the {" "}
+                                        <a
+                                            href="#"
+                                            className="underline-text"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleAgreeClick();
+                                            }}
+                                        >
+                                            Terms & Conditions
+                                        </a>
+                                    </span>
                                 </label>
                             </div>
-                            {modal && (
+                            {isModalOpen && (
                                 <div style={styles.modal}>
-                                    <div onClick={toggleModal} style={styles.overlay}></div>
+                                    <div id="modalOverlay" onClick={handleOutsideClick} style={styles.overlay}></div>
                                     <div style={styles.modalContent}>
                                         <h2 style={styles.titleModal}>Terms & Conditions</h2>
                                         <h3 style={styles.sectionTitle}>App & Crypto</h3>
@@ -265,10 +288,19 @@ const Signup = () => {
                                         <p style={styles.paragraphModal}>
                                             Your privacy is important. Any personal data is encrypted and will not be shared. Tree data, however, may be shared with forestry departments, universities, scientists, and research institutes to support research and conservation efforts.
                                         </p>
-
-                                        <button onClick={toggleModal} style={styles.btnModal}>
-                                            I Agree
-                                        </button>
+                                        <div style={styles.btn}>
+                                            <button style={styles.btnAgree}  onClick={handleAcceptTerms}>
+                                                I Agree
+                                            </button>
+                                            <button style={styles.btnDisagree}>
+                                                <Link
+                                                href="/"
+                                                style={{ color: "#fff" }}
+                                                >
+                                                I Disagree
+                                                </Link>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -325,22 +357,33 @@ const styles = {
         fontWeight: 500,
         color: '#4F3738',
     },
-    btnModal: {
-        backgroundColor: '#778B28',
-        color: '#fff',
-        padding: '1px 20px',
-        margin: '10px 0 10px',
-        fontSize: '1.25em',
-        fontWeight: '500',
+    btn: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginTop: '20px',
+    },
+    btnAgree: {
+        flex: 1,
+        padding: '10px',
         borderRadius: '8px',
-        border: 'none',
+        fontWeight: 500,
         cursor: 'pointer',
-        lineHeight: '50px',
-        textAlign: 'center',
-        width: '100%',
-        maxWidth: '130px', /* Maximum button width */
-        height: 'auto', /* Automatic height */
-        minHeight: '51.58px', /* Minimum height */
+        border: 'none',
+        margin: '0 5px',
+        fontSize: '20px',
+        backgroundColor: '#778b28',
+        color: '#fff',
+    },
+    btnDisagree: {
+      flex: 1,
+      padding: '10px',
+      borderRadius: '8px',
+      fontWeight: 500,
+      cursor: 'pointer',
+      border: 'none',
+      margin: '0 5px',
+      fontSize: '20px',
+      backgroundColor: '#4f3738',
     },
     modal: {
         width: '100vw',
