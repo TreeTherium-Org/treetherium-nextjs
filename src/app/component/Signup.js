@@ -57,13 +57,6 @@ const Signup = () => {
         }
     };
 
-    const toggleModal = (shouldAccept = false) => {
-        setModal(!modal);
-        if (shouldAccept) {
-            setAcceptTerms(true);
-        }
-    };
-
     const handleAcceptTerms = () => {
         // Set acceptTerms to true and close the modal when "Accept" inside the modal is clicked
         setAcceptTerms(true);
@@ -289,9 +282,6 @@ const Signup = () => {
                                             Your privacy is important. Any personal data is encrypted and will not be shared. Tree data, however, may be shared with forestry departments, universities, scientists, and research institutes to support research and conservation efforts.
                                         </p>
                                         <div style={styles.btn}>
-                                            <button style={styles.btnAgree}  onClick={handleAcceptTerms}>
-                                                I Agree
-                                            </button>
                                             <button style={styles.btnDisagree}>
                                                 <Link
                                                 href="/"
@@ -299,6 +289,9 @@ const Signup = () => {
                                                 >
                                                 I Disagree
                                                 </Link>
+                                            </button>
+                                            <button style={styles.btnAgree}  onClick={handleAcceptTerms}>
+                                                I Agree
                                             </button>
                                         </div>
                                     </div>

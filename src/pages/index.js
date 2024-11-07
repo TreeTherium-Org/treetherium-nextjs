@@ -92,7 +92,7 @@ const Page = () => {
         action: () => setCurrentSlide(2)
       },
       secondaryButton: {
-        text: "Done",
+        text: "Register",
         action: () => setCurrentSlide(4)
       }
     },
