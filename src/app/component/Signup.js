@@ -9,9 +9,9 @@ import { auth, db } from '../../firebase';
 
 // Full-Screen Loader Component
 const FullScreenLoader = () => (
-  <div className="full-screen-loader">
-    <div className="loading"></div>
-  </div>
+    <div className="full-screen-loader">
+        <div className="loading"></div>
+    </div>
 );
 
 const Signup = () => {
@@ -71,19 +71,48 @@ const Signup = () => {
       };
 
     const checkUserExists = async (uid) => {
-        const userDocRef = doc(collection(db, "users"), uid);
-        const userDoc = await getDoc(userDocRef);
-        return userDoc.exists();
+        try {
+            const userDocRef = doc(collection(db, "users"), uid);
+            const userDoc = await getDoc(userDocRef);
+            return userDoc.exists();
+        } catch (error) {
+            setError("Failed to check if the user exists. Please try again.");
+            console.error(error);
+            return false;
+        }
+    };
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     };
 
     const signUpWithEmail = async (e) => {
         e.preventDefault();
+
+        if (!username) {
+            setError("Username is required.");
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setError("Please enter a valid email address.");
+            return;
+        }
+
+        if (password.length < 6) {
+            setError("Password must be at least 6 characters.");
+            return;
+        }
+
         if (!acceptTerms) {
             setError("You must accept the terms and conditions.");
             return;
         }
 
         setLoading(true);
+        setError(null);
+
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const userExists = await checkUserExists(userCredential.user.uid);
@@ -111,8 +140,7 @@ const Signup = () => {
 
             router.push('/home');
         } catch (error) {
-            console.error('Error signing up: ', error);
-            setError(error.message);
+            handleFirebaseError(error);
         } finally {
             setLoading(false);
         }
@@ -120,6 +148,8 @@ const Signup = () => {
 
     const handleProviderSignIn = async (provider) => {
         setLoading(true);
+        setError(null);
+
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
@@ -150,38 +180,33 @@ const Signup = () => {
 
             router.push('/home');
         } catch (error) {
-            console.error('Error signing in with provider:', error);
-            setError(error.message);
+            handleFirebaseError(error);
         } finally {
             setLoading(false);
         }
     };
 
-    const googleProvider = new GoogleAuthProvider();
-
     const connectPhantomWallet = async () => {
         setLoading(true);
+        setError(null);
+
         try {
             const { solana } = window;
-            if (solana && solana.isPhantom) {
-                const response = await solana.connect();
-                const walletAddress = response.publicKey.toString();
-                const userExists = await checkUserExists(walletAddress);
+            if (!solana || !solana.isPhantom) {
+                throw new Error("Phantom Wallet not found. Please install it.");
+            }
 
-                if (!userExists) {
-                    const userDocRef = doc(collection(db, "users"), walletAddress);
-                    await setDoc(userDocRef, {
-                        username: username || `Phantom_${walletAddress.slice(0, 6)}`,
-                        provider: 'Phantom',
-                        createdAt: new Date(),
-                        walletAddress: walletAddress,
-                    });
-                }
+            const response = await solana.connect();
+            const walletAddress = response.publicKey.toString();
 
+            const userExists = await checkUserExists(walletAddress);
+
+            if (userExists) {
                 const nextAuthResult = await signIn('credentials', {
-                    username: username || `Phantom_${walletAddress.slice(0, 6)}`,
-                    provider: 'Phantom',
+                    userId: walletAddress,
                     walletAddress: walletAddress,
+                    username: `Phantom_${walletAddress.slice(0, 6)}`,
+                    provider: 'Phantom',
                     redirect: false,
                 });
 
@@ -191,14 +216,71 @@ const Signup = () => {
 
                 router.push('/home');
             } else {
-                throw new Error("Phantom Wallet not found. Please install it.");
+                const userDocRef = doc(collection(db, "users"), walletAddress);
+                await setDoc(userDocRef, {
+                    username: username || `Phantom_${walletAddress.slice(0, 6)}`,
+                    provider: 'Phantom',
+                    createdAt: new Date(),
+                    walletAddress: walletAddress,
+                });
+
+                const nextAuthResult = await signIn('credentials', {
+                    userId: walletAddress,
+                    walletAddress: walletAddress,
+                    username: username || `Phantom_${walletAddress.slice(0, 6)}`,
+                    provider: 'Phantom',
+                    redirect: false,
+                });
+
+                if (nextAuthResult.error) {
+                    throw new Error(nextAuthResult.error);
+                }
+
+                router.push('/home');
             }
         } catch (error) {
-            console.error('Error connecting to Phantom Wallet:', error);
-            setError(error.message);
+            handleFirebaseError(error);
         } finally {
             setLoading(false);
         }
+    };
+
+    const googleProvider = new GoogleAuthProvider();
+
+    const handleFirebaseError = (error) => {
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                setError("This email is already registered. Please log in or use a different email.");
+                break;
+            case 'auth/invalid-email':
+                setError("The email address is not valid. Please enter a valid email.");
+                break;
+            case 'auth/weak-password':
+                setError("Password should be at least 6 characters.");
+                break;
+            case 'auth/operation-not-allowed':
+                setError("This account type is not enabled. Please contact support.");
+                break;
+            case 'auth/user-disabled':
+                setError("This account has been disabled. Please contact support.");
+                break;
+            case 'auth/user-not-found':
+                setError("No account found with this email. Please sign up.");
+                break;
+            case 'auth/wrong-password':
+                setError("Incorrect password. Please try again.");
+                break;
+            case 'auth/popup-closed-by-user':
+                setError("Sign-in popup closed. Please try again.");
+                break;
+            case 'auth/network-request-failed':
+                setError("Network error. Please check your internet connection.");
+                break;
+            default:
+                setError(error.message || "An unexpected error occurred. Please try again.");
+                break;
+        }
+        console.error('Firebase Error:', error);
     };
 
     return (
@@ -208,10 +290,10 @@ const Signup = () => {
                 <div className="logo-container">
                     <h3></h3>
                 </div>
-
                 <div className="signin-area mg-bottom-35">
                     <div className="container">
                         <form className="contact-form-inner" onSubmit={signUpWithEmail}>
+                            {error && <p className="error-message">{error}</p>}
                             <label className="single-input-wrap">
                                 <span>User Name*</span>
                                 <input
@@ -309,7 +391,6 @@ const Signup = () => {
                                 Already have an account? Go to <span className="underline-text">Login</span>
                             </Link>
                         </form>
-                        {error && <p className="error">{error}</p>}
                         <div className="social-buttons">
                             <button onClick={connectPhantomWallet} className="social-button btn-phantom-wallet">
                                 <img
