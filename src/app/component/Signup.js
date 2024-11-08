@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import Section from '../component/layouts/Section.js';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, getDocs, query, where } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 
 // Full-Screen Loader Component
@@ -186,36 +186,57 @@ const Signup = () => {
         }
     };
 
+    const checkUserExistsByWalletAddress = async (walletAddress) => {
+        try {
+            const usersCollection = collection(db, "users");
+            const q = query(usersCollection, where("walletAddress", "==", walletAddress));
+            const querySnapshot = await getDocs(q);
+    
+            if (!querySnapshot.empty) {
+                const doc = querySnapshot.docs[0];
+                return { exists: true, userId: doc.id };
+            } else {
+                return { exists: false };
+            }
+        } catch (error) {
+            setError("Failed to check if the wallet address exists. Please try again.");
+            console.error(error);
+            return { exists: false };
+        }
+    };
+    
     const connectPhantomWallet = async () => {
         setLoading(true);
         setError(null);
-
+    
         try {
             const { solana } = window;
             if (!solana || !solana.isPhantom) {
                 throw new Error("Phantom Wallet not found. Please install it.");
             }
-
+    
             const response = await solana.connect();
             const walletAddress = response.publicKey.toString();
-
-            const userExists = await checkUserExists(walletAddress);
-
-            if (userExists) {
+    
+            const userCheck = await checkUserExistsByWalletAddress(walletAddress);
+    
+            if (userCheck.exists) {
+                // Log in using the existing document's ID
                 const nextAuthResult = await signIn('credentials', {
-                    userId: walletAddress,
+                    userId: userCheck.userId,
                     walletAddress: walletAddress,
                     username: `Phantom_${walletAddress.slice(0, 6)}`,
                     provider: 'Phantom',
                     redirect: false,
                 });
-
+    
                 if (nextAuthResult.error) {
                     throw new Error(nextAuthResult.error);
                 }
-
+    
                 router.push('/home');
             } else {
+                // Create a new document
                 const userDocRef = doc(collection(db, "users"), walletAddress);
                 await setDoc(userDocRef, {
                     username: username || `Phantom_${walletAddress.slice(0, 6)}`,
@@ -223,19 +244,18 @@ const Signup = () => {
                     createdAt: new Date(),
                     walletAddress: walletAddress,
                 });
-
+    
                 const nextAuthResult = await signIn('credentials', {
-                    userId: walletAddress,
                     walletAddress: walletAddress,
                     username: username || `Phantom_${walletAddress.slice(0, 6)}`,
                     provider: 'Phantom',
                     redirect: false,
                 });
-
+    
                 if (nextAuthResult.error) {
                     throw new Error(nextAuthResult.error);
                 }
-
+    
                 router.push('/home');
             }
         } catch (error) {
@@ -244,6 +264,7 @@ const Signup = () => {
             setLoading(false);
         }
     };
+    
 
     const googleProvider = new GoogleAuthProvider();
 
@@ -286,7 +307,7 @@ const Signup = () => {
     return (
         <>
             {loading && <FullScreenLoader />}
-            <Section allNotification={false} searchPopup={true} title="Register">
+            <Section allNotification={false} searchPopup={true} title="Registration">
                 <div className="logo-container">
                     <h3></h3>
                 </div>

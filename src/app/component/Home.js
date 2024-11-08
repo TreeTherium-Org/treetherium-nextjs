@@ -67,7 +67,7 @@ const Home = () => {
               </div>
               <div style={buttonCardStyle} onClick={() => handleButtonClick('/analytics')}>
                 <Image
-                      src="/assets/img/analytics.png"
+                      src="/assets/img/Analytics.png"
                       alt="Single Tree"
                       width={109}
                       height={109}

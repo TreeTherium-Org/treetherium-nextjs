@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { auth, db } from "../../firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
 import Link from "next/link";
+import Section from '../component/layouts/Section.js';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -25,37 +26,34 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div style={styles.outerContainer}>
-      <button style={styles.backButton}>
-        <Link href="/signin" style={styles.loginLink}>
-          <i class="fa fa-arrow-left" aria-hidden="true"></i>
-        </Link>
-      </button>
-      <div style={styles.innerContainer}>
-        <h2 style={styles.title}>Forget Password</h2>
-        <form onSubmit={handleForgotPassword} style={styles.form}>
-          <input
-            type="email"
-            placeholder="Your Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={styles.input}
-            required
-          />
-          <button type="submit" style={styles.button}>
-            Send Email
-          </button>
-        </form>
-        {message && <p style={styles.message}>{message}</p>}
-        {error && <p style={styles.error}>{error}</p>}
-        <p style={styles.loginText}>
-          Already have an account?{" "}
-          <Link href="/signin" style={styles.loginLink}>
-            Log In
-          </Link>
-        </p>
+    <Section allNotification={false} searchPopup={true} title={'Lost Password'}>
+      <div style={styles.outerContainer}>
+        <div style={styles.innerContainer}>
+          <h5 style={styles.title}>Enter email address associated with your account and we'll send email with instruction to reset your password</h5>
+          <form onSubmit={handleForgotPassword} style={styles.form}>
+            <input
+              type="email"
+              placeholder="Your Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={styles.input}
+              required
+            />
+            <button type="submit" style={styles.button}>
+              Send Email
+            </button>
+          </form>
+          {message && <p style={styles.message}>{message}</p>}
+          {error && <p style={styles.error}>{error}</p>}
+          <p style={styles.loginText}>
+            Already have an account?{" "}
+            <Link href="/signin" style={styles.loginLink}>
+              Log In
+            </Link>
+          </p>
+        </div>
       </div>
-    </div>
+    </Section>
   );
 }
 
@@ -90,9 +88,10 @@ const styles = {
     paddingTop: "80px", // Adjust as needed to give some space below the back button
   },
   title: {
-    fontSize: "1.8rem",
-    fontWeight: "bold",
+    fontSize: "1.0rem",
+    fontWeight: "400",
     marginBottom: "40px",
+    textAlign: "center"
   },
   form: {
     width: "100%",
@@ -137,5 +136,6 @@ const styles = {
   loginLink: {
     color: "#4F3738",
     textDecoration: "none",
+    textDecoration: "underline"
   },
 };

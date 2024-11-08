@@ -25,6 +25,8 @@ const UserSetting = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
   const [countries, setCountries] = useState([]);
+  const [showConnectWalletPopup, setShowConnectWalletPopup] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const db = getFirestore();
   const storage = getStorage();
@@ -181,9 +183,21 @@ const UserSetting = () => {
         const userDocRef = doc(db, "users", userId);
         const userDoc = await getDoc(userDocRef);
 
-        if (userDoc.exists() && !userDoc.data().walletAddress) {
+        if (userDoc.exists()) {
+          const currentWalletAddress = userDoc.data().walletAddress;
+          if (currentWalletAddress && currentWalletAddress !== newWalletAddress) {
+            // Show popup to ask user to connect a new wallet
+            setShowConnectWalletPopup(true);
+            return;
+          }
+
+          // Update wallet address if it's new
           await updateDoc(userDocRef, { walletAddress: newWalletAddress });
           setFormData({ ...formData, walletAddress: newWalletAddress });
+
+          // Show success message
+          setShowSuccessPopup(true);
+          setTimeout(() => setShowSuccessPopup(false), 3000);
         }
       } catch (error) {
         console.error("Failed to connect to Phantom Wallet:", error);
@@ -191,6 +205,20 @@ const UserSetting = () => {
     } else {
       alert("Phantom Wallet not found. Please install it first.");
     }
+  };
+
+  const handleConfirmConnectNewWallet = async () => {
+    const provider = window.solana;
+    const response = await provider.connect();
+    const newWalletAddress = response.publicKey.toString();
+    const userDocRef = doc(db, "users", userId);
+    await updateDoc(userDocRef, { walletAddress: newWalletAddress });
+    setFormData({ ...formData, walletAddress: newWalletAddress });
+
+    // Hide popup and show success message
+    setShowConnectWalletPopup(false);
+    setShowSuccessPopup(true);
+    setTimeout(() => setShowSuccessPopup(false), 3000);
   };
 
   return (
@@ -291,7 +319,7 @@ const UserSetting = () => {
                   type="text"
                   id="walletAddress"
                   name="walletAddress"
-                  value={formData.walletAddress || "No wallet address provided."}
+                  value={formData.walletAddress || "Click here to connect Phantom Wallet."}
                   readOnly
                   onClick={handleWalletConnect}
                   style={{ cursor: 'pointer' }}
@@ -310,6 +338,25 @@ const UserSetting = () => {
           </div>
         </div>
       </div>
+
+      {/* Popup for connecting a new wallet */}
+      {showConnectWalletPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <p>A wallet is already connected. Do you want to connect a new one?</p>
+            <button onClick={handleConfirmConnectNewWallet}>Yes</button>
+            <button onClick={() => setShowConnectWalletPopup(false)}>No</button>
+          </div>
+        </div>
+      )}
+
+      {/* Success popup for 3 seconds */}
+      {showSuccessPopup && (
+        <div className="success-popup">
+          <p>Wallet address updated successfully!</p>
+        </div>
+      )}
+
       <style jsx>{`
         .settings-area {
           padding: 40px 0;
@@ -532,7 +579,6 @@ const UserSetting = () => {
           }
         }
 
-        /* Ensure dropdown options appear above other elements */
         .select-wrapper select:focus + .select-wrapper::after {
           transform: translateY(-50%) rotate(180deg);
         }
@@ -543,18 +589,73 @@ const UserSetting = () => {
           z-index: 0;
         }
 
-        /* Style the dropdown options */
         .select-wrapper select option {
           padding: 10px;
           min-height: 1.2em;
           background: white;
         }
 
-        /* Ensure other form elements don't overlap */
         .form-group:not(.select-container) {
           position: relative;
           z-index: 0;
         }
+
+              .popup {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 1000;
+        }
+
+        .popup-content {
+          background: white;
+          padding: 20px;
+          border-radius: 10px;
+          text-align: center;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup-content button {
+          margin: 10px;
+          padding: 10px 20px;
+          border: none;
+          background-color: #4F3738;
+          color: white;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        .popup-content button:hover {
+          opacity: 0.9;
+        }
+
+        /* Styles for the success message popup */
+        .success-popup {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: #4CAF50;
+          color: white;
+          padding: 10px 20px;
+          border-radius: 5px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          animation: fadeOut 3s forwards;
+        }
+
+        @keyframes fadeOut {
+          0% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+            display: none;
+          }
       `}</style>
     </Section>
   );
