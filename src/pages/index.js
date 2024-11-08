@@ -280,7 +280,13 @@ const Page = () => {
     >
           <button
               onClick={slides[currentSlide].primaryButton.action}
-              className={styles.buttonTertiary}
+              className={`${
+                slides[currentSlide].id === 2 || slides[currentSlide].id === 3
+                  ? styles.buttonTertiary
+                  : slides[currentSlide].id === 4
+                  ? styles.backButton
+                  : ''
+              }`}
           >
               {slides[currentSlide].primaryButton.text}
           </button>
