@@ -23,7 +23,7 @@ const Page = () => {
 
       const timer = setTimeout(() => {
         setShowModal(false);
-      }, 3000);
+      }, 33000);
 
       return () => clearTimeout(timer);
     }
@@ -269,7 +269,15 @@ const Page = () => {
         </div>
       </div>
 
-      <div className={styles.buttonContainer1}>
+      <div
+      className={`${
+        slides[currentSlide].id === 2 || slides[currentSlide].id === 3
+          ? styles.buttonContainer1
+          : slides[currentSlide].id === 4
+          ? styles.buttonContainer4
+          : ''
+      }`}
+    >
           <button
               onClick={slides[currentSlide].primaryButton.action}
               className={styles.buttonTertiary}
@@ -279,8 +287,12 @@ const Page = () => {
 
           <button
             onClick={slides[currentSlide].secondaryButton.action}
-            className={`${styles.buttonQuartery} ${
-              currentSlide === 4 ? styles.registerButton : ''
+            className={`${
+              slides[currentSlide].id === 2 || slides[currentSlide].id === 3
+                ? styles.buttonQuartery
+                : slides[currentSlide].id === 4
+                ? styles.registerButton
+                : ''
             }`}
           >
             {slides[currentSlide].secondaryButton.text}
@@ -341,12 +353,6 @@ const modalContentStyle = {
 };
 
 //Landing Page Styles
-const containerStyle = {
-  display: "flex",
-  flexDirection: "column",
-  height: "100vh",
-  backgroundColor: "#ebf6e2",
-};
 
 const headerStyle = {
   textAlign: "center",

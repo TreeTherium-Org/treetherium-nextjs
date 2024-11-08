@@ -93,7 +93,7 @@
 .loadingText {
   position: absolute;
   z-index: 2; /* In front of the image */
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: white;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Add shadow for better readability */
