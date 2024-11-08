@@ -9,22 +9,36 @@ import Image from 'next/image';
 
 const Page = () => {
   const router = useRouter();
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const hasSeenModal = localStorage.getItem('hasSeenModal');
+    setIsClient(true);
+    
+    const hasSeenModal = sessionStorage.getItem('hasSeenModal');
     if (!hasSeenModal) {
       setShowModal(true);
+      sessionStorage.setItem('hasSeenModal', 'true');
+
       const timer = setTimeout(() => {
         setShowModal(false);
-        localStorage.setItem('hasSeenModal', 'true'); // Set flag in storage
       }, 3000);
+
       return () => clearTimeout(timer);
-    } else {
-      setShowModal(false);
     }
   }, []);
+  
+    // Determine which layout to render
+    const renderContent = () => {
+      if (currentSlide === 0) {
+        return renderLandingPage();
+      } else if (currentSlide === 4) {
+        return renderLoginRegister();
+      } else {
+        return renderOnboardingStep();
+      }
+    };
   
   const slides = [
     {
@@ -113,13 +127,6 @@ const Page = () => {
 
   const renderLandingPage = () => (
     <div className={styles.container}>
-      {showModal && (
-        <div style={modalOverlayStyle}>
-          <div style={modalContentStyle}>
-            <StartupScreen />
-          </div>
-        </div>
-      )}
       <div className={styles.header}>
         <div className={styles.headerLogo}>
           <Image
@@ -134,16 +141,18 @@ const Page = () => {
       </div>
 
       <div style={headerStyle}>
-        <div className={styles.imageContainer}>
-          <Image
-            src={slides[currentSlide].image}
-            alt="Landing Background"
-            width={500}
-            height={500}
-            className={styles.image}
-            priority={true}
-          />
-        </div>
+      {isClient && slides[currentSlide].image && (
+          <div className={styles.imageContainer}>
+            <Image
+              src={slides[currentSlide].image}
+              alt="Landing Background"
+              width={500}
+              height={500}
+              className={styles.image}
+              priority={true}
+            />
+          </div>
+        )}
 
         <div className={styles.textContainer}>
           <h2 className={styles.title}>
@@ -176,14 +185,16 @@ const Page = () => {
     <div className={styles.loginRegisterContainer}>
       <div className={styles.formWrapper}>
         <div className={styles.formWrapper2}>
-          <Image
+        {isClient && (
+            <Image
               src="/assets/img/TT-Logo.png"
               alt="Logo"
               width={500}
               height={500}
               className={styles.logo}
               priority={true}
-          />
+            />
+          )}
           <h2 className={styles.title1}>{slides[currentSlide].title}</h2>
         </div>
         <div className={styles.buttonContainer3}>
@@ -216,27 +227,31 @@ const Page = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.headerLogo}>
-          <Image
-            src="/assets/img/TT-Logo.png"
-            alt="Logo"
-            width={500}
-            height={500}
-            className={styles.headerLogo}
-            priority={true}
-          />
+        {isClient && (
+            <Image
+              src="/assets/img/TT-Logo.png"
+              alt="Logo"
+              width={500}
+              height={500}
+              className={styles.headerLogo}
+              priority={true}
+            />
+          )}
         </div>
       </div>
 
-      <div className={styles.imageContainer1}>
+      {isClient && slides[currentSlide].image && (
+        <div className={styles.imageContainer1}>
           <Image
-              src={slides[currentSlide].image}
-              alt={slides[currentSlide].title}
-              width={500}
-              height={500}
-              className={styles.image1}
-              priority={true}
+            src={slides[currentSlide].image}
+            alt={slides[currentSlide].title}
+            width={500}
+            height={500}
+            className={styles.image1}
+            priority={true}
           />
-      </div>
+        </div>
+      )}
 
       <div className={styles.card}>
         <div className={styles.innerCard}>
@@ -263,10 +278,12 @@ const Page = () => {
           </button>
 
           <button
-              onClick={slides[currentSlide].secondaryButton.action}
-              className={styles.buttonQuartery}
+            onClick={slides[currentSlide].secondaryButton.action}
+            className={`${styles.buttonQuartery} ${
+              currentSlide === 4 ? styles.registerButton : ''
+            }`}
           >
-              {slides[currentSlide].secondaryButton.text}
+            {slides[currentSlide].secondaryButton.text}
           </button>
       </div>
 
@@ -283,14 +300,18 @@ const Page = () => {
   </div>
 );
 
-  // Determine which layout to render
-  if (currentSlide === 0) {
-    return renderLandingPage();
-  } else if (currentSlide === 4) {
-    return renderLoginRegister();
-  } else {
-    return renderOnboardingStep();
-  }
+return (
+  <>
+    {isClient && showModal && (
+      <div style={modalOverlayStyle}>
+        <div style={modalContentStyle}>
+          <StartupScreen />
+        </div>
+      </div>
+    )}
+    {renderContent()}
+  </>
+);
 };
 
 export default Page;
@@ -332,10 +353,3 @@ const headerStyle = {
   marginTop: "20px",
   marginBottom: "30px",
 };
-
-
-
-
-
-
-

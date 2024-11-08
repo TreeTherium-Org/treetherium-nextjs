@@ -273,6 +273,15 @@
     min-height: 51.58px; /* Minimum height */
   }
 
+  .registerButton {
+    padding: 12px 24px;
+    font-size: 1.25em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+  }
+
 
 /* Progress Indicators */
 .progressIndicator {

@@ -11,62 +11,75 @@ const KnowledgeBase = () => {
           </h3>
         </div>
         <div style={styles.card}>
-            <h3 style={styles.title}>TreeTherium</h3>
+                <h3 style={styles.title}>TreeTherium</h3>
                 <div style={styles.divider} />
                 <h3 style={styles.page}>
                 <Link
-                    href="/"
+                    href="/what-is-treetherium"
                 ><span className="underline-text">What is TreeTherium</span></Link>
                 </h3>
                 <h3 style={styles.page}>
                 <Link
-                    href="/"
+                    href="/why-solana"
                 ><span className="underline-text">Why Solana</span></Link>
                 </h3>
                 <h3 style={styles.paragraph}>
                 <Link
-                    href="/"
+                    href="/investors"
                 ><span className="underline-text">Investors</span></Link>
                 </h3>
                 <h3 style={styles.title}>Blockchain & Crypto</h3>
                 <div style={styles.divider} />
                 <h3 style={styles.page}>
                 <Link
-                    href="/"
+                    href="/nfts-tree-planting"
                 ><span className="underline-text">NFT's & Tree Planting</span></Link>
                 </h3>
                 <h3 style={styles.page}>
                 <Link
-                    href="/"
-                ><span className="underline-text">What is a crypto wallet</span></Link>
+                    href="/what-is-crypto"
+                ><span className="underline-text">What Is Crypto</span></Link>
                 </h3>
                 <h3 style={styles.page}>
                 <Link
-                    href="/"
+                    href="/what-is-a-crypto-wallet"
+                ><span className="underline-text">What Is A Crypto Wallet</span></Link>
+                </h3>
+                <h3 style={styles.page}>
+                <Link
+                    href="/what-is-blockchain"
                 ><span className="underline-text">What Is Blockchain</span></Link>
                 </h3>
                 <h3 style={styles.page}>
                 <Link
-                    href="/"
+                    href="/create-a-phantom-wallet"
                 ><span className="underline-text">Create A Phantom Wallet</span></Link>
                 </h3>
                 <h3 style={styles.page}>
                 <Link
-                    href="/"
+                    href="/create-a-jupiter-account"
                 ><span className="underline-text">Create A Jupiter Account</span></Link>
                 </h3>
                 <h3 style={styles.paragraph}>
                 <Link
-                    href="/"
+                    href="/create-a-raydium-account"
                 ><span className="underline-text">Create A Raydium Account</span></Link>
                 </h3>
 
                 <h3 style={styles.title}>Reforestation</h3>
                 <div style={styles.divider} />
+                <h3 style={styles.paragraph}>
+                <Link
+                    href="/landowners"
+                ><span className="underline-text">Landowners</span></Link>
+                </h3>
+
+                <h3 style={styles.title}>Tree Planting</h3>
+                <div style={styles.divider} />
                 <h3 style={styles.page}>
                 <Link
-                    href="/"
-                ><span className="underline-text">Landowner</span></Link>
+                    href="/tree-planting-general"
+                ><span className="underline-text">Tree Planting General</span></Link>
                 </h3>
             </div>
         </div>
@@ -86,15 +99,15 @@ const styles = {
         backgroundColor: '#fff', /* White background for the card */
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', /* Soft shadow */
         textAlign: 'left', /* Left-align content */
-        padding: '20px', /* Inner padding */
-        maxWidth: '400px', /* Max width for the card */
+        padding: '1.25rem', /* Inner padding */
+        maxWidth: '100%', /* Max width for the card */
         margin: '21px 20px 100px',
     },
     title: {
         fontSize: '1.125em',
         fontWeight: 700,
         color: '#4F3738',
-        padding: '9px 34px',
+        padding: '5px 34px',
         marginBottom: '0px',
     },
     divider: {
@@ -108,7 +121,7 @@ const styles = {
         fontSize: '1.125em',
         fontWeight: 400,
         color: '#4F3738',
-        padding: '0 0 40px 55px',
+        padding: '0 0 39px 55px',
         marginBottom: '0px',
     },
     page: {
@@ -140,5 +153,25 @@ const styles = {
         left: 0,
         right: 0,
         bottom: 0,
+    },
+    // Adding a responsive layout to make sure the text and dividers adjust well to screen size
+    '@media (min-width: 600px)': {
+        card: {
+            maxWidth: '80%',   // Limit card width on medium screens
+        },
+    },
+    '@media (min-width: 1024px)': {
+        card: {
+            maxWidth: '600px',  // Limit card width on larger screens
+        },
+        title: {
+            fontSize: '1.5rem',
+        },
+        page: {
+            fontSize: '1.125rem',
+        },
+        paragraph: {
+            fontSize: '1.125rem',
+        },
     },
 };
