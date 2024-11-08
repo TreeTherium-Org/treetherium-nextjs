@@ -112,7 +112,7 @@ const styles = {
     },
     divider: {
         width: '100%',
-        height: '5px',
+        height: '4px',
         margin: '0 0 32px',
         borderRadius: '50px',
         backgroundColor: '#e7e1ee',
