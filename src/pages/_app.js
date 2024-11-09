@@ -8,6 +8,7 @@ import "../../public/assets/demo/css/demo.css";
 import "../../public/assets/css/vendor.css";
 import { SessionProvider } from "next-auth/react";
 import { Roboto } from "next/font/google";
+import Head from "next/head";
 
 // Import Font files (if needed for specific font settings)
 // You don't need to explicitly import fonts in most cases as they're linked in the CSS.
@@ -23,7 +24,7 @@ const roboto = Roboto({
 function MyApp({ Component, pageProps }) {
   return (
     <SessionProvider session={pageProps.session}>
-      <head>
+      <Head>
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -42,7 +43,7 @@ function MyApp({ Component, pageProps }) {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
-      </head>
+      </Head>
       <main className={roboto.className}>
         <Component {...pageProps} />
       </main>
