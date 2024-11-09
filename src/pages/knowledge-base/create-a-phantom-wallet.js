@@ -1,4 +1,4 @@
-import Phantom from '../../src/app/component/knowledge/create-a-phantom-wallet';
+import Phantom from "@/app/component/knowledge/create-a-phantom-wallet";
 
 export default function PhantomPage() {
   return (

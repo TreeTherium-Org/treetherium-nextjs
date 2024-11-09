@@ -1,4 +1,4 @@
-import WhatIsCrypto from '../../src/app/component/knowledge/what-is-crypto';
+import WhatIsCrypto from "@/app/component/knowledge/what-is-crypto";
 
 export default function WhatIsCryptoPage() {
   return (

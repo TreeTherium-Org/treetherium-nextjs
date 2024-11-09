@@ -1,4 +1,4 @@
-import WhatIsBlockchain from '../../src/app/component/knowledge/what-is-blockchain';
+import WhatIsBlockchain from "@/app/component/knowledge/what-is-blockchain";
 
 export default function WhatIsBlockchainPage() {
   return (

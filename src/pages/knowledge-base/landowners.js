@@ -1,4 +1,4 @@
-import Landowners from '../../src/app/component/knowledge/landowners';
+import Landowners from "@/app/component/knowledge/landowners";
 
 export default function LandownersPage() {
   return (

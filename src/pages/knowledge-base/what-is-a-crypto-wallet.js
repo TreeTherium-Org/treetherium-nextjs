@@ -1,4 +1,4 @@
-import WhatIsACryptoWallet from '../../src/app/component/knowledge/what-is-a-crypto-wallet';
+import WhatIsACryptoWallet from "@/app/component/knowledge/what-is-a-crypto-wallet";
 
 export default function WhatIsACryptoWalletPage() {
   return (

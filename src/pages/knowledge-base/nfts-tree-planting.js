@@ -1,4 +1,4 @@
-import NFT from '../../src/app/component/knowledge/nfts-tree-planting';
+import NFT from "@/app/component/knowledge/nfts-tree-planting";
 
 export default function NFTPage() {
   return (

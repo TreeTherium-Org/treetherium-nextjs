@@ -1,4 +1,4 @@
-import Investors from '../../src/app/component/knowledge/investors';
+import Investors from "@/app/component/knowledge/investors";
 
 export default function InvestorsPage() {
   return (
