@@ -214,7 +214,7 @@ export default function UploadForm() {
 
               {isUploading && (
                 <div className="form-group">
-                  <p>Uploading: {Math.round(uploadProgress)}%</p>
+                  <p style="color: brown;">Uploading: {Math.round(uploadProgress)}%</p>
                 </div>
               )}
 

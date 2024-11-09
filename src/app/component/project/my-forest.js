@@ -18,7 +18,7 @@ const MyForestPage = () => {
     };
 
     return (
-        <Section allNotification={false} searchPopup={true} title="My Forest Page">
+        <Section allNotification={false} searchPopup={true} title="My Forest">
             <div style={containerStyle}>
                 <main style={mainStyle}>
                     <p style={questionStyle}>Have you planted any trees yet?</p>

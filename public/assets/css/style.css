@@ -5596,7 +5596,7 @@ span.badge-pulse-orange {
 }
 
 .btn-google:hover {
-  background-color: #357ae8;
+  background-color: #4285F4;
 }
 
 .btn-facebook:hover {
@@ -5608,7 +5608,7 @@ span.badge-pulse-orange {
 }
 
 .btn-phantom-wallet:hover {
-  background-color: #357ae8;
+  background-color: #ab9ff2;
 }
 
 /* Modal Styles */
@@ -5823,7 +5823,7 @@ span.badge-pulse-orange {
 }
 
 .btn-submit:hover {
-  background: #217dbb;
+  background: #778B28;
 }
 
 @media (max-width: 768px) {

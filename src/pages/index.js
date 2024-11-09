@@ -13,12 +13,12 @@ const Page = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
-    const hasSeenModal = localStorage.getItem('hasSeenModal');
+    const hasSeenModal = sessionStorage.getItem('hasSeenModal');
     if (!hasSeenModal) {
       setShowModal(true);
       const timer = setTimeout(() => {
         setShowModal(false);
-        localStorage.setItem('hasSeenModal', 'true'); // Set flag in storage
+        sessionStorage.setItem('hasSeenModal', 'true'); // Set flag in storage
       }, 3000);
       return () => clearTimeout(timer);
     } else {
