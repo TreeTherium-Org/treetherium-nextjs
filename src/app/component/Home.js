@@ -90,7 +90,7 @@ const Home = () => {
               onClick={() => handleButtonClick("/analytics")}
             >
               <Image
-                src="/assets/img/analytics.png"
+                src="/assets/img/analytic.png"
                 alt="Single Tree"
                 width={109}
                 height={109}
