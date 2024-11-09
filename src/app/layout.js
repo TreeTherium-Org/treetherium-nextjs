@@ -1,6 +1,5 @@
-import Section from '/src/app/component/layouts/Section.js';
+import Section from "/src/app/component/layouts/Section.js";
 import "./globals.css";
-
 
 export const metadata = {
   title: "Welcome to Treetherium",
@@ -10,9 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-        <body>
-            {children}
-        </body>
+      <body>{children}</body>
     </html>
   );
 }

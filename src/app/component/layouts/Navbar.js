@@ -73,7 +73,7 @@ const Navbar = ({ isOpen, onClose }) => {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/planted-forest">
+                            <Link href="/my-forest">
                                 <i className="fa fa-tree" />
                                 <span>My Forest</span>
                             </Link>

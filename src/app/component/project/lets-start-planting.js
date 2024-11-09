@@ -2,39 +2,43 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Section from "../layouts/Section";
 import { useRouter } from "next/router";
+import { getFirestore, doc, getDoc } from "firebase/firestore"; // Import Firebase functions
+import { useSession } from "next-auth/react"; // Assuming you're using next-auth for session handling
 
 const LetsStartPlanting = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
-  const [showWalletPopup, setShowWalletPopup] = useState(false);
+  const [showRedirectPopup, setShowRedirectPopup] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession(); // Get session data
+  const db = getFirestore(); // Initialize Firestore
 
   useEffect(() => {
-    const checkWalletConnection = () => {
-      const connected = localStorage.getItem("walletConnected"); // Replace with actual connection check
-      if (connected) {
-        setIsWalletConnected(true);
+    // Function to check if wallet is connected in Firebase
+    const checkWalletConnection = async () => {
+      if (session?.user?.id) {
+        const userRef = doc(db, "users", session.user.id);
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists() && userDoc.data().walletAddress) {
+          setIsWalletConnected(true);
+        } else {
+          setIsWalletConnected(false);
+        }
       }
     };
+
     checkWalletConnection();
-  }, []);
+  }, [db, session]);
 
-  const handleButtonClick = (route) => {
-    if (!isWalletConnected) {
-      setShowWalletPopup(true);
+  const handleButtonClick = async (route) => {
+    if (isWalletConnected) {
+      router.push(route); // Redirect if wallet is connected
     } else {
-      router.push(route); // Redirect to the specified route
+      setShowRedirectPopup(true); // Show the redirect popup if wallet not connected
+      setTimeout(() => {
+        router.push("/accountprofile"); // Redirect to Account Profile after 3 seconds
+      }, 3000);
     }
-  };
-
-  const connectWallet = () => {
-    setIsWalletConnected(true);
-    setShowWalletPopup(false);
-    localStorage.setItem("walletConnected", "true"); // Update the wallet connection state
-  };
-
-  const disconnectWallet = () => {
-    setIsWalletConnected(false);
-    localStorage.removeItem("walletConnected"); // Clear the wallet connection state
   };
 
   return (
@@ -86,38 +90,21 @@ const LetsStartPlanting = () => {
           </div>
         </header>
 
-        {/* Wallet Connection Popup */}
-        {showWalletPopup && (
+        {/* Redirect Popup */}
+        {showRedirectPopup && (
           <div style={popupOverlayStyle}>
             <div style={popupStyle}>
-              <p>Please connect your wallet to continue.</p>
-              <button style={buttonStyle} onClick={connectWallet}>
-                Connect Wallet
-              </button>
-              <button
-                style={buttonStyle}
-                onClick={() => setShowWalletPopup(false)}
-              >
-                Close
-              </button>
+              <p>You are not connected to your wallet yet. Redirecting to Account Profile page...</p>
             </div>
           </div>
         )}
-
-        {/* Disconnect Wallet Button */}
-        <div style={buttonContainerStyle}>
-          {isWalletConnected && (
-            <button style={disconnectButtonStyle} onClick={disconnectWallet}>
-              Disconnect Wallet
-            </button>
-          )}
-        </div>
       </div>
     </Section>
   );
 };
 
 export default LetsStartPlanting;
+
 
 const containerStyle = {
   display: "flex",

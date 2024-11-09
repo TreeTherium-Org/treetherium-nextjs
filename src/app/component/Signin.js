@@ -9,7 +9,7 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import { auth, db } from "../../firebase";
-import { doc, getDoc, collection } from "firebase/firestore";
+import { doc, getDoc, collection, query, where, getDocs  } from "firebase/firestore";
 
 // Full-Screen Loader Component
 const FullScreenLoader = () => (
@@ -42,6 +42,42 @@ const Signin = () => {
     return userDoc.exists();
   };
 
+  const handleFirebaseError = (error) => {
+    switch (error.code) {
+      case 'auth/user-not-found':
+        setError("No account found with this email. Please sign up first.");
+        break;
+      case 'auth/wrong-password':
+        setError("Incorrect password. Please try again.");
+        break;
+      case 'auth/invalid-email':
+        setError("Invalid email format. Please enter a valid email.");
+        break;
+      case 'auth/invalid-credential':
+        setError("The email/password provided are not valid. Please try again.");
+        break;
+      case 'auth/user-disabled':
+        setError("This account has been disabled. Please contact support.");
+        break;
+      case 'auth/too-many-requests':
+        setError("Too many login attempts. Please try again later.");
+        break;
+      case 'auth/popup-closed-by-user':
+        setError("The sign-in popup was closed. Please try again.");
+        break;
+      case 'auth/network-request-failed':
+        setError("Network error. Please check your internet connection.");
+        break;
+      case 'auth/cancelled-popup-request':
+        setError("Multiple sign-in attempts detected. Please complete the first sign-in attempt.");
+        break;
+      default:
+        setError(error.message || "An unexpected error occurred. Please try again.");
+        break;
+    }
+    console.error('Firebase Error:', error);
+  };
+
   const signInWithEmail = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading
@@ -66,8 +102,7 @@ const Signin = () => {
 
       router.push("/home");
     } catch (error) {
-      console.error("Error signing in:", error);
-      setError(error.message);
+      handleFirebaseError(error);
     } finally {
       setLoading(false); // Stop loading
     }
@@ -98,49 +133,71 @@ const Signin = () => {
 
       router.push("/home");
     } catch (error) {
-      console.error("Error signing in with provider:", error);
-      setError(error.message);
+      handleFirebaseError(error);
     } finally {
       setLoading(false); // Stop loading
     }
   };
+
+  const checkUserExistsByWalletAddress = async (walletAddress) => {
+    try {
+        const usersCollection = collection(db, "users");
+        const q = query(usersCollection, where("walletAddress", "==", walletAddress));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const doc = querySnapshot.docs[0];
+            return { exists: true, userId: doc.id };
+        } else {
+            return { exists: false };
+        }
+    } catch (error) {
+        setError("Failed to check if the wallet address exists. Please try again.");
+        console.error(error);
+        return { exists: false };
+    }
+};
 
   const connectPhantomWallet = async () => {
     setLoading(true); // Start loading
     setError(null); // Clear previous errors
     try {
       const { solana } = window;
-      if (solana && solana.isPhantom) {
-        const response = await solana.connect();
-        const walletAddress = response.publicKey.toString();
-        const userExists = await checkUserExists(walletAddress);
-
-        if (!userExists) {
-          throw new Error("User not found in Firestore. Please sign up first.");
-        }
-
-        const nextAuthResult = await signIn("credentials", {
-          userId: walletAddress,
-          provider: "Phantom",
-          walletAddress: walletAddress,
-          redirect: false,
-        });
-
-        if (nextAuthResult.error) {
-          throw new Error(nextAuthResult.error);
-        }
-
-        router.push("/home");
-      } else {
+      if (!solana || !solana.isPhantom) {
         throw new Error("Phantom Wallet not found. Please install it.");
       }
+
+      const response = await solana.connect();
+      const walletAddress = response.publicKey.toString();
+
+      // Check if user exists by wallet address
+      const userCheck = await checkUserExistsByWalletAddress(walletAddress);
+
+      if (!userCheck.exists) {
+        // If no account is found, prompt the user to sign up
+        throw new Error("Account not found. Please sign up first.");
+      }
+
+      // Log in with the existing user ID
+      const nextAuthResult = await signIn("credentials", {
+        userId: userCheck.userId,
+        provider: "Phantom",
+        walletAddress: walletAddress,
+        redirect: false,
+      });
+
+      if (nextAuthResult.error) {
+        throw new Error(nextAuthResult.error);
+      }
+
+      router.push("/home");
     } catch (error) {
-      console.error("Error connecting to Phantom Wallet:", error);
-      setError(error.message);
+      handleFirebaseError(error); // Display error message
     } finally {
       setLoading(false); // Stop loading
     }
   };
+
 
   const googleProvider = new GoogleAuthProvider();
 
@@ -155,6 +212,7 @@ const Signin = () => {
         <div className="signin-area mg-bottom-35">
           <div className="container">
             <form className="contact-form-inner" onSubmit={signInWithEmail}>
+              {error && <p className="error-message">{error}</p>}
               <label className="single-input-wrap">
                 <span>Email Address*</span>
                 <input
@@ -184,7 +242,7 @@ const Signin = () => {
                   />
                   Remember Password
                 </label>
-                <Link href="/forgot-password" className="forgot-password-link">
+                <Link href="/lostpassword" className="forgot-password-link">
                   Forgot Password
                 </Link>
               </div>
@@ -195,7 +253,6 @@ const Signin = () => {
                 <span className="underline-text">Create an account</span>
               </Link>
             </form>
-            {error && <p className="error">{error}</p>}
             <div className="social-buttons">
               <button
                 onClick={connectPhantomWallet}

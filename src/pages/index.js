@@ -1,11 +1,11 @@
 //LATEST LANDING PAGE
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import StartupScreen from "/src/app/component/StartupScreen.js";
-import styles from './LandingPage.module.css';
-import Image from 'next/image';
+import styles from "./LandingPage.module.css";
+import Image from "next/image";
 
 const Page = () => {
   const router = useRouter();
@@ -15,31 +15,31 @@ const Page = () => {
 
   useEffect(() => {
     setIsClient(true);
-    
-    const hasSeenModal = sessionStorage.getItem('hasSeenModal');
+
+    const hasSeenModal = sessionStorage.getItem("hasSeenModal");
     if (!hasSeenModal) {
       setShowModal(true);
-      sessionStorage.setItem('hasSeenModal', 'true');
+      sessionStorage.setItem("hasSeenModal", "true");
 
       const timer = setTimeout(() => {
         setShowModal(false);
-      }, 33000);
+      }, 3000);
 
       return () => clearTimeout(timer);
     }
   }, []);
-  
-    // Determine which layout to render
-    const renderContent = () => {
-      if (currentSlide === 0) {
-        return renderLandingPage();
-      } else if (currentSlide === 4) {
-        return renderLoginRegister();
-      } else {
-        return renderOnboardingStep();
-      }
-    };
-  
+
+  // Determine which layout to render
+  const renderContent = () => {
+    if (currentSlide === 0) {
+      return renderLandingPage();
+    } else if (currentSlide === 4) {
+      return renderLoginRegister();
+    } else {
+      return renderOnboardingStep();
+    }
+  };
+
   const slides = [
     {
       id: 1,
@@ -49,12 +49,12 @@ const Page = () => {
       isLanding: true,
       primaryButton: {
         text: "Let's Get Started",
-        action: () => setCurrentSlide(1)
+        action: () => setCurrentSlide(1),
       },
       secondaryButton: {
         text: "I Have An Account",
-        action: () => setCurrentSlide(4) // Go to login/register page
-      }
+        action: () => setCurrentSlide(4), // Go to login/register page
+      },
     },
     {
       id: 2,
@@ -62,17 +62,17 @@ const Page = () => {
       subtitle: [
         "Start your journey by planting a tree with TreeTherium! Choose a project, pick your tree type, and join a global effort to make the planet greener. Each tree you plant makes a real difference. You can even track the tree’s growth and see its positive impact over time.",
         "Planting a tree is quick, easy, and helps build a livable world for everyone.",
-        "Ready to start? Just follow the steps in our app to plant your first tree and support a greener planet today!"
+        "Ready to start? Just follow the steps in our app to plant your first tree and support a greener planet today!",
       ],
       image: "/assets/img/step-1.png",
       primaryButton: {
         text: "Skip",
-        action: () => setCurrentSlide(4)
+        action: () => setCurrentSlide(4),
       },
       secondaryButton: {
         text: "Next",
-        action: () => setCurrentSlide(2) // Go to login/register page
-      }
+        action: () => setCurrentSlide(2), // Go to login/register page
+      },
     },
     {
       id: 3,
@@ -80,17 +80,17 @@ const Page = () => {
       subtitle: [
         "After planting a tree, you can tokenize it! Tokenizing means giving your tree a unique digital identity. Based on it’s geographical location. This identity is stored on the blockchain, making it easy to track and keep secure.",
         "Tokenizing your trees shows you are part of the TreeTherium community and supports tree-planting programs worldwide.",
-        "Just follow the instructions in the app to tokenize your tree and watch its progress digitally grow. Now, your tree is officially part of a global network of trees helping the environment!"
+        "Just follow the instructions in the app to tokenize your tree and watch its progress digitally grow. Now, your tree is officially part of a global network of trees helping the environment!",
       ],
       image: "/assets/img/step-2.png",
       primaryButton: {
         text: "Back",
-        action: () => setCurrentSlide(1)
+        action: () => setCurrentSlide(1),
       },
       secondaryButton: {
         text: "Next",
-        action: () => setCurrentSlide(3)
-      }
+        action: () => setCurrentSlide(3),
+      },
     },
     {
       id: 4,
@@ -98,17 +98,17 @@ const Page = () => {
       subtitle: [
         "Now, you can turn your tree’s growth into value! By tokenizing, you create potential earnings that grow as your tree grows. Each tree helps save the planet and can earn value over time.",
         "You can view the benefits your tree creates in the app and see how it contributes to global sustainability.",
-        "This is a simple way to both save the planet and gain rewards. With TreeTherium, your tree is a smart way to help the earth while enjoying long-term benefits!"
+        "This is a simple way to both save the planet and gain rewards. With TreeTherium, your tree is a smart way to help the earth while enjoying long-term benefits!",
       ],
       image: "/assets/img/step-3.png",
       primaryButton: {
         text: "Back",
-        action: () => setCurrentSlide(2)
+        action: () => setCurrentSlide(2),
       },
       secondaryButton: {
         text: "Register",
-        action: () => setCurrentSlide(4)
-      }
+        action: () => setCurrentSlide(4),
+      },
     },
     {
       id: 5,
@@ -116,13 +116,13 @@ const Page = () => {
       isLoginRegister: true,
       primaryButton: {
         text: "Login",
-        action: () => router.push('/signin')
+        action: () => router.push("/signin"),
       },
       secondaryButton: {
         text: "Register",
-        action: () => router.push('/signup')
-      }
-    }
+        action: () => router.push("/signup"),
+      },
+    },
   ];
 
   const renderLandingPage = () => (
@@ -141,7 +141,7 @@ const Page = () => {
       </div>
 
       <div style={headerStyle}>
-      {isClient && slides[currentSlide].image && (
+        {isClient && slides[currentSlide].image && (
           <div className={styles.imageContainer}>
             <Image
               src={slides[currentSlide].image}
@@ -155,12 +155,8 @@ const Page = () => {
         )}
 
         <div className={styles.textContainer}>
-          <h2 className={styles.title}>
-            {slides[currentSlide].title}
-          </h2>
-          <p className={styles.subtitle}>
-            {slides[currentSlide].subtitle}
-          </p>
+          <h2 className={styles.title}>{slides[currentSlide].title}</h2>
+          <p className={styles.subtitle}>{slides[currentSlide].subtitle}</p>
 
           <div className={styles.buttonContainer}>
             <button
@@ -185,7 +181,7 @@ const Page = () => {
     <div className={styles.loginRegisterContainer}>
       <div className={styles.formWrapper}>
         <div className={styles.formWrapper2}>
-        {isClient && (
+          {isClient && (
             <Image
               src="/assets/img/TT-Logo.png"
               alt="Logo"
@@ -198,25 +194,25 @@ const Page = () => {
           <h2 className={styles.title1}>{slides[currentSlide].title}</h2>
         </div>
         <div className={styles.buttonContainer3}>
-            <button
-                onClick={slides[currentSlide].primaryButton.action}
-                className={styles.button}
-            >
-                {slides[currentSlide].primaryButton.text}
-            </button>
-            <button
-                onClick={slides[currentSlide].secondaryButton.action}
-                className={styles.buttonSecondary}
-            >
-                {slides[currentSlide].secondaryButton.text}
-            </button>
+          <button
+            onClick={slides[currentSlide].primaryButton.action}
+            className={styles.button}
+          >
+            {slides[currentSlide].primaryButton.text}
+          </button>
+          <button
+            onClick={slides[currentSlide].secondaryButton.action}
+            className={styles.buttonSecondary}
+          >
+            {slides[currentSlide].secondaryButton.text}
+          </button>
         </div>
         <div className={styles.buttonContainer2}>
           <button
-              onClick={() => setCurrentSlide(0)}
-              className={styles.buttonTertiary}
+            onClick={() => setCurrentSlide(0)}
+            className={styles.buttonTertiary}
           >
-              Back
+            Back
           </button>
         </div>
       </div>
@@ -227,7 +223,7 @@ const Page = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.headerLogo}>
-        {isClient && (
+          {isClient && (
             <Image
               src="/assets/img/TT-Logo.png"
               alt="Logo"
@@ -256,80 +252,80 @@ const Page = () => {
       <div className={styles.card}>
         <div className={styles.innerCard}>
           <div className={styles.cardTitle}>
-              <h2>{slides[currentSlide].title}</h2>
+            <h2>{slides[currentSlide].title}</h2>
           </div>
           <div className={styles.divider} />
           <div>
-              {slides[currentSlide].subtitle.map((paragraph, index) => (
-                  <p key={index} className={styles.subtitleParagraph}>
-                      {paragraph}
-                  </p>
-              ))}
+            {slides[currentSlide].subtitle.map((paragraph, index) => (
+              <p key={index} className={styles.subtitleParagraph}>
+                {paragraph}
+              </p>
+            ))}
           </div>
         </div>
       </div>
 
       <div
-      className={`${
-        slides[currentSlide].id === 2 || slides[currentSlide].id === 3
-          ? styles.buttonContainer1
-          : slides[currentSlide].id === 4
-          ? styles.buttonContainer4
-          : ''
-      }`}
-    >
-          <button
-              onClick={slides[currentSlide].primaryButton.action}
-              className={`${
-                slides[currentSlide].id === 2 || slides[currentSlide].id === 3
-                  ? styles.buttonTertiary
-                  : slides[currentSlide].id === 4
-                  ? styles.backButton
-                  : ''
-              }`}
-          >
-              {slides[currentSlide].primaryButton.text}
-          </button>
+        className={`${
+          slides[currentSlide].id === 2 || slides[currentSlide].id === 3
+            ? styles.buttonContainer1
+            : slides[currentSlide].id === 4
+            ? styles.buttonContainer4
+            : ""
+        }`}
+      >
+        <button
+          onClick={slides[currentSlide].primaryButton.action}
+          className={`${
+            slides[currentSlide].id === 2 || slides[currentSlide].id === 3
+              ? styles.buttonTertiary
+              : slides[currentSlide].id === 4
+              ? styles.backButton
+              : ""
+          }`}
+        >
+          {slides[currentSlide].primaryButton.text}
+        </button>
 
-          <button
-            onClick={slides[currentSlide].secondaryButton.action}
-            className={`${
-              slides[currentSlide].id === 2 || slides[currentSlide].id === 3
-                ? styles.buttonQuartery
-                : slides[currentSlide].id === 4
-                ? styles.registerButton
-                : ''
-            }`}
-          >
-            {slides[currentSlide].secondaryButton.text}
-          </button>
+        <button
+          onClick={slides[currentSlide].secondaryButton.action}
+          className={`${
+            slides[currentSlide].id === 2 || slides[currentSlide].id === 3
+              ? styles.buttonQuartery
+              : slides[currentSlide].id === 4
+              ? styles.registerButton
+              : ""
+          }`}
+        >
+          {slides[currentSlide].secondaryButton.text}
+        </button>
       </div>
 
       <div className={styles.progressIndicator}>
-          {[1, 2, 3].map((_, index) => (
-              <div
-                  key={index}
-                  className={`${styles.indicator} ${
-                      index === currentSlide - 1 ? styles.active : styles.inactive
-                  }`}
-              />
-          ))}
+        {[1, 2, 3].map((_, index) => (
+          <div
+            key={index}
+            className={`${styles.indicator} ${
+              index === currentSlide - 1 ? styles.active : styles.inactive
+            }`}
+          />
+        ))}
       </div>
-  </div>
-);
+    </div>
+  );
 
-return (
-  <>
-    {isClient && showModal && (
-      <div style={modalOverlayStyle}>
-        <div style={modalContentStyle}>
-          <StartupScreen />
+  return (
+    <>
+      {isClient && showModal && (
+        <div style={modalOverlayStyle}>
+          <div style={modalContentStyle}>
+            <StartupScreen />
+          </div>
         </div>
-      </div>
-    )}
-    {renderContent()}
-  </>
-);
+      )}
+      {renderContent()}
+    </>
+  );
 };
 
 export default Page;

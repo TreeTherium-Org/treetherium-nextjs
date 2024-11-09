@@ -5596,7 +5596,7 @@ span.badge-pulse-orange {
 }
 
 .btn-google:hover {
-  background-color: #357ae8;
+  background-color: #4285F4;
 }
 
 .btn-facebook:hover {
@@ -5608,7 +5608,7 @@ span.badge-pulse-orange {
 }
 
 .btn-phantom-wallet:hover {
-  background-color: #357ae8;
+  background-color: #ab9ff2;
 }
 
 /* Modal Styles */
@@ -5823,7 +5823,7 @@ span.badge-pulse-orange {
 }
 
 .btn-submit:hover {
-  background: #217dbb;
+  background: #778B28;
 }
 
 @media (max-width: 768px) {
@@ -6037,3 +6037,18 @@ span.badge-pulse-orange {
   100% { transform: rotate(360deg); }
 }
 
+/* Error Message Style */
+.error-message {
+  color: #D8000C; /* Red color for error */
+  background-color: #FFD2D2; /* Light red background */
+  border: 1px solid #D8000C;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
