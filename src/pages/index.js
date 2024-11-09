@@ -23,7 +23,7 @@ const Page = () => {
 
       const timer = setTimeout(() => {
         setShowModal(false);
-      }, 33000);
+      }, 3000);
 
       return () => clearTimeout(timer);
     }
