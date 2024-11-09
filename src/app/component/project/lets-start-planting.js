@@ -1,34 +1,27 @@
+"use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Section from "../layouts/Section";
-import { useRouter } from "next/router";
-import { getFirestore, doc, getDoc } from "firebase/firestore"; // Import Firebase functions
-import { useSession } from "next-auth/react"; // Assuming you're using next-auth for session handling
+import { useRouter } from "next/navigation";
+import useQuery from "@/app/libs/useQuery";
 
 const LetsStartPlanting = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [showRedirectPopup, setShowRedirectPopup] = useState(false);
   const router = useRouter();
-  const { data: session } = useSession(); // Get session data
-  const db = getFirestore(); // Initialize Firestore
+  const { data: user } = useQuery("/api/me"); // Get session data
 
   useEffect(() => {
-    // Function to check if wallet is connected in Firebase
     const checkWalletConnection = async () => {
-      if (session?.user?.id) {
-        const userRef = doc(db, "users", session.user.id);
-        const userDoc = await getDoc(userRef);
-
-        if (userDoc.exists() && userDoc.data().walletAddress) {
-          setIsWalletConnected(true);
-        } else {
-          setIsWalletConnected(false);
-        }
+      if (user?.walletAddress) {
+        setIsWalletConnected(true);
+      } else {
+        setIsWalletConnected(false);
       }
     };
 
     checkWalletConnection();
-  }, [db, session]);
+  }, [user]);
 
   const handleButtonClick = async (route) => {
     if (isWalletConnected) {
@@ -49,7 +42,9 @@ const LetsStartPlanting = () => {
     >
       <div style={containerStyle}>
         <header style={headerStyle}>
-          <h3 className="form-title">&quot;what are you planting today?&quot;</h3>
+          <h3 className="form-title">
+            &quot;what are you planting today?&quot;
+          </h3>
           <div style={buttonGroupStyle}>
             <div
               onClick={() => handleButtonClick("list-trees")}
@@ -94,7 +89,10 @@ const LetsStartPlanting = () => {
         {showRedirectPopup && (
           <div style={popupOverlayStyle}>
             <div style={popupStyle}>
-              <p>You are not connected to your wallet yet. Redirecting to Account Profile page...</p>
+              <p>
+                You are not connected to your wallet yet. Redirecting to Account
+                Profile page...
+              </p>
             </div>
           </div>
         )}
@@ -104,7 +102,6 @@ const LetsStartPlanting = () => {
 };
 
 export default LetsStartPlanting;
-
 
 const containerStyle = {
   display: "flex",
@@ -126,7 +123,7 @@ const buttonGroupStyle = {
   gap: "80px",
   marginTop: "25px",
   alignItems: "center",
-  fontWeight: '400'
+  fontWeight: "400",
 };
 
 const cardStyle = {
@@ -154,8 +151,6 @@ const cardStyle = {
   gap: '10px'
 };
 */
-
-
 
 const imageShadowStyle = "0px 4px 10px rgba(0, 0, 0, 0.2)";
 
@@ -204,5 +199,5 @@ const disconnectButtonStyle = {
 };
 
 const labelStyle = {
-  fontSize: '18px'
-}
+  fontSize: "18px",
+};

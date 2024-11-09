@@ -1,37 +1,11 @@
-import { useEffect, useState } from "react";
+"use client";
 import Section from "../component/layouts/Section";
 import Link from "next/link";
-import { auth, db } from "../../firebase";
-import { doc, getDoc } from "firebase/firestore";
-import { useSession, signOut } from "next-auth/react"; // Import useSession and signOut
-import { useRouter } from "next/router";
+import { signOut } from "next-auth/react"; // Import useSession and signOut
+import useQuery from "../libs/useQuery";
 
 const AccountProfile = () => {
-  const [userData, setUserData] = useState(null);
-  const { data: session, status } = useSession(); // Destructure session data
-  const router = useRouter();
-  const userId = session?.user?.id; // Retrieve user ID from the session object
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (userId) {
-        try {
-          const docRef = doc(db, "users", userId);
-          const docSnap = await getDoc(docRef);
-
-          if (docSnap.exists()) {
-            setUserData(docSnap.data());
-          } else {
-            console.log("No such document!"); // This will log if the document does not exist
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      }
-    };
-
-    fetchUserData();
-  }, [userId]);
+  const { data: userData } = useQuery("/api/me"); // Destructure session data
 
   if (!userData) {
     return <div>Loading...</div>;
@@ -39,12 +13,11 @@ const AccountProfile = () => {
 
   const handleLogout = async () => {
     try {
-        await signOut({ callbackUrl: "/signin" });
+      await signOut({ callbackUrl: "/signin" });
     } catch (error) {
-        console.error("Error logging out:", error);
+      console.error("Error logging out:", error);
     }
-};
-
+  };
 
   return (
     <Section allNotification={false} searchPopup={true} title="Account Profile">
@@ -88,9 +61,9 @@ const AccountProfile = () => {
                         ).toLocaleDateString("en-GB", {
                           day: "numeric",
                           month: "long",
-                          year: "numeric"
+                          year: "numeric",
                         })
-                        : "Unknown"}
+                      : "Unknown"}
                   </span>
                 </div>
               </div>

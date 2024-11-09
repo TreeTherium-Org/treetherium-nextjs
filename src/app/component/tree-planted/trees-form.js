@@ -1,20 +1,15 @@
+"use client";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Section from "../layouts/Section";
-import { db, storage } from "../../../firebase";
-import { collection, addDoc } from "firebase/firestore";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { useSession } from "next-auth/react";
-import LocationPicker from "./LocationPicker";
-import { getData } from "country-list"; // Import countries list
+import { getData } from "country-list";
 
-export default function UploadForm() {
-  const { data: session } = useSession();
+export default function TreesForm() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     location: "",
-    country: "", // Add country field
+    country: "",
     image: null,
   });
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -59,59 +54,24 @@ export default function UploadForm() {
       setError(formError);
       return;
     }
+    const form = new FormData();
+    form.append("file", formData.image);
+    form.append("title", formData.title.toString());
+    form.append("description", formData.description.toString());
+    form.append("location", formData.location.toString());
+    form.append("country", formData.country.toString());
 
-    setIsUploading(true);
-    setError("");
+    const response = await fetch("/api/trees", {
+      method: "POST",
+      body: form,
+    });
 
-    try {
-      const storageRef = ref(storage, `tree-images/${formData.image.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, formData.image);
+    const data = await response.json();
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
-        },
-        (error) => {
-          console.error("Upload failed:", error);
-          setIsUploading(false);
-          setError("Failed to upload image. Please try again.");
-        },
-        async () => {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          if (session?.user?.id) {
-            await addDoc(collection(db, "tree"), {
-              userId: session.user.id,
-              title: formData.title,
-              description: formData.description,
-              location: formData.location,
-              country: formData.country, // Save country
-              imageUrl: downloadURL,
-              timestamp: new Date(),
-            });
-            setFormData({
-              title: "",
-              description: "",
-              location: "",
-              country: "",
-              image: null,
-            });
-            setIsUploading(false);
-            setUploadProgress(0);
-            router.push("/list-trees");
-          } else {
-            setError("User ID not found. Please sign in again.");
-            setIsUploading(false);
-          }
-        }
-      );
-    } catch (error) {
-      console.error("Error uploading data:", error);
-      setIsUploading(false);
-      setError("Failed to upload data. Please try again.");
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to plant tree");
     }
+    router.push("/list-trees");
   };
 
   return (
@@ -214,7 +174,9 @@ export default function UploadForm() {
 
               {isUploading && (
                 <div className="form-group">
-                  <p style="color: brown;">Uploading: {Math.round(uploadProgress)}%</p>
+                  <p style="color: brown;">
+                    Uploading: {Math.round(uploadProgress)}%
+                  </p>
                 </div>
               )}
 

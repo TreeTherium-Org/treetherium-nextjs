@@ -1,11 +1,11 @@
-// ForgotPassword.js
+"use client";
 import React, { useState } from "react";
 import { auth, db } from "../../firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
 import Link from "next/link";
 import Section from "../component/layouts/Section.js";
 
-export default function ForgotPassword() {
+export default function LossPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");

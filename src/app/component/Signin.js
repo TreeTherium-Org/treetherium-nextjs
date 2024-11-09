@@ -1,5 +1,6 @@
+"use client";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import Section from "../component/layouts/Section.js";
@@ -9,7 +10,14 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import { auth, db } from "../../firebase";
-import { doc, getDoc, collection, query, where, getDocs  } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 
 // Full-Screen Loader Component
 const FullScreenLoader = () => (
@@ -44,38 +52,44 @@ const Signin = () => {
 
   const handleFirebaseError = (error) => {
     switch (error.code) {
-      case 'auth/user-not-found':
+      case "auth/user-not-found":
         setError("No account found with this email. Please sign up first.");
         break;
-      case 'auth/wrong-password':
+      case "auth/wrong-password":
         setError("Incorrect password. Please try again.");
         break;
-      case 'auth/invalid-email':
+      case "auth/invalid-email":
         setError("Invalid email format. Please enter a valid email.");
         break;
-      case 'auth/invalid-credential':
-        setError("The email/password provided are not valid. Please try again.");
+      case "auth/invalid-credential":
+        setError(
+          "The email/password provided are not valid. Please try again."
+        );
         break;
-      case 'auth/user-disabled':
+      case "auth/user-disabled":
         setError("This account has been disabled. Please contact support.");
         break;
-      case 'auth/too-many-requests':
+      case "auth/too-many-requests":
         setError("Too many login attempts. Please try again later.");
         break;
-      case 'auth/popup-closed-by-user':
+      case "auth/popup-closed-by-user":
         setError("The sign-in popup was closed. Please try again.");
         break;
-      case 'auth/network-request-failed':
+      case "auth/network-request-failed":
         setError("Network error. Please check your internet connection.");
         break;
-      case 'auth/cancelled-popup-request':
-        setError("Multiple sign-in attempts detected. Please complete the first sign-in attempt.");
+      case "auth/cancelled-popup-request":
+        setError(
+          "Multiple sign-in attempts detected. Please complete the first sign-in attempt."
+        );
         break;
       default:
-        setError(error.message || "An unexpected error occurred. Please try again.");
+        setError(
+          error.message || "An unexpected error occurred. Please try again."
+        );
         break;
     }
-    console.error('Firebase Error:', error);
+    console.error("Firebase Error:", error);
   };
 
   const signInWithEmail = async (e) => {
@@ -83,7 +97,11 @@ const Signin = () => {
     setLoading(true); // Start loading
     setError(null); // Clear previous errors
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const userExists = await checkUserExists(userCredential.user.uid);
 
       if (!userExists) {
@@ -141,22 +159,27 @@ const Signin = () => {
 
   const checkUserExistsByWalletAddress = async (walletAddress) => {
     try {
-        const usersCollection = collection(db, "users");
-        const q = query(usersCollection, where("walletAddress", "==", walletAddress));
-        const querySnapshot = await getDocs(q);
+      const usersCollection = collection(db, "users");
+      const q = query(
+        usersCollection,
+        where("walletAddress", "==", walletAddress)
+      );
+      const querySnapshot = await getDocs(q);
 
-        if (!querySnapshot.empty) {
-            const doc = querySnapshot.docs[0];
-            return { exists: true, userId: doc.id };
-        } else {
-            return { exists: false };
-        }
-    } catch (error) {
-        setError("Failed to check if the wallet address exists. Please try again.");
-        console.error(error);
+      if (!querySnapshot.empty) {
+        const doc = querySnapshot.docs[0];
+        return { exists: true, userId: doc.id };
+      } else {
         return { exists: false };
+      }
+    } catch (error) {
+      setError(
+        "Failed to check if the wallet address exists. Please try again."
+      );
+      console.error(error);
+      return { exists: false };
     }
-};
+  };
 
   const connectPhantomWallet = async () => {
     setLoading(true); // Start loading
@@ -197,7 +220,6 @@ const Signin = () => {
       setLoading(false); // Stop loading
     }
   };
-
 
   const googleProvider = new GoogleAuthProvider();
 
