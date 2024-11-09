@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { auth, db } from "../../firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
 import Link from "next/link";
-import Section from '../component/layouts/Section.js';
+import Section from "../component/layouts/Section.js";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -26,10 +26,13 @@ export default function ForgotPassword() {
   };
 
   return (
-    <Section allNotification={false} searchPopup={true} title={'Lost Password'}>
+    <Section allNotification={false} searchPopup={true} title={"Lost Password"}>
       <div style={styles.outerContainer}>
         <div style={styles.innerContainer}>
-          <h5 style={styles.title}>Enter email address associated with your account and we'll send email with instruction to reset your password</h5>
+          <h5 style={styles.title}>
+            Enter email address associated with your account and we&apos;ll send
+            email with instruction to reset your password
+          </h5>
           <form onSubmit={handleForgotPassword} style={styles.form}>
             <input
               type="email"
@@ -91,7 +94,7 @@ const styles = {
     fontSize: "1.0rem",
     fontWeight: "400",
     marginBottom: "40px",
-    textAlign: "center"
+    textAlign: "center",
   },
   form: {
     width: "100%",
@@ -136,6 +139,6 @@ const styles = {
   loginLink: {
     color: "#4F3738",
     textDecoration: "none",
-    textDecoration: "underline"
+    textDecoration: "underline",
   },
 };

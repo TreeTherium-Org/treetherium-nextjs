@@ -16,10 +16,10 @@ const Page = () => {
   useEffect(() => {
     setIsClient(true);
 
-    const hasSeenModal = sessionStorage.getItem("hasSeenModal");
+    const hasSeenModal = localStorage.getItem("hasSeenModal");
     if (!hasSeenModal) {
       setShowModal(true);
-      sessionStorage.setItem("hasSeenModal", "true");
+      localStorage.setItem("hasSeenModal", "true");
 
       const timer = setTimeout(() => {
         setShowModal(false);
