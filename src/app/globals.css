@@ -1432,28 +1432,18 @@ ul {
 
 .ba-navbar .ba-main-menu ul li a {
   position: relative;
-  padding-left: 25px;
+  padding-left: 10px;
   display: block;
   -webkit-transition: all 0.3s ease-in;
   -o-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.ba-navbar .ba-main-menu ul li a:before {
-  content: '';
-  position: absolute;
-  width: 15px;
-  height: 2px;
-  left: 0;
-  top: 10px;
-  background: #7c00cf;
-}
-
 .ba-navbar .ba-main-menu ul li a:after {
   content: '\f105';
   position: absolute;
   right: 0;
-  top: 0;
+  top: 10;
   font-family: fontAwesome;
 }
 

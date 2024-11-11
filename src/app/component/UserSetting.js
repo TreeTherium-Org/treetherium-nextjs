@@ -224,7 +224,7 @@ const UserSetting = () => {
                   type="text"
                   id="motto"
                   name="motto"
-                  value={formData.motto}
+                  value={formData.motto }
                   onChange={handleChange}
                   placeholder="Enter your life's motto"
                   className="form-control"

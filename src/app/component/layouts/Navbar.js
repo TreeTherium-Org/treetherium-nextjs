@@ -24,9 +24,6 @@ const Navbar = ({ isOpen, onClose }) => {
       {/* Navbar */}
       <div className={`ba-navbar ${isOpen ? "ba-navbar-show" : ""}`}>
         <div className="ba-navbar-user">
-          <div className="menu-close" onClick={onClose}>
-            <i className="fa fa-times" />
-          </div>
           <div className="thumb">
             <Image
               src={userData?.profileImageUrl || "/assets/img/user.png"}
@@ -93,7 +90,7 @@ const Navbar = ({ isOpen, onClose }) => {
           ) : (
             <Link href="/signin">
               <i className="fa fa-sign-in" />
-              <span>Sign in / Register</span>
+              <span>Login / Register</span>
             </Link>
           )}
         </div>

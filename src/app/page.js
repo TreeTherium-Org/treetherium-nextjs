@@ -280,7 +280,7 @@ const Page = () => {
             slides[currentSlide].id === 2 || slides[currentSlide].id === 3
               ? styles.buttonTertiary
               : slides[currentSlide].id === 4
-              ? styles.backButton
+              ? styles.buttonTertiary
               : ""
           }`}
         >
@@ -323,7 +323,7 @@ const Page = () => {
           </div>
         </div>
       )}
-      {renderContent()}
+      {!showModal && renderContent()}
     </>
   );
 };

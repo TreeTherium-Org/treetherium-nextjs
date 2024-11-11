@@ -38,7 +38,7 @@ const LetsStartPlanting = () => {
     <Section
       allNotification={false}
       searchPopup={true}
-      title={"Lets Start Planting"}
+      title={"Let's Start Planting"}
     >
       <div style={containerStyle}>
         <header style={headerStyle}>

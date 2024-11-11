@@ -62,12 +62,13 @@ const styles = {
         padding: '0 20px',
     },
     title: {
-        fontSize: '1.125em',
+        fontSize: "1.125em",
         fontWeight: 700,
-        color: '#4F3738',
-        padding: '0 0 8px',
-        marginBottom: '0px',
-    },
+        color: "#4F3738",
+        padding: "0 0 8px",
+        marginBottom: "0px",
+        textTransform: 'capitalize'
+      },
     divider: {
         width: '100%',
         height: '4px',

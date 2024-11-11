@@ -57,12 +57,12 @@ const Footer = ({ session }) => {
                 </Link>
               </li>
               <li className="text-center">
-                <Link href="/menu">
+                <Link href="/knowledge-base">
                   <i
                     className="fa fa-bars"
                     style={{ fontSize: "22px", color: "#4F3738" }}
                   />
-                  <p style={{ margin: "0", color: "#4F3738" }}>Menu</p>
+                  <p style={{ margin: "0", color: "#4F3738" }}>Guide</p>
                 </Link>
               </li>
               <li className="text-center">
@@ -75,7 +75,7 @@ const Footer = ({ session }) => {
                 </Link>
               </li>
               <li className="text-center">
-                <a href="#" onClick={handleProfileClick}>
+                <a href="/accountprofile">
                   <i
                     className="fa fa-user"
                     style={{ fontSize: "22px", color: "#4F3738" }}
