@@ -124,6 +124,7 @@ const styles = {
     color: "#4F3738",
     padding: "0 0 8px",
     marginBottom: "0px",
+    textTransform: 'capitalize'
   },
   divider: {
     width: "100%",

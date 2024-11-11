@@ -68,7 +68,6 @@ const styles = {
     height: "100vh",
     width: "100%",
     padding: "20px",
-    fontFamily: "Roboto",
     position: "relative",
   },
   backButton: {

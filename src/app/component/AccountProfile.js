@@ -4,11 +4,19 @@ import Link from "next/link";
 import { signOut } from "next-auth/react"; // Import useSession and signOut
 import useQuery from "../libs/useQuery";
 
+// Full-Screen Loader Component
+const FullScreenLoader = () => (
+  <div className="full-screen-loader">
+    <div className="loading"></div>
+  </div>
+);
+
 const AccountProfile = () => {
   const { data: userData } = useQuery("/api/me"); // Destructure session data
 
+  console.log(userData);
   if (!userData) {
-    return <div>Loading...</div>;
+    return <FullScreenLoader />;
   }
 
   const handleLogout = async () => {
