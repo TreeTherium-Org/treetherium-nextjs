@@ -106,7 +106,7 @@ const Page = () => {
         action: () => setCurrentSlide(2),
       },
       secondaryButton: {
-        text: "Register",
+        text: "Start",
         action: () => setCurrentSlide(4),
       },
     },
@@ -293,7 +293,7 @@ const Page = () => {
             slides[currentSlide].id === 2 || slides[currentSlide].id === 3
               ? styles.buttonQuartery
               : slides[currentSlide].id === 4
-              ? styles.registerButton
+              ? styles.buttonQuartery
               : ""
           }`}
         >

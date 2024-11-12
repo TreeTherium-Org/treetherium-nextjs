@@ -1,52 +1,54 @@
 import Section from "../../component/layouts/Section.js";
 
-const Phantom = () => {
+const WhatIsANFT = () => {
   return (
     <Section
       allNotification={false}
       searchPopup={true}
-      title={"Create A Phantom Wallet"}
+      title={"What Is An TreeTherium NFT?"}
     >
       <div className="pd-top-36">
         <div className="container">
           <h3 className="form-title">
-            &quot;pure security & speed from the Solana blockchain&quot;
+            &quot;once planted, the data is immutable&quot;
           </h3>
         </div>
       </div>
       <div style={styles.card}>
         <img
           style={styles.cardImgTop}
-          src="/assets/img/phantom-wallet.png"
+          src="/assets/img/what-is-treetherium-nft.png"
           alt="Tree Image"
         />
         <div style={styles.cardBody}>
           <div style={styles.divider} />
           <p style={styles.paragraph}>
-            A Phantom Wallet is a widely trusted digital wallet on the Solana
-            blockchain, designed for securely storing, managing, and using
-            cryptocurrency. Known for its ease of use and security, Phantom
-            allows TreeTherium users to interact seamlessly with the platform,
-            whether it’s holding tokens, managing NFTs, or staking.
+            An NFT, or Non-Fungible Token, is a unique digital asset stored on
+            the blockchain that cannot be replicated. Unlike cryptocurrencies,
+            each NFT is one-of-a-kind and represents ownership of a specific
+            item or piece of data. In TreeTherium, NFTs serve as digital
+            certificates, verifying each user’s contributions to reforestation
+            and conservation.
           </p>
-          <p style={styles.title}>Why Choose Phantom?</p>
+          <p style={styles.title}>NFTs In Your Planted Forest</p>
           <p style={styles.paragraph}>
-            Phantom is the preferred wallet for TreeTherium users, as it
-            supports everything needed for the platform. With Phantom, you can
-            receive and store your $SEEDZ and $TREEZ tokens and hold NFTs linked
-            to tree-planting projects. Designed specifically for Solana, Phantom
-            provides fast transactions, low fees, and a user-friendly
-            experience—making it ideal for both newcomers and crypto
-            enthusiasts.
+            With TreeTherium, each user account, every tree you plant, and every
+            project you join becomes an NFT. These NFTs are collectible tokens
+            that represent your personal "Planted Forest", showcasing your
+            journey and impact on the environment. Each NFT acts as a permanent,
+            digital record of your contribution, and you can view and share your
+            achievements with others.
           </p>
-          <p style={styles.title}>Getting Started With Phantom</p>
+          <p style={styles.title}>Immutable Data Connected To Your NFTs</p>
           <p style={styles.paragraph}>
-            To create your Phantom Wallet, download the app or browser
-            extension, follow the setup instructions, and securely store your
-            secret recovery phrase. This phrase is essential for accessing your
-            wallet, so keep it private and safe. Once your wallet is set up,
-            you’re ready to join the TreeTherium community, receive NFTs, and
-            support reforestation projects through $SEEDZ and $TREEZ.
+            Every NFT holds detailed, unchangeable information related to the
+            trees you plant. This includes data such as the planter’s name, date
+            of germination, potting and planting dates, and even multimedia like
+            pictures and videos of the growing tree. Additional details, like
+            local weather conditions and whether the tree is part of a larger
+            project, are also stored. This information is securely registered on
+            the blockchain, providing proof of your environmental impact and
+            making it available for future reference.
           </p>
         </div>
       </div>
@@ -54,7 +56,7 @@ const Phantom = () => {
   );
 };
 
-export default Phantom;
+export default WhatIsANFT;
 
 const styles = {
   card: {

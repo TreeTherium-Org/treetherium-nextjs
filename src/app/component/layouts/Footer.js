@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookOpenReader } from '@fortawesome/free-solid-svg-icons';
 import { useSession } from "next-auth/react"; // Import useSession
 
 const Footer = ({ session }) => {
@@ -58,11 +60,11 @@ const Footer = ({ session }) => {
               </li>
               <li className="text-center">
                 <Link href="/knowledge-base">
-                  <i
-                    className="fa fa-bars"
-                    style={{ fontSize: "22px", color: "#4F3738" }}
+                  <FontAwesomeIcon
+                    icon={faBookOpenReader}
+                    style={{ fontSize: "20px", color: "#4F3738" }}
                   />
-                  <p style={{ margin: "0", color: "#4F3738" }}>Guide</p>
+                  <p style={{ margin: "0", color: "#4F3738" }}>Guides</p>
                 </Link>
               </li>
               <li className="text-center">
