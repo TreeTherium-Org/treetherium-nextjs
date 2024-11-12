@@ -23,6 +23,10 @@ const knowledgeBaseSections = [
     name: "Blockchain & Crypto",
     pages: [
       {
+        name: "What Is Blockchain",
+        link: "/knowledge-base/what-is-blockchain",
+      },
+      {
         name: "NFT's & Tree Planting",
         link: "/knowledge-base/nfts-tree-planting",
       },
@@ -35,8 +39,16 @@ const knowledgeBaseSections = [
         link: "/knowledge-base/what-is-a-crypto-wallet",
       },
       {
-        name: "What Is Blockchain",
-        link: "/knowledge-base/what-is-blockchain",
+        name: "What Is An NFT",
+        link: "/knowledge-base/what-is-a-nft",
+      }, 
+      {
+        name: "What Is An TreeTherium NFT",
+        link: "/knowledge-base/what-is-an-treetherium-nft",
+      },
+      {
+        name: "What Is A Cold Wallet",
+        link: "/knowledge-base/what-is-cold-wallet",
       },
       {
         name: "Create A Phantom Wallet",
@@ -47,9 +59,13 @@ const knowledgeBaseSections = [
         link: "/knowledge-base/create-a-jupiter-account",
       },
       {
-        name: "Create A Raydium Account",
+        name: "Create A Raydium DEX Account",
         link: "/knowledge-base/create-a-raydium-account",
-      },
+      },      
+      {
+        name: "Create A SafePal Wallet",
+        link: "/knowledge-base/create-a-safepal-wallet",
+      }
     ],
   },
   {
@@ -65,8 +81,8 @@ const knowledgeBaseSections = [
     name: "Tree Planting",
     pages: [
       {
-        name: "Tree Planting General",
-        link: "/knowledge-base/tree-planting-general",
+        name: "Start Tree Planting From Home",
+        link: "/knowledge-base/start-tree-planting-from-home",
       },
     ],
   },

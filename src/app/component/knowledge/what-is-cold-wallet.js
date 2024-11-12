@@ -1,52 +1,53 @@
 import Section from "../../component/layouts/Section.js";
 
-const Phantom = () => {
+const WhatIsANFT = () => {
   return (
     <Section
       allNotification={false}
       searchPopup={true}
-      title={"Create A Phantom Wallet"}
+      title={"What Is A Cold Wallet"}
     >
       <div className="pd-top-36">
         <div className="container">
           <h3 className="form-title">
-            &quot;pure security & speed from the Solana blockchain&quot;
+            &quot;safety first, take it offline&quot;
           </h3>
         </div>
       </div>
       <div style={styles.card}>
         <img
           style={styles.cardImgTop}
-          src="/assets/img/phantom-wallet.png"
+          src="/assets/img/cold-wallet.png"
           alt="Tree Image"
         />
         <div style={styles.cardBody}>
           <div style={styles.divider} />
           <p style={styles.paragraph}>
-            A Phantom Wallet is a widely trusted digital wallet on the Solana
-            blockchain, designed for securely storing, managing, and using
-            cryptocurrency. Known for its ease of use and security, Phantom
-            allows TreeTherium users to interact seamlessly with the platform,
-            whether it’s holding tokens, managing NFTs, or staking.
+            A cold wallet is a type of cryptocurrency wallet designed to keep
+            your digital assets—like coins, tokens, and NFTs—extra secure by
+            storing them offline. Unlike online wallets, which are connected to
+            the internet and vulnerable to hacking, cold wallets are completely
+            offline. This means that your private keys, which provide access to
+            your crypto assets, are safely kept away from potential online
+            threats.
           </p>
-          <p style={styles.title}>Why Choose Phantom?</p>
-          <p style={styles.paragraph}>
-            Phantom is the preferred wallet for TreeTherium users, as it
-            supports everything needed for the platform. With Phantom, you can
-            receive and store your $SEEDZ and $TREEZ tokens and hold NFTs linked
-            to tree-planting projects. Designed specifically for Solana, Phantom
-            provides fast transactions, low fees, and a user-friendly
-            experience—making it ideal for both newcomers and crypto
-            enthusiasts.
+          <p style={styles.title}>
+            How Does A Cold Wallet Keep Your Assets Safe?
           </p>
-          <p style={styles.title}>Getting Started With Phantom</p>
           <p style={styles.paragraph}>
-            To create your Phantom Wallet, download the app or browser
-            extension, follow the setup instructions, and securely store your
-            secret recovery phrase. This phrase is essential for accessing your
-            wallet, so keep it private and safe. Once your wallet is set up,
-            you’re ready to join the TreeTherium community, receive NFTs, and
-            support reforestation projects through $SEEDZ and $TREEZ.
+            Cold wallets store your cryptocurrency keys on physical devices,
+            like USB drives or specialized hardware wallets, that aren’t
+            connected to the internet. By keeping your keys offline, cold
+            wallets reduce the risk of hacking, phishing, and other cyber
+            attacks. For anyone holding valuable assets like NFTs or a large
+            amount of crypto, a cold wallet offers a secure way to protect your
+            investments.
+          </p>
+          <p style={styles.paragraph}>
+            Cold wallets are ideal for long-term storage, providing peace of
+            mind that your assets remain safe, even if they’re out of reach for
+            daily transactions. They’re a go-to choice for those serious about
+            protecting their digital assets against online vulnerabilities.
           </p>
         </div>
       </div>
@@ -54,7 +55,7 @@ const Phantom = () => {
   );
 };
 
-export default Phantom;
+export default WhatIsANFT;
 
 const styles = {
   card: {
