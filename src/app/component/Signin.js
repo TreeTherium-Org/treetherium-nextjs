@@ -111,10 +111,9 @@ const Signin = () => {
       const result = await signIn("credentials", {
         userId: userCredential.user.uid,
         email: userCredential.user.email,
-        redirect: false,
       });
 
-      if (result.error) {
+      if (result?.error) {
         throw new Error(result.error);
       }
 
@@ -176,7 +175,6 @@ const Signin = () => {
       setError(
         "Failed to check if the wallet address exists. Please try again."
       );
-      console.error(error);
       return { exists: false };
     }
   };
@@ -287,7 +285,8 @@ const Signin = () => {
                 Login with Phantom Wallet
               </button>
               <button
-                onClick={() => handleProviderSignIn(googleProvider)}
+                // onClick={() => handleProviderSignIn(googleProvider)}
+                onClick={() => signIn("google")}
                 className="social-button btn-google"
               >
                 <img

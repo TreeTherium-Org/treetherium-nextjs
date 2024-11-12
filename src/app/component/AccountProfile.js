@@ -14,7 +14,6 @@ const FullScreenLoader = () => (
 const AccountProfile = () => {
   const { data: userData } = useQuery("/api/me"); // Destructure session data
 
-  console.log(userData);
   if (!userData) {
     return <FullScreenLoader />;
   }

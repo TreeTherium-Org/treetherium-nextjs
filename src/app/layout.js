@@ -6,7 +6,6 @@ import "../../public/assets/css/components/_buttons.css";
 import "../../public/assets/demo/css/demo.css";
 import "../../public/assets/css/vendor.css";
 import { Roboto } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
 
 export const metadata = {
   title: "Welcome to Treetherium",

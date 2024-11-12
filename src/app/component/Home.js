@@ -7,30 +7,6 @@ import Section from "../component/layouts/Section.js";
 
 const Home = () => {
   const router = useRouter();
-  // const session = {};
-  // const { data: session, status } = useSession();
-
-  // Log session data when it changes
-  // useEffect(() => {
-  //   if (status === "loading") {
-  //     console.log("Loading session...");
-  //   }
-
-  //   if (status === "authenticated") {
-  //     console.log("Session User ID", session.user.id);
-  //     console.log("Session data:", {
-  //       user: session.user,
-  //       expires: session.expires,
-  //       status: status,
-  //     });
-  //   }
-
-  //   if (status === "unauthenticated") {
-  //     console.log("Not authenticated");
-  //     // Optionally redirect to login page
-  //     // router.push('/signin');
-  //   }
-  // }, [session, status]);
 
   // Function to handle button click to redirect pages
   const handleButtonClick = (route) => {
@@ -40,7 +16,7 @@ const Home = () => {
   return (
     <Section allNotification={false} searchPopup={true} title={"Home"}>
       <div style={containerStyle}>
-        <header
+        <div
           style={{
             ...headerStyle,
             padding: 0,
@@ -58,7 +34,6 @@ const Home = () => {
             }}
           >
             {" "}
-            {/* Full viewport width */}
             <Image
               src="/assets/img/landing-home.png"
               alt="Everyone Can Grow A Tree"
@@ -68,7 +43,7 @@ const Home = () => {
               priority={true}
             />
           </div>
-        </header>
+        </div>
         <main style={mainStyle}>
           <div style={buttonGridStyle}>
             <div

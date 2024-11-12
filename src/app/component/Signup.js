@@ -283,8 +283,6 @@ const Signup = () => {
     }
   };
 
-  const googleProvider = new GoogleAuthProvider();
-
   const handleFirebaseError = (error) => {
     switch (error.code) {
       case "auth/email-already-in-use":
@@ -471,7 +469,7 @@ const Signup = () => {
                 Sign up with Phantom Wallet
               </button>
               <button
-                onClick={() => handleProviderSignIn(googleProvider)}
+                onClick={() => signIn("google")}
                 className="social-button btn-google"
               >
                 <img

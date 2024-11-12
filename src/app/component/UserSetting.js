@@ -110,7 +110,7 @@ const UserSetting = () => {
 
   const handleSave = async () => {
     try {
-      await updateProfile({ ...formData, walletAddress: "" });
+      await updateProfile({ ...formData });
     } catch (error) {
       console.error("Error updating user data:", error);
       alert("Failed to save changes. Please try again.");
@@ -224,7 +224,7 @@ const UserSetting = () => {
                   type="text"
                   id="motto"
                   name="motto"
-                  value={formData.motto }
+                  value={formData.motto}
                   onChange={handleChange}
                   placeholder="Enter your life's motto"
                   className="form-control"

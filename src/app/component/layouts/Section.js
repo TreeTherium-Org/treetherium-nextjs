@@ -8,7 +8,6 @@ import AutoNotification from "./AutoNotification";
 
 const Section = ({ title, autoNotification, children, searchPopup }) => {
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
-  const session = {};
 
   const toggleNavbar = () => {
     setIsNavbarOpen(!isNavbarOpen);
@@ -20,7 +19,7 @@ const Section = ({ title, autoNotification, children, searchPopup }) => {
 
   return (
     <>
-      <Navbar isOpen={isNavbarOpen} onClose={closeNavbar} session={session} />
+      <Navbar isOpen={isNavbarOpen} onClose={closeNavbar} />
       {autoNotification && <AutoNotification />}
       <Header
         title={title}
@@ -28,7 +27,7 @@ const Section = ({ title, autoNotification, children, searchPopup }) => {
         searchPopup={searchPopup}
       />
       {children}
-      <Footer session={session} />
+      <Footer />
     </>
   );
 };

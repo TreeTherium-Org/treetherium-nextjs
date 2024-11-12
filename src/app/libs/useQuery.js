@@ -2,7 +2,10 @@ import axios from "../libs/axios";
 import useSWR from "swr";
 
 const fetcher = async (request, params, returnOriginalData) => {
-  const headers = {};
+  const headers = {
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
+  };
 
   const result = await axios().get(request, { params, headers });
   if (returnOriginalData) return result;

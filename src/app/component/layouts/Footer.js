@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookOpenReader } from '@fortawesome/free-solid-svg-icons';
-import { useSession } from "next-auth/react"; // Import useSession
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookOpenReader } from "@fortawesome/free-solid-svg-icons";
+import useQuery from "@/app/libs/useQuery";
 
-const Footer = ({ session }) => {
-  // const { data: session } = useSession(); // Destructure session data
+const Footer = () => {
+  const { data: session } = useQuery("/api/me");
+
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
