@@ -34,10 +34,10 @@ const WhatIsANFT = () => {
           <p style={styles.paragraph}>
             With TreeTherium, each user account, every tree you plant, and every
             project you join becomes an NFT. These NFTs are collectible tokens
-            that represent your personal "Planted Forest", showcasing your
-            journey and impact on the environment. Each NFT acts as a permanent,
-            digital record of your contribution, and you can view and share your
-            achievements with others.
+            that represent your personal &quot;Planted Forest&quot;, showcasing
+            your journey and impact on the environment. Each NFT acts as a
+            permanent, digital record of your contribution, and you can view and
+            share your achievements with others.
           </p>
           <p style={styles.title}>Immutable Data Connected To Your NFTs</p>
           <p style={styles.paragraph}>

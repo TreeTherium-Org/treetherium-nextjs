@@ -36,11 +36,12 @@ const WhatIsANFT = () => {
             NFTs are stored on a blockchain, which acts as a secure digital
             ledger that records each transaction and ownership history. The most
             common blockchains for NFTs are Ethereum and Solana, although new
-            platforms are emerging. When an NFT is created, or "minted," it’s
-            given a unique identifier on the blockchain. This identifier is tied
-            to the digital asset, creating a permanent, unchangeable record of
-            ownership. Because of this, NFTs offer a level of transparency and
-            trust that traditional ownership models can’t provide.
+            platforms are emerging. When an NFT is created, or
+            &quot;minted&quot;, it’s given a unique identifier on the
+            blockchain. This identifier is tied to the digital asset, creating a
+            permanent, unchangeable record of ownership. Because of this, NFTs
+            offer a level of transparency and trust that traditional ownership
+            models can’t provide.
           </p>
           <p style={styles.title}>Decentralization: No Central Authority</p>
           <p style={styles.paragraph}>
@@ -60,8 +61,8 @@ const WhatIsANFT = () => {
             more than just digital collectibles—they’re proof of your
             environmental impact. Every tree planted, every project joined, and
             every achievement within TreeTherium becomes a part of your personal
-            "Planted Forest," creating a digital record of your commitment to
-            reforestation.
+            &quot;Planted Forest,&quot; creating a digital record of your
+            commitment to reforestation.
           </p>
           <p style={styles.title}>Immutable Data Linked To Each NFT</p>
           <p style={styles.paragraph}>
