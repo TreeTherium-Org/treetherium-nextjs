@@ -1,52 +1,58 @@
 import Section from "../../component/layouts/Section.js";
 
-const Phantom = () => {
+const WhatIsANFT = () => {
   return (
     <Section
       allNotification={false}
       searchPopup={true}
-      title={"Create A Phantom Wallet"}
+      title={"Create a SafePal Wallet"}
     >
       <div className="pd-top-36">
         <div className="container">
           <h3 className="form-title">
-            &quot;pure security & speed from the Solana blockchain&quot;
+            &quot;your crypto safe environment&quot;
           </h3>
         </div>
       </div>
       <div style={styles.card}>
         <img
           style={styles.cardImgTop}
-          src="/assets/img/phantom-wallet.png"
+          src="/assets/img/safepal_wallet.png"
           alt="Tree Image"
         />
         <div style={styles.cardBody}>
           <div style={styles.divider} />
           <p style={styles.paragraph}>
-            A Phantom Wallet is a widely trusted digital wallet on the Solana
-            blockchain, designed for securely storing, managing, and using
-            cryptocurrency. Known for its ease of use and security, Phantom
-            allows TreeTherium users to interact seamlessly with the platform,
-            whether it’s holding tokens, managing NFTs, or staking.
+            SafePal is one of the world’s leading crypto wallets, known for its
+            high security and user-friendly design. Trusted by users worldwide,
+            SafePal offers both hot (online) and cold (offline) wallet options,
+            making it an ideal choice for managing, storing, and protecting your
+            digital assets. One of the reasons SafePal stands out is its close
+            connection to Binance, the largest centralized exchange (CEX)
+            globally. This partnership provides seamless compatibility with
+            Binance’s platform, making it easy for users to manage their assets
+            securely and efficiently.
           </p>
-          <p style={styles.title}>Why Choose Phantom?</p>
-          <p style={styles.paragraph}>
-            Phantom is the preferred wallet for TreeTherium users, as it
-            supports everything needed for the platform. With Phantom, you can
-            receive and store your $SEEDZ and $TREEZ tokens and hold NFTs linked
-            to tree-planting projects. Designed specifically for Solana, Phantom
-            provides fast transactions, low fees, and a user-friendly
-            experience—making it ideal for both newcomers and crypto
-            enthusiasts.
+          <p style={styles.title}>
+            Why SafePal Is Among The Best Crypto Wallets
           </p>
-          <p style={styles.title}>Getting Started With Phantom</p>
           <p style={styles.paragraph}>
-            To create your Phantom Wallet, download the app or browser
-            extension, follow the setup instructions, and securely store your
-            secret recovery phrase. This phrase is essential for accessing your
-            wallet, so keep it private and safe. Once your wallet is set up,
-            you’re ready to join the TreeTherium community, receive NFTs, and
-            support reforestation projects through $SEEDZ and $TREEZ.
+            SafePal wallets are designed with top-notch security features to
+            protect your cryptocurrency from online threats. The SafePal Cold
+            Wallet, in particular, is completely offline, providing an extra
+            layer of protection by keeping your private keys out of reach from
+            hackers and phishing attempts. This makes SafePal’s cold wallets
+            some of the safest options available, ideal for those looking to
+            securely store large amounts of crypto or valuable NFTs for the long
+            term.
+          </p>
+          <p style={styles.title}>SafePal And Binance: A Powerful Connection</p>
+          <p style={styles.paragraph}>
+            As a Binance-backed wallet, SafePal provides direct integration with
+            the Binance platform, allowing users to easily access their assets,
+            trade, and track their portfolio within the SafePal ecosystem. This
+            connection means SafePal users get the best of both worlds—a secure,
+            independent wallet backed by the world’s largest crypto exchange.
           </p>
         </div>
       </div>
@@ -54,7 +60,7 @@ const Phantom = () => {
   );
 };
 
-export default Phantom;
+export default WhatIsANFT;
 
 const styles = {
   card: {
