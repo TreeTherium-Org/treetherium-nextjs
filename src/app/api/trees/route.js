@@ -1,3 +1,4 @@
+import { getUserByEmail, getUserByWalletAddress } from "@/app/model/user";
 import { auth } from "@/auth";
 import { db, storage } from "@/firebase";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
@@ -6,6 +7,11 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 export async function GET() {
   const session = await auth();
   let user = session?.user;
+  user =
+    user.provider === "solana"
+      ? await getUserByWalletAddress(user.walletAddress)
+      : await getUserByEmail(user.email);
+
   try {
     if (user) {
       const treeCollection = collection(db, "tree");
@@ -30,7 +36,11 @@ export async function GET() {
 
 export async function POST(req) {
   const session = await auth();
-  const user = session.user;
+  let user = session.user;
+  user =
+    user.provider === "solana"
+      ? await getUserByWalletAddress(user.walletAddress)
+      : await getUserByEmail(user.email);
 
   try {
     if (user) {

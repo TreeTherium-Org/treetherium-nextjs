@@ -106,6 +106,7 @@ export const {
             email: token.email || "",
             username: token.name || "",
             walletAddress: token.walletAddress || user.walletAddress || "",
+            provider: provider,
             createdAt: new Date(),
           });
 

@@ -1,3 +1,4 @@
+import { getUserByEmail, getUserByWalletAddress } from "@/app/model/user";
 import { auth } from "@/auth";
 import { db } from "@/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -5,6 +6,11 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 export async function GET() {
   const session = await auth();
   let user = session?.user;
+  user =
+    user.provider === "solana"
+      ? await getUserByWalletAddress(user.walletAddress)
+      : await getUserByEmail(user.email);
+
   try {
     if (user) {
       const projectCollection = collection(db, "projects");

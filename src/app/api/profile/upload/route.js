@@ -8,10 +8,17 @@ import { doc, updateDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import { db, storage } from "@/firebase";
 import { auth } from "@/auth";
+import { getUserByEmail, getUserByWalletAddress } from "@/app/model/user";
 
 export async function POST(request) {
   const session = await auth();
   let user = session?.user;
+
+  user =
+    user.provider === "solana"
+      ? await getUserByWalletAddress(user.walletAddress)
+      : await getUserByEmail(user.email);
+
   const formData = await request.formData();
   const file = formData.get("file");
 
