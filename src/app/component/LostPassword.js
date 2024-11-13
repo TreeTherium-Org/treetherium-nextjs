@@ -1,7 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { auth, db } from "../../firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Section from "../component/layouts/Section.js";
 
@@ -9,15 +11,34 @@ export default function LossPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
 
     try {
+      // Check if the email exists in the Firestore database
+      const usersRef = collection(db, "users"); // Replace "users" with your actual collection name
+      const q = query(usersRef, where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        setError("Email does not exist in our records. Please try again.");
+        setMessage("");
+        return;
+      }
+
+      // If email exists, send the password reset email
       await sendPasswordResetEmail(auth, email);
       setMessage("Password reset email sent! Check your inbox.");
       setError("");
+
+      // Start the 5-second timer for redirection
+      setTimeout(() => {
+        router.push("/signin");
+      }, 5000);
     } catch (error) {
+      console.log(error);
       setError(
         "Failed to send password reset email. Make sure your email is correct."
       );

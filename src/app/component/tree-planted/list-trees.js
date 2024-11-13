@@ -4,6 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import useQuery from "@/app/libs/useQuery";
 
+// Full-Screen Loader Component
+const FullScreenLoader = () => (
+  <div className="full-screen-loader">
+    <div className="loading-message">Loading trees...</div>
+  </div>
+);
+
 const ListTrees = () => {
   const { data: trees, loading } = useQuery("/api/trees");
 
@@ -14,9 +21,7 @@ const ListTrees = () => {
         searchPopup={true}
         title={"List of Trees"}
       >
-        <div className="loading-area">
-          <div className="loading-message">Loading trees...</div>
-        </div>
+        <FullScreenLoader />
       </Section>
     );
   }
@@ -47,7 +52,6 @@ const ListTrees = () => {
                         style={{ borderRadius: "20px" }}
                       />
                     </div>
-
                     <h5 className="tree-title">
                       {tree.title || "Unnamed Tree"}
                     </h5>
