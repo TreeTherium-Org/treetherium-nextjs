@@ -2,13 +2,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { getCsrfToken, signIn } from "next-auth/react";
 import Section from "../component/layouts/Section.js";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import {
   collection,
   doc,
@@ -19,6 +15,8 @@ import {
   where,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase";
+import { SigninMessage } from "../libs/signinMessage.js";
+import bs58 from "bs58";
 
 // Full-Screen Loader Component
 const FullScreenLoader = () => (
@@ -159,130 +157,6 @@ const Signup = () => {
     }
   };
 
-  const handleProviderSignIn = async (provider) => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      const userExists = await checkUserExists(user.uid);
-
-      if (!userExists) {
-        const userDocRef = doc(collection(db, "users"), user.uid);
-        await setDoc(userDocRef, {
-          uid: user.uid,
-          email: user.email,
-          username: user.displayName || username,
-          createdAt: new Date(),
-          provider: provider.providerId,
-        });
-      }
-
-      const nextAuthResult = await signIn("credentials", {
-        userId: user.uid,
-        email: user.email,
-        username: user.displayName || username,
-        provider: provider.providerId,
-        redirect: false,
-      });
-
-      if (nextAuthResult.error) {
-        throw new Error(nextAuthResult.error);
-      }
-
-      router.push("/home");
-    } catch (error) {
-      handleFirebaseError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const checkUserExistsByWalletAddress = async (walletAddress) => {
-    try {
-      const usersCollection = collection(db, "users");
-      const q = query(
-        usersCollection,
-        where("walletAddress", "==", walletAddress)
-      );
-      const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
-        const doc = querySnapshot.docs[0];
-        return { exists: true, userId: doc.id };
-      } else {
-        return { exists: false };
-      }
-    } catch (error) {
-      setError(
-        "Failed to check if the wallet address exists. Please try again."
-      );
-      console.error(error);
-      return { exists: false };
-    }
-  };
-
-  const connectPhantomWallet = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const { solana } = window;
-      if (!solana || !solana.isPhantom) {
-        throw new Error("Phantom Wallet not found. Please install it.");
-      }
-
-      const response = await solana.connect();
-      const walletAddress = response.publicKey.toString();
-
-      const userCheck = await checkUserExistsByWalletAddress(walletAddress);
-
-      if (userCheck.exists) {
-        // Log in using the existing document's ID
-        const nextAuthResult = await signIn("credentials", {
-          userId: userCheck.userId,
-          walletAddress: walletAddress,
-          username: `Phantom_${walletAddress.slice(0, 6)}`,
-          provider: "Phantom",
-          redirect: false,
-        });
-
-        if (nextAuthResult.error) {
-          throw new Error(nextAuthResult.error);
-        }
-
-        router.push("/home");
-      } else {
-        // Create a new document
-        const userDocRef = doc(collection(db, "users"), walletAddress);
-        await setDoc(userDocRef, {
-          username: username || `Phantom_${walletAddress.slice(0, 6)}`,
-          provider: "Phantom",
-          createdAt: new Date(),
-          walletAddress: walletAddress,
-        });
-
-        const nextAuthResult = await signIn("credentials", {
-          walletAddress: walletAddress,
-          username: username || `Phantom_${walletAddress.slice(0, 6)}`,
-          provider: "Phantom",
-          redirect: false,
-        });
-
-        if (nextAuthResult.error) {
-          throw new Error(nextAuthResult.error);
-        }
-
-        router.push("/home");
-      }
-    } catch (error) {
-      handleFirebaseError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleFirebaseError = (error) => {
     switch (error.code) {
       case "auth/email-already-in-use":
@@ -321,6 +195,49 @@ const Signup = () => {
         break;
     }
     console.error("Firebase Error:", error);
+  };
+
+  const handlePhantomWalletSignin = async () => {
+    try {
+      if ("solana" in window) {
+        const provider = window.solana;
+        const response = await provider.connect();
+
+        if (!response.publicKey) {
+          alert("Error connecting to phantom wallet");
+        }
+
+        const csrf = await getCsrfToken();
+        if (!response.publicKey || !csrf || !provider.signMessage) return;
+
+        const message = new SigninMessage({
+          domain: window.location.host,
+          publicKey: provider.publicKey?.toBase58(),
+          statement: `Sign this message to sign in to the app.`,
+          nonce: csrf,
+        });
+
+        const data = new TextEncoder().encode(message.prepare());
+        const signature = await provider.signMessage(data);
+        const serializedSignature = bs58.encode(signature?.signature);
+
+        const result = await signIn("solana", {
+          message: JSON.stringify(message),
+          redirect: false,
+          signature: serializedSignature,
+        });
+
+        if (result?.error) {
+          throw new Error(result.error);
+        }
+
+        router.push("/home");
+      } else {
+        alert("Phantom Wallet not found. Please install it first.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -459,7 +376,7 @@ const Signup = () => {
             </form>
             <div className="social-buttons">
               <button
-                onClick={connectPhantomWallet}
+                onClick={handlePhantomWalletSignin}
                 className="social-button btn-phantom-wallet"
               >
                 <img

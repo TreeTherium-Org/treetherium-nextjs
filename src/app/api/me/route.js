@@ -1,11 +1,14 @@
-import { getUserByEmail } from "@/app/model/user";
+import { getUserByEmail, getUserByWalletAddress } from "@/app/model/user";
 import { auth } from "@/auth";
 
 export async function GET() {
   const session = await auth();
   let user = session?.user;
   if (user) {
-    const userDoc = await getUserByEmail(user.email);
+    const userDoc =
+      user.provider === "solana"
+        ? await getUserByWalletAddress(user.walletAddress)
+        : await getUserByEmail(user.email);
     if (userDoc) {
       const res = new Response(JSON.stringify({ data: userDoc }), {
         status: 200,
