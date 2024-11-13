@@ -111,6 +111,7 @@ const UserSetting = () => {
   const handleSave = async () => {
     try {
       await updateProfile({ ...formData });
+      router.push("/accountprofile");
     } catch (error) {
       console.error("Error updating user data:", error);
       alert("Failed to save changes. Please try again.");
