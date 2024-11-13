@@ -5842,10 +5842,24 @@ span.badge-pulse-orange {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.card-img-top {
-  height: 253px;
-  object-fit: cover;
+.image-container {
+  width: 100%;
+  height: auto;
+  max-height: 600px; /* Adjust to your desired max height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #f0f0f0; 
 }
+
+.card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  object-position: center; 
+}
+
 
 .card-body {
   padding: 20px;
