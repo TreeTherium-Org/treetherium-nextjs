@@ -76,7 +76,7 @@ const Landowners = () => {
         </div>
         <div style={styles.buttonContainer}>
           <Link href="/my-forest">
-            <button style={styles.button}>Plant Land Now</button>
+            <button style={styles.button}>Plant Land Today</button>
           </Link>
         </div>
       </div>
