@@ -20,22 +20,22 @@ const NFT = () => {
           style={styles.cardImgTop}
           src="/assets/img/nfts-tree-planting.png"
           alt="Tree Image"
-          width={600} 
+          width={600}
           height={253}
-          layout="responsive" 
-          priority={true} 
+          layout="responsive"
+          priority={true}
         />
         <div style={styles.cardBody}>
           <div style={styles.divider} />
           <p style={styles.paragraph}>
-            At TreeTherium, both land plots and individual trees are represented
-            by unique NFTs. Each plot of land approved for planting receives its
-            own NFT, which certifies its role in our reforestation network. On
-            top of that, each tree planted on this land is minted as a separate
-            NFT, creating a digital record for every tree’s journey from
-            seedling to maturity. This dual NFT provides complete transparency
-            and ensures that every part of your impact is verifiable on the
-            blockchain.
+            At TreeTherium, both projects, land plots and individual trees are
+            represented by unique NFTs. Each plot of land approved for planting
+            receives its own NFT, which certifies its role in our reforestation
+            network. On top of that, each tree planted on this land is minted as
+            a separate NFT, creating a digital record for every tree’s journey
+            from seedling to maturity. This dual NFT provides complete
+            transparency and ensures that every part of your impact is
+            verifiable on the blockchain.
           </p>
           <p style={styles.title}>NFT is value</p>
           <p style={styles.paragraph}>
@@ -105,7 +105,7 @@ const styles = {
     color: "#4F3738",
     padding: "0 0 15px",
     marginBottom: "0px",
-    textAlign: "justify", 
+    textAlign: "justify",
   },
   paragraphLast: {
     fontSize: "1.125em",
@@ -113,7 +113,7 @@ const styles = {
     color: "#4F3738",
     padding: "0 0 25px",
     marginBottom: "0px",
-    textAlign: "justify", 
+    textAlign: "justify",
   },
   "@media (min-width: 600px)": {
     card: {
