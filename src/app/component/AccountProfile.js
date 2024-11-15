@@ -3,6 +3,7 @@ import Section from "../component/layouts/Section";
 import Link from "next/link";
 import { signOut } from "next-auth/react"; // Import useSession and signOut
 import useQuery from "../libs/useQuery";
+import { Toaster, toast } from "react-hot-toast";
 
 // Full-Screen Loader Component
 const FullScreenLoader = () => (
@@ -19,15 +20,19 @@ const AccountProfile = () => {
   }
 
   const handleLogout = async () => {
+    const loadingToast = toast.loading("Logging out...");
     try {
       await signOut({ callbackUrl: "/signin" });
+      toast.success("Logged out successfully!", { id: loadingToast });
     } catch (error) {
+      toast.error("Failed to log out. Please try again.", { id: loadingToast });
       console.error("Error logging out:", error);
     }
   };
 
   return (
     <Section allNotification={false} searchPopup={true} title="Account Profile">
+      <Toaster position="top-center" />
       <div className="profile-area">
         <div className="container">
           <div className="profile-card">

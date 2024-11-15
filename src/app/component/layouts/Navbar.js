@@ -3,21 +3,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import useQuery from "@/app/libs/useQuery";
+import { Toaster, toast } from "react-hot-toast";
 
 const Navbar = ({ isOpen, onClose }) => {
   const { data: userData } = useQuery("/api/me");
 
   // Function to handle logout
   const handleLogout = async () => {
+    const loadingToast = toast.loading("Logging out...");
     try {
       await signOut({ callbackUrl: "/signin" });
+      toast.success("Logged out successfully!", { id: loadingToast });
     } catch (error) {
+      toast.error("Failed to log out. Please try again.", { id: loadingToast });
       console.error("Error logging out:", error);
     }
   };
 
   return (
     <>
+
+       {/* Toaster for notifications */}
+       <Toaster position="top-center" />
+
       {/* Overlay */}
       {isOpen && <div className="overlay" onClick={onClose} />}
 

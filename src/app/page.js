@@ -268,7 +268,7 @@ const Page = () => {
       <div
         className={`${
           slides[currentSlide].id === 2 || slides[currentSlide].id === 3
-            ? styles.buttonContainer1
+            ? styles.buttonContainer4
             : slides[currentSlide].id === 4
             ? styles.buttonContainer4
             : ""
