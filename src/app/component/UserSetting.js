@@ -6,6 +6,7 @@ import { getNames } from "country-list";
 import useQuery from "../libs/useQuery";
 import useMutation from "../libs/useMutation";
 import Image from "next/image";
+import { Toaster, toast } from "react-hot-toast";
 
 const UserSetting = () => {
   const { data: userData } = useQuery("/api/me");
@@ -37,13 +38,18 @@ const UserSetting = () => {
 
     setFormData({
       ...userData,
+      username: userData?.username || "",
+      motto: userData?.motto || "",
+      email: userData?.email || "",
+      walletAddress: userData?.walletAddress || "",
+      country: userData?.country || "",
       profileImageUrl: userData?.profileImageUrl || DEFAULT_PROFILE_IMAGE,
     });
   }, [userData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value || "" });
   };
 
   const handleImageError = () => {
@@ -72,9 +78,8 @@ const UserSetting = () => {
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    setIsUploading(true);
-    setUploadError("");
 
+    const loadingToast = toast.loading("Uploading image...");
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -92,12 +97,12 @@ const UserSetting = () => {
       const { downloadUrl } = await response.json();
 
       setFormData((prev) => ({ ...prev, profileImageUrl: downloadUrl }));
-      console.log("Image uploaded successfully:", downloadUrl);
+      toast.success("Image uploaded successfully!", { id: loadingToast });
     } catch (error) {
-      console.error("Error uploading image:", error);
-      setUploadError(error.message || "Failed to upload image.");
+      toast.error(error.message || "Failed to upload image.", {
+        id: loadingToast,
+      });
     } finally {
-      setIsUploading(false);
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -109,12 +114,15 @@ const UserSetting = () => {
   });
 
   const handleSave = async () => {
+    const loadingToast = toast.loading("Saving profile...");
     try {
       await updateProfile({ ...formData });
+      toast.success("Profile updated successfully!", { id: loadingToast });
       router.push("/accountprofile");
     } catch (error) {
-      console.error("Error updating user data:", error);
-      alert("Failed to save changes. Please try again.");
+      toast.error("Failed to save changes. Please try again.", {
+        id: loadingToast,
+      });
     }
   };
 
@@ -129,23 +137,21 @@ const UserSetting = () => {
 
         const currentWalletAddress = userData.walletAddress;
         if (currentWalletAddress && currentWalletAddress !== newWalletAddress) {
-          // Show popup to ask user to connect a new wallet
-          setShowConnectWalletPopup(true);
+          toast.error(
+            "Wallet address mismatch. Please connect the correct wallet."
+          );
           return;
         }
 
-        // Update wallet address if it's new
         await updateProfile({ ...formData, walletAddress: newWalletAddress });
         setFormData({ ...formData, walletAddress: newWalletAddress });
 
-        // Show success message
-        setShowSuccessPopup(true);
-        setTimeout(() => setShowSuccessPopup(false), 3000);
+        toast.success("Wallet address updated successfully!");
       } catch (error) {
-        console.error("Failed to connect to Phantom Wallet:", error);
+        toast.error("Failed to connect to Phantom Wallet. Please try again.");
       }
     } else {
-      alert("Phantom Wallet not found. Please install it first.");
+      toast.error("Phantom Wallet not found. Please install it first.");
     }
   };
 
@@ -164,6 +170,7 @@ const UserSetting = () => {
 
   return (
     <Section allNotification={false} searchPopup={true} title="Edit Profile">
+      <Toaster position="top-center" /> 
       <div className="settings-area">
         <div className="container">
           <div className="settings-card">
