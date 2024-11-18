@@ -3,8 +3,6 @@ import "./globals.css";
 import "../../public/assets/css/responsive.css";
 import "../../public/assets/css/style.css";
 import "../../public/assets/css/components/_buttons.css";
-import "../../public/assets/demo/css/demo.css";
-import "../../public/assets/css/vendor.css";
 import { Roboto } from "next/font/google";
 
 export const metadata = {

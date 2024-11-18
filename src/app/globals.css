@@ -36,8 +36,8 @@ Version: 1.0.0
   --main-color: #6236ff;
   --heading-color: #474747;
   --paragraph-color: #474747;
-  --heading-font: 'Roboto', sans-serif;
-  --body-font: 'Roboto', sans-serif;
+  --heading-font: "Roboto";
+  --body-font: "Roboto";
 }
 
 html {
@@ -61,7 +61,7 @@ body {
   margin: 0;
   color: var(--paragraph-color);
   overflow-x: hidden;
-  font-family: var(--body-font);
+  font-family: "Roboto";
   background: #f6f6f6;
   font-size: 14px;
 }
@@ -103,7 +103,6 @@ h4,
 h5,
 h6 {
   color: var(--heading-color);
-  font-family: var(--heading-font);
   font-weight: 600;
 }
 
@@ -789,12 +788,7 @@ ul {
   border-radius: 5px;
 }
 
-.bg-transaction-details::after {
-  background-image: url("../../public/assets/img/bg/8.png") !important;
-  background-size: cover !important;
-  background-position: center !important;
-  border-radius: 5px;
-}
+
 
 /*-------------------------
     ## section-title
@@ -1811,10 +1805,7 @@ ul {
   font-weight: 500;
 }
 
-.balance-area-bg-home:after {
-  background-image: url("../../public/assets/img/bg/8.png") !important;
-  background-size: cover;
-}
+
 
 .balance-area-bg-home .balance-title h6 {
   color: #fff;
