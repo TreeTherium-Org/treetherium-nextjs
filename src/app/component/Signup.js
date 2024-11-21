@@ -17,6 +17,7 @@ import {
 import { auth, db } from "../../firebase";
 import { SigninMessage } from "../libs/signinMessage.js";
 import bs58 from "bs58";
+import { Toaster, toast } from "react-hot-toast";
 
 // Full-Screen Loader Component
 const FullScreenLoader = () => (
@@ -96,27 +97,29 @@ const Signup = () => {
 
     if (!username) {
       setError("Username is required.");
+      toast.error("Username is required.");
       return;
     }
 
     if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
+      toast.error("Please enter a valid email address.");
       return;
     }
 
     if (password.length < 6) {
       setError("Password must be at least 6 characters.");
+      toast.error("Password must be at least 6 characters.");
       return;
     }
 
     if (!acceptTerms) {
       setError("You must accept the terms and conditions.");
+      toast.error("You must accept the terms and conditions.");
       return;
     }
 
-    setLoading(true);
-    setError(null);
-
+    const loadingToast = toast.loading("Registering your account...");
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -149,11 +152,14 @@ const Signup = () => {
         throw new Error(result.error);
       }
 
+      toast.success("Registration successful! Redirecting to home...", {
+        id: loadingToast,
+      });
       router.push("/home");
     } catch (error) {
-      handleFirebaseError(error);
-    } finally {
-      setLoading(false);
+      toast.error(error.message || "An error occurred during registration.", {
+        id: loadingToast,
+      });
     }
   };
 
@@ -198,6 +204,7 @@ const Signup = () => {
   };
 
   const handlePhantomWalletSignin = async () => {
+    const loadingToast = toast.loading("Connecting to Phantom Wallet...");
     try {
       if ("solana" in window) {
         const provider = window.solana;
@@ -231,18 +238,24 @@ const Signup = () => {
           throw new Error(result.error);
         }
 
+        toast.success("Phantom Wallet connected successfully!", {
+          id: loadingToast,
+        });
         router.push("/home");
       } else {
         alert("Phantom Wallet not found. Please install it first.");
       }
     } catch (error) {
+      toast.error(error.message || "Failed to connect to Phantom Wallet.", {
+        id: loadingToast,
+      });
       console.log(error);
     }
   };
 
   return (
     <>
-      {loading && <FullScreenLoader />}
+      <Toaster position="top-center" />
       <Section allNotification={false} searchPopup={true} title="Registration">
         <div className="logo-container">
           <h3></h3>

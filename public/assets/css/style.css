@@ -810,7 +810,6 @@ ul {
 .section-title .title {
   font-size: 24px;
   font-weight: 600;
-
   display: inline-block;
 }
 
@@ -1276,7 +1275,6 @@ ul {
 }
 
 .header-area .logo {
-
   margin-top: 2px;
   display: inline-block;
 }
@@ -1360,7 +1358,7 @@ ul {
 .ba-navbar {
   width: 300px;
   position: fixed;
-  left: -300px;
+  left: -330px;
   top: 0;
   transition: 0.5s;
   z-index: 9;

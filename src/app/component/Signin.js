@@ -8,6 +8,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../firebase";
 import { doc, getDoc, collection } from "firebase/firestore";
 import { SigninMessage } from "../libs/signinMessage.js";
+import { Toaster, toast } from "react-hot-toast";
 import bs58 from "bs58";
 
 // Full-Screen Loader Component
@@ -22,6 +23,7 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const [rememberPassword, setRememberPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null); // Success state
   const [loading, setLoading] = useState(false); // Loading state
   const router = useRouter();
 
@@ -120,15 +122,17 @@ const Signin = () => {
         setError(
           error.message || "An unexpected error occurred. Please try again."
         );
-        break;
+        toast.error(errorMessage); // Display error using toast
+        console.error("Firebase Error:", error);
     }
-    console.error("Firebase Error:", error);
   };
 
   const signInWithEmail = async (e) => {
     e.preventDefault();
+    const loadingToast = toast.loading("Signing in...");
     setLoading(true); // Start loading
     setError(null); // Clear previous errors
+    setSuccess(null); // Clear previous success messages
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -150,17 +154,21 @@ const Signin = () => {
         throw new Error(result.error);
       }
 
+      toast.success("Login successful! Redirecting to home page...", {
+        id: loadingToast, // Replace the loading toast
+      });
       router.push("/home");
     } catch (error) {
+      toast.error("Login failed. Please try again.", {
+        id: loadingToast, // Replace the loading toast
+      });
       handleFirebaseError(error);
-    } finally {
-      setLoading(false); // Stop loading
     }
   };
 
   return (
     <>
-      {loading && <FullScreenLoader />}
+      <Toaster position="top-center" />
       <Section allNotification={false} searchPopup={true} title="Login">
         <div className="logo-container">
           <h3></h3>
@@ -170,6 +178,8 @@ const Signin = () => {
           <div className="container">
             <form className="contact-form-inner" onSubmit={signInWithEmail}>
               {error && <p className="error-message">{error}</p>}
+              {success && <p className="success-message">{success}</p>}{" "}
+              {/* Success message */}
               <label className="single-input-wrap">
                 <span>Email Address*</span>
                 <input

@@ -5,6 +5,7 @@ import Section from "../layouts/Section";
 import { useRouter } from "next/navigation";
 import { getFirestore, doc, getDoc } from "firebase/firestore"; // Firebase import
 import useQuery from "@/app/libs/useQuery";
+import { Toaster, toast } from "react-hot-toast";
 // import { useSession } from "next-auth/react"; // Assuming you're using next-auth
 
 const MyPlantedForest = () => {
@@ -32,13 +33,16 @@ const MyPlantedForest = () => {
   // }, [db, session]);
 
   const handleButtonClick = async (route) => {
-    if (userData.walletAddress) {
+    if (isWalletConnected) {
       router.push(route); // Redirect if wallet is connected
     } else {
-      setShowRedirectPopup(true); // Show message for 3 seconds if not connected
+      // Show toast notification and redirect after 2 seconds
+      toast.error(
+        "Please connect wallet first at your account setting before proceeding.."
+      );
       setTimeout(() => {
-        router.push("/accountprofile"); // Redirect to Account Profile after 3 seconds
-      }, 3000);
+        router.push("/usersetting");
+      }, 2000);
     }
   };
 
@@ -48,6 +52,9 @@ const MyPlantedForest = () => {
       searchPopup={true}
       title={"My Planted Forest"}
     >
+      {/* Toaster for notifications */}
+      <Toaster position="top-center" />
+      
       <div style={containerStyle}>
         <header style={headerStyle}>
           <h3 className="form-title">My Data Overview</h3>

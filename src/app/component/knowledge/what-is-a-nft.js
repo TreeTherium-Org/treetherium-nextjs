@@ -1,5 +1,6 @@
 import Section from "../../component/layouts/Section.js";
 import Image from "next/image";
+import styles from "./textstyle.module.css";
 
 const WhatIsANFT = () => {
   return (
@@ -15,9 +16,9 @@ const WhatIsANFT = () => {
           </h3>
         </div>
       </div>
-      <div style={styles.card}>
+      <div className={styles.card}>
         <Image
-          style={styles.cardImgTop}
+          className={styles.cardImgTop}
           src="/assets/img/what-is-nft.png"
           alt="Tree Image"
           width={600} 
@@ -25,9 +26,9 @@ const WhatIsANFT = () => {
           layout="responsive" 
           priority={true} 
         />
-        <div style={styles.cardBody}>
-          <div style={styles.divider} />
-          <p style={styles.paragraph}>
+        <div className={styles.cardBody}>
+          <div className={styles.divider} />
+          <p className={styles.paragraph}>
             An NFT, or Non-Fungible Token, is a unique digital asset that
             represents ownership of a specific item, artwork, collectible, or
             even real-world object like a planted tree. Unlike cryptocurrencies
@@ -36,8 +37,8 @@ const WhatIsANFT = () => {
             This uniqueness gives NFTs their value and makes them a powerful
             tool for proving ownership and authenticity in the digital world.
           </p>
-          <p style={styles.title}>How NFTs Work On The Blockchain</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>How NFTs Work On The Blockchain</p>
+          <p className={styles.paragraph}>
             NFTs are stored on a blockchain, which acts as a secure digital
             ledger that records each transaction and ownership history. The most
             common blockchains for NFTs are Ethereum and Solana, although new
@@ -48,8 +49,8 @@ const WhatIsANFT = () => {
             offer a level of transparency and trust that traditional ownership
             models can’t provide.
           </p>
-          <p style={styles.title}>Decentralization: No Central Authority</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>Decentralization: No Central Authority</p>
+          <p className={styles.paragraph}>
             Unlike traditional databases managed by a single organization,
             blockchain is decentralized. This means that no single entity
             controls the network. Instead, multiple nodes (computers) work
@@ -57,10 +58,10 @@ const WhatIsANFT = () => {
             blockchain more secure, as data is spread across the network and
             protected from single points of failure or manipulation.
           </p>
-          <p style={styles.title}>
+          <p className={styles.title}>
             NFTs In TreeTherium: Building Your Planted & Digital Forest
           </p>
-          <p style={styles.paragraph}>
+          <p className={styles.paragraph}>
             In TreeTherium, NFTs are used to represent each user account, each
             tree you plant, and each project you participate in. These NFTs are
             more than just digital collectibles—they’re proof of your
@@ -69,8 +70,8 @@ const WhatIsANFT = () => {
             &quot;Planted Forest,&quot; creating a digital record of your
             commitment to reforestation.
           </p>
-          <p style={styles.title}>Immutable Data Linked To Each NFT</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>Immutable Data Linked To Each NFT</p>
+          <p className={styles.paragraph}>
             Each TreeTherium NFT holds a wealth of data tied to the individual
             tree or project it represents. This data includes details like the
             planter’s name, date of germination, potting and planting dates,
@@ -79,8 +80,8 @@ const WhatIsANFT = () => {
             the blockchain, creating an immutable, verifiable record of each
             tree’s journey and its environmental contributions.
           </p>
-          <p style={styles.title}>Why NFTs Matter For The Future</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>Why NFTs Matter For The Future</p>
+          <p className={styles.paragraph}>
             NFTs offer a groundbreaking way to establish ownership, verify
             authenticity, and support transparency in digital and real-world
             projects. In platforms like TreeTherium, NFTs provide a trusted,
@@ -96,72 +97,3 @@ const WhatIsANFT = () => {
 };
 
 export default WhatIsANFT;
-
-const styles = {
-  card: {
-    backgroundColor: "#fff",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-    borderRadius: "10px 10px 0 0",
-    textAlign: "left",
-    padding: "0",
-    maxWidth: "100%",
-    margin: "21px 20px 100px",
-  },
-  cardImgTop: {
-    borderRadius: "10px 10px 0 0",
-    objectFit: "cover",
-  },
-  cardBody: {
-    padding: "0 20px",
-  },
-  title: {
-    fontSize: "1.125em",
-    fontWeight: 700,
-    color: "#4F3738",
-    padding: "0 0 8px",
-    marginBottom: "0px",
-    textTransform: "capitalize",
-  },
-  divider: {
-    width: "100%",
-    height: "4px",
-    margin: "15px 0 11px",
-    borderRadius: "50px",
-    backgroundColor: "#e7e1ee",
-  },
-  paragraph: {
-    fontSize: "1.125em",
-    fontWeight: 400,
-    color: "#4F3738",
-    padding: "0 0 15px",
-    marginBottom: "0px",
-    textAlign: "justify", 
-  },
-  paragraphLast: {
-    fontSize: "1.125em",
-    fontWeight: 400,
-    color: "#4F3738",
-    padding: "0 0 25px",
-    marginBottom: "0px",
-    textAlign: "justify", 
-  },
-  "@media (min-width: 600px)": {
-    card: {
-      maxWidth: "80%",
-    },
-  },
-  "@media (min-width: 1024px)": {
-    card: {
-      maxWidth: "600px",
-    },
-    title: {
-      fontSize: "1.5rem",
-    },
-    page: {
-      fontSize: "1.125rem",
-    },
-    paragraph: {
-      fontSize: "1.125rem",
-    },
-  },
-};

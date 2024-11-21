@@ -1,5 +1,6 @@
 import Section from "../../component/layouts/Section.js";
 import Image from "next/image";
+import styles from "./textstyle.module.css";
 
 const WhatIsCrypto = () => {
   return (
@@ -15,9 +16,9 @@ const WhatIsCrypto = () => {
           </h3>
         </div>
       </div>
-      <div style={styles.card}>
+      <div className={styles.card}>
         <Image
-          style={styles.cardImgTop}
+          className={styles.cardImgTop}
           src="/assets/img/what-is-crypto.png"
           alt="Tree Image"
           width={600} 
@@ -25,9 +26,9 @@ const WhatIsCrypto = () => {
           layout="responsive" 
           priority={true} 
         />
-        <div style={styles.cardBody}>
-          <div style={styles.divider} />
-          <p style={styles.paragraph}>
+        <div className={styles.cardBody}>
+          <div className={styles.divider} />
+          <p className={styles.paragraph}>
             Cryptocurrency is a form of digital money that operates
             independently of traditional banks and governments. Unlike regular
             currencies like dollars or euros, crypto relies on a technology
@@ -36,8 +37,8 @@ const WhatIsCrypto = () => {
             digital transactions and global accessibility, allowing people
             around the world to send, receive, and store value securely online.
           </p>
-          <p style={styles.title}>How Does Cryptocurrency Work?</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>How Does Cryptocurrency Work?</p>
+          <p className={styles.paragraph}>
             Cryptocurrencies operate on a technology known as blockchain—a
             digital ledger shared across a network of computers. Each
             transaction is recorded on this ledger, creating a chain of secure,
@@ -46,8 +47,8 @@ const WhatIsCrypto = () => {
             computers validates and records every transaction, ensuring security
             and transparency for users.
           </p>
-          <p style={styles.title}>Types of Cryptocurrencies</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>Types of Cryptocurrencies</p>
+          <p className={styles.paragraph}>
             There are thousands of cryptocurrencies, but they generally fall
             into a few main categories. Bitcoin was the first and remains the
             most popular, often seen as &quot;digital gold.&quot; Altcoins
@@ -57,8 +58,8 @@ const WhatIsCrypto = () => {
             volatility. Each type of cryptocurrency serves different purposes,
             from investment to payments and more.
           </p>
-          <p style={styles.title}>Why is Crypto Valuable?</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>Why is Crypto Valuable?</p>
+          <p className={styles.paragraph}>
             The value of cryptocurrency often comes from its limited supply and
             the trust users have in its technology. For example, Bitcoin has a
             capped supply of 21 million coins, creating scarcity that can
@@ -67,8 +68,8 @@ const WhatIsCrypto = () => {
             freedom, as they aren&apos;t restricted by borders or traditional
             banking regulations.
           </p>
-          <p style={styles.title}>Crypto Wallets: Where is Crypto Stored?</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>Crypto Wallets: Where is Crypto Stored?</p>
+          <p className={styles.paragraph}>
             Crypto is stored in digital wallets, which can be online (hot
             wallets) or offline (cold wallets). A wallet doesn’t actually hold
             your cryptocurrency; instead, it stores the private keys that let
@@ -76,8 +77,8 @@ const WhatIsCrypto = () => {
             to keeping your funds secure—remember, your keys, your crypto. If
             you lose them, you lose access to your funds.
           </p>
-          <p style={styles.title}>How Do You Use Cryptocurrency?</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>How Do You Use Cryptocurrency?</p>
+          <p className={styles.paragraph}>
             Cryptocurrency can be used in various ways. You can buy, sell, or
             trade it on exchanges, or hold it as an investment. Some businesses
             accept crypto as payment for goods and services, allowing you to
@@ -85,8 +86,8 @@ const WhatIsCrypto = () => {
             transferring funds globally, often with lower fees and faster
             transaction times than regular bank transfers.
           </p>
-          <p style={styles.title}>The Role of Crypto in the Future</p>
-          <p style={styles.paragraphLast}>
+          <p className={styles.title}>The Role of Crypto in the Future</p>
+          <p className={styles.paragraphLast}>
             As digital transactions become more common, cryptocurrency could
             play a bigger role in the financial world. It has the potential to
             increase financial inclusion, streamline international transactions,
@@ -103,72 +104,3 @@ const WhatIsCrypto = () => {
 };
 
 export default WhatIsCrypto;
-
-const styles = {
-  card: {
-    backgroundColor: "#fff",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-    borderRadius: "10px 10px 0 0",
-    textAlign: "left",
-    padding: "0",
-    maxWidth: "100%",
-    margin: "21px 20px 100px",
-  },
-  cardImgTop: {
-    borderRadius: "10px 10px 0 0",
-    objectFit: "cover",
-  },
-  cardBody: {
-    padding: "0 20px",
-  },
-  title: {
-    fontSize: "1.125em",
-    fontWeight: 700,
-    color: "#4F3738",
-    padding: "0 0 8px",
-    marginBottom: "0px",
-    textTransform: "capitalize",
-  },
-  divider: {
-    width: "100%",
-    height: "4px",
-    margin: "15px 0 11px",
-    borderRadius: "50px",
-    backgroundColor: "#e7e1ee",
-  },
-  paragraph: {
-    fontSize: "1.125em",
-    fontWeight: 400,
-    color: "#4F3738",
-    padding: "0 0 15px",
-    marginBottom: "0px",
-    textAlign: "justify",
-  },
-  paragraphLast: {
-    fontSize: "1.125em",
-    fontWeight: 400,
-    color: "#4F3738",
-    padding: "0 0 25px",
-    marginBottom: "0px",
-    textAlign: "justify", 
-  },
-  "@media (min-width: 600px)": {
-    card: {
-      maxWidth: "80%",
-    },
-  },
-  "@media (min-width: 1024px)": {
-    card: {
-      maxWidth: "600px",
-    },
-    title: {
-      fontSize: "1.5rem",
-    },
-    page: {
-      fontSize: "1.125rem",
-    },
-    paragraph: {
-      fontSize: "1.125rem",
-    },
-  },
-};
