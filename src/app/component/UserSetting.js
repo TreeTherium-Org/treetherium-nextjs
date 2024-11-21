@@ -7,6 +7,7 @@ import useQuery from "../libs/useQuery";
 import useMutation from "../libs/useMutation";
 import Image from "next/image";
 import { Toaster, toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 
 const UserSetting = () => {
   const { data: userData } = useQuery("/api/me");

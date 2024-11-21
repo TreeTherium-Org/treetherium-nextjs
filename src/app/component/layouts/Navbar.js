@@ -4,6 +4,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import useQuery from "@/app/libs/useQuery";
 import { Toaster, toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 
 const Navbar = ({ isOpen, onClose }) => {
   const { data: userData } = useQuery("/api/me");
