@@ -145,6 +145,14 @@ export const {
   pages: {
     signIn: "/signin",
   },
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60 * 24, // 1 minute (60 seconds)
+    // updateAge: 60, // 1 minute (60 seconds)
+  },
+  jwt: {
+    maxAge: 60 * 60 * 24,
+  },
   secret: process.env.NEXTAUTH_SECRET,
   // adapter: FirestoreAdapter(authfirestore),
 });

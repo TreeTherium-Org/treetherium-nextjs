@@ -1,6 +1,7 @@
 "use client";
 
-import Section from "../component/layouts/Section.js";
+import Section from "../layouts/Section.js";
+import styles from "./faq.module.css";
 import Link from "next/link";
 import React, { useState } from 'react';
 import {
@@ -129,7 +130,7 @@ const FAQ = () => {
               <div key={index}>
                 <Typography
                   variant="h4"
-                  style={styles.title}
+                  className={styles.title}
                 >
                   {section.category}
                 </Typography>
@@ -138,21 +139,21 @@ const FAQ = () => {
                     key={idx}
                     expanded={expanded === `panel${index}-${idx}`}
                     onChange={handleChange(`panel${index}-${idx}`)}
-                    style={styles.accordion}
+                    className={styles.accordion}
                   >
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
+                      className={`${styles.summary} ${
+                        expanded === `panel${index}-${idx}` ? styles.expanded : ""
+                      }`}
                       style={{
-                        ...styles.summary,
-                        backgroundColor:
-                          expanded === `panel${index}-${idx}`
-                            ? "#f0f0f0"
-                            : "#fff",
+                        backgroundColor: expanded === `panel${index}-${idx}` ? "#f0f0f0" : "#fff",
                       }}
+                      
                     >
                       <Typography>{item.question}</Typography>
                     </AccordionSummary>
-                    <AccordionDetails style={styles.details}>
+                    <AccordionDetails className={styles.details}>
                       <Typography>{item.answer}</Typography>
                     </AccordionDetails>
                   </Accordion>
@@ -167,72 +168,3 @@ const FAQ = () => {
 };
 
 export default FAQ;
-
-const styles = {
-  card: {
-    backgroundColor: "#fff" /* White background for the card */,
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)" /* Soft shadow */,
-    textAlign: "left" /* Left-align content */,
-    padding: "5px" /* Inner padding */,
-    maxWidth: "100%" /* Max width for the card */,
-    margin: "21px 20px 100px",
-  },
-  accordion: {
-    margin: "20px 0",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-    borderRadius: "8px",
-    overflow: "hidden", // Rounded corners
-    backgroundColor: "#f9f9f9",
-  },
-  summary: {
-    backgroundColor: "#fff",
-    padding: "16px 24px",
-    fontWeight: "bold",
-    color: "#333",
-    borderBottom: "1px solid #e0e0e0",
-    "&:hover": {
-      backgroundColor: "#f4f4f4",
-    },
-  },
-  details: {
-    padding: "16px 24px",
-    color: "#555",
-  },
-  title: {
-    fontSize: "1.50em",
-    fontWeight: 700,
-    color: "#4F3738",
-    marginBottom: "0px",
-  },
-  divider: {
-    width: "100%",
-    height: "4px",
-    margin: "0 0 32px",
-    borderRadius: "50px",
-    backgroundColor: "#e7e1ee",
-  },
-  page: {
-    fontSize: "1.125em",
-    fontWeight: 400,
-    color: "#4F3738",
-    padding: "-1 0 11px 55px",
-    marginBottom: "0px",
-  },
-  // Adding a responsive layout to make sure the text and dividers adjust well to screen size
-  "@media (min-width: 600px)": {
-    card: {
-      maxWidth: "80%", // Limit card width on medium screens
-    },
-  },
-  "@media (min-width: 1024px)": {
-    card: {
-      maxWidth: "600px", // Limit card width on larger screens
-    },
-    title: {
-      fontSize: "1.5rem",
-    },
-    page: {
-      fontSize: "1.125rem",
-    },
-  },
-};

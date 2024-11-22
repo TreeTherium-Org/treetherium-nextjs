@@ -1,4 +1,4 @@
-import MyPlantedForest from "@/app/component/project/planted-forest";
+import MyPlantedForest from "@/app/component/planted-forest/planted-forest";
 
 export default function PlantedForestPage() {
   return (

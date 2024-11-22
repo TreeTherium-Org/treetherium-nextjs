@@ -23,9 +23,9 @@ const Navbar = ({ isOpen, onClose }) => {
   return (
     <>
 
-       {/* Toaster for notifications */}
-       <Toaster position="top-center" />
-
+      {/* Toaster for notifications */}
+      <Toaster position="top-center" />
+      
       {/* Overlay */}
       {isOpen && <div className="overlay" onClick={onClose} />}
 

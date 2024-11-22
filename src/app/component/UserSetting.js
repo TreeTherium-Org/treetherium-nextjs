@@ -170,7 +170,7 @@ const UserSetting = () => {
 
   return (
     <Section allNotification={false} searchPopup={true} title="Edit Profile">
-      <Toaster position="top-center" /> 
+      <Toaster position="top-center" />
       <div className="settings-area">
         <div className="container">
           <div className="settings-card">
@@ -273,12 +273,16 @@ const UserSetting = () => {
                   id="walletAddress"
                   name="walletAddress"
                   value={
-                    formData.walletAddress ||
-                    "Click here to connect Phantom Wallet."
+                    formData.walletAddress
+                      ? formData.walletAddress
+                      : "Click here to connect Phantom Wallet."
                   }
                   readOnly
                   onClick={handleWalletConnect}
-                  style={{ cursor: "pointer" }}
+                  style={{
+                    cursor: "pointer",
+                    color: formData.walletAddress ? "black" : "red", // Red text if no wallet address
+                  }}
                 />
               </div>
 
@@ -297,26 +301,6 @@ const UserSetting = () => {
           </div>
         </div>
       </div>
-
-      {/* Popup for connecting a new wallet */}
-      {showConnectWalletPopup && (
-        <div className="popup">
-          <div className="popup-content">
-            <p>
-              A wallet is already connected. Do you want to connect a new one?
-            </p>
-            <button onClick={handleConfirmConnectNewWallet}>Yes</button>
-            <button onClick={() => setShowConnectWalletPopup(false)}>No</button>
-          </div>
-        </div>
-      )}
-
-      {/* Success popup for 3 seconds */}
-      {showSuccessPopup && (
-        <div className="success-popup">
-          <p>Wallet address updated successfully!</p>
-        </div>
-      )}
     </Section>
   );
 };

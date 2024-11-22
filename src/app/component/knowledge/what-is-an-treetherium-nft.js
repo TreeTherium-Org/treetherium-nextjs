@@ -1,5 +1,6 @@
 import Section from "../../component/layouts/Section.js";
 import Image from "next/image";
+import styles from "./textstyle.module.css";
 
 const TreeTheriumNFT = () => {
   return (
@@ -15,9 +16,9 @@ const TreeTheriumNFT = () => {
           </h3>
         </div>
       </div>
-      <div style={styles.card}>
+      <div className={styles.card}>
         <Image
-          style={styles.cardImgTop}
+          className={styles.cardImgTop}
           src="/assets/img/what-is-treetherium-nft.png"
           alt="Tree Image"
           width={600} 
@@ -25,9 +26,9 @@ const TreeTheriumNFT = () => {
           layout="responsive" 
           priority={true} 
         />
-        <div style={styles.cardBody}>
-          <div style={styles.divider} />
-          <p style={styles.paragraph}>
+        <div className={styles.cardBody}>
+          <div className={styles.divider} />
+          <p className={styles.paragraph}>
             An NFT, or Non-Fungible Token, is a unique digital asset stored on
             the blockchain that cannot be replicated. Unlike cryptocurrencies,
             each NFT is one-of-a-kind and represents ownership of a specific
@@ -35,8 +36,8 @@ const TreeTheriumNFT = () => {
             certificates, verifying each user’s contributions to reforestation
             and conservation.
           </p>
-          <p style={styles.title}>NFTs In Your Planted Forest</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>NFTs In Your Planted Forest</p>
+          <p className={styles.paragraph}>
             With TreeTherium, each user account, every tree you plant, and every
             project you join becomes an NFT. These NFTs are collectible tokens
             that represent your personal &quot;Planted Forest&quot;, showcasing
@@ -44,8 +45,8 @@ const TreeTheriumNFT = () => {
             permanent, digital record of your contribution, and you can view and
             share your achievements with others.
           </p>
-          <p style={styles.title}>Immutable Data Connected To Your NFTs</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>Immutable Data Connected To Your NFTs</p>
+          <p className={styles.paragraph}>
             Every NFT holds detailed, unchangeable information related to the
             trees you plant. This includes data such as the planter’s name, date
             of germination, potting and planting dates, and even multimedia like
@@ -63,71 +64,3 @@ const TreeTheriumNFT = () => {
 
 export default TreeTheriumNFT;
 
-const styles = {
-  card: {
-    backgroundColor: "#fff",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-    borderRadius: "10px 10px 0 0",
-    textAlign: "left",
-    padding: "0",
-    maxWidth: "100%",
-    margin: "21px 20px 100px",
-  },
-  cardImgTop: {
-    borderRadius: "10px 10px 0 0",
-    objectFit: "cover",
-  },
-  cardBody: {
-    padding: "0 20px",
-  },
-  title: {
-    fontSize: "1.125em",
-    fontWeight: 700,
-    color: "#4F3738",
-    padding: "0 0 8px",
-    marginBottom: "0px",
-    textTransform: "capitalize",
-  },
-  divider: {
-    width: "100%",
-    height: "4px",
-    margin: "15px 0 11px",
-    borderRadius: "50px",
-    backgroundColor: "#e7e1ee",
-  },
-  paragraph: {
-    fontSize: "1.125em",
-    fontWeight: 400,
-    color: "#4F3738",
-    padding: "0 0 15px",
-    marginBottom: "0px",
-    textAlign: "justify", 
-  },
-  paragraphLast: {
-    fontSize: "1.125em",
-    fontWeight: 400,
-    color: "#4F3738",
-    padding: "0 0 25px",
-    marginBottom: "0px",
-    textAlign: "justify", 
-  },
-  "@media (min-width: 600px)": {
-    card: {
-      maxWidth: "80%",
-    },
-  },
-  "@media (min-width: 1024px)": {
-    card: {
-      maxWidth: "600px",
-    },
-    title: {
-      fontSize: "1.5rem",
-    },
-    page: {
-      fontSize: "1.125rem",
-    },
-    paragraph: {
-      fontSize: "1.125rem",
-    },
-  },
-};

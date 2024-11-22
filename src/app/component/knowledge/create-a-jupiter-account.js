@@ -1,5 +1,6 @@
 import Section from "../../component/layouts/Section.js";
 import Image from "next/image";
+import styles from "./textstyle.module.css";
 
 const Jupiter = () => {
   return (
@@ -15,26 +16,26 @@ const Jupiter = () => {
           </h3>
         </div>
       </div>
-      <div style={styles.card}>
+      <div className={styles.card}>
         <Image
-          style={styles.cardImgTop}
+          className={styles.cardImgTop}
           src="/assets/img/create-jupiter-account.png"
           alt="Tree Image"
           width={600} 
           height={253}
           layout="responsive"
         />
-        <div style={styles.cardBody}>
-          <div style={styles.divider} />
-          <p style={styles.paragraph}>
+        <div className={styles.cardBody}>
+          <div className={styles.divider} />
+          <p className={styles.paragraph}>
             Jupiter is a powerful platform on the Solana blockchain that acts as
             an aggregator, helping users find the best rates for swapping or
             bridging tokens across various decentralized exchanges (DEXs). With
             Jupiter, you get access to a network of exchanges on Solana,
             ensuring you always get the most value when trading tokens.
           </p>
-          <p style={styles.title}>Why Use Jupiter?</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>Why Use Jupiter?</p>
+          <p className={styles.paragraph}>
             Jupiter is the preferred choice for TreeTherium users when it comes
             to buying and managing $SEEDZ and $TREEZ tokens. With Jupiter, you
             can quickly swap between tokens or bridge assets to support your
@@ -42,8 +43,8 @@ const Jupiter = () => {
             It’s reliable, efficient, and designed to make navigating the Solana
             blockchain simple.
           </p>
-          <p style={styles.title}>Getting Started With Jupiter</p>
-          <p style={styles.paragraph}>
+          <p className={styles.title}>Getting Started With Jupiter</p>
+          <p className={styles.paragraph}>
             To set up an account with Jupiter, connect your Phantom Wallet to
             the platform, and follow the easy steps to start swapping and
             bridging tokens. Once connected, you can explore the range of
@@ -58,71 +59,3 @@ const Jupiter = () => {
 
 export default Jupiter;
 
-const styles = {
-  card: {
-    backgroundColor: "#fff",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-    borderRadius: "10px 10px 0 0",
-    textAlign: "left",
-    padding: "0",
-    maxWidth: "100%",
-    margin: "21px 20px 100px",
-  },
-  cardImgTop: {
-    borderRadius: "10px 10px 0 0",
-    objectFit: "cover",
-  },
-  cardBody: {
-    padding: "0 20px",
-  },
-  title: {
-    fontSize: "1.125em",
-    fontWeight: 700,
-    color: "#4F3738",
-    padding: "0 0 8px",
-    marginBottom: "0px",
-    textTransform: "capitalize",
-  },
-  divider: {
-    width: "100%",
-    height: "4px",
-    margin: "15px 0 11px",
-    borderRadius: "50px",
-    backgroundColor: "#e7e1ee",
-  },
-  paragraph: {
-    fontSize: "1.125em",
-    fontWeight: 400,
-    color: "#4F3738",
-    padding: "0 0 15px",
-    marginBottom: "0px",
-    textAlign: "justify",
-  },
-  paragraphLast: {
-    fontSize: "1.125em",
-    fontWeight: 400,
-    color: "#4F3738",
-    padding: "0 0 25px",
-    marginBottom: "0px",
-    textAlign: "justify", 
-  },
-  "@media (min-width: 600px)": {
-    card: {
-      maxWidth: "80%",
-    },
-  },
-  "@media (min-width: 1024px)": {
-    card: {
-      maxWidth: "600px",
-    },
-    title: {
-      fontSize: "1.5rem",
-    },
-    page: {
-      fontSize: "1.125rem",
-    },
-    paragraph: {
-      fontSize: "1.125rem",
-    },
-  },
-};

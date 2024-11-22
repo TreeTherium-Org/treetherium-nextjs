@@ -1,4 +1,4 @@
-import AccountProfile from "@/app/component/AccountProfile";
+import AccountProfile from "@/app/component/accountprofile/AccountProfile";
 
 export default function AccountProfilePage() {
   return (
