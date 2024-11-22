@@ -4,6 +4,7 @@ import "../../public/assets/css/responsive.css";
 
 import "../../public/assets/css/components/_buttons.css";
 import { Roboto } from "next/font/google";
+import manifest from "./manifest";
 
 export const metadata = {
   title: "Welcome to Treetherium",
@@ -25,6 +26,7 @@ export const metadata = {
     ],
     appleTouchIcon: { sizes: "180x180", url: "/apple-touch-icon.png" },
   },
+  manifest,
 };
 
 const roboto = Roboto({
