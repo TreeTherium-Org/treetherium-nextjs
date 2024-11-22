@@ -1,0 +1,76 @@
+.card {
+    background-color: #fff; /* White background for the card */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: left; /* Left-align content */
+    padding: 5px; /* Inner padding */
+    max-width: 100%; /* Max width for the card */
+    margin: 21px 20px 100px;
+  }
+  
+  .accordion {
+    margin: 20px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden; /* Rounded corners */
+    background-color: #f9f9f9;
+  }
+  
+  .summary {
+    background-color: #fff;
+    padding: 16px 24px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .summary:hover {
+    background-color: #f4f4f4;
+  }
+  
+  .details {
+    padding: 16px 24px;
+    color: #555;
+  }
+  
+  .title {
+    font-size: 1.50em;
+    font-weight: 700;
+    color: #4F3738;
+    margin-bottom: 0px;
+  }
+  
+  .divider {
+    width: 100%;
+    height: 4px;
+    margin: 0 0 32px;
+    border-radius: 50px;
+    background-color: #e7e1ee;
+  }
+  
+  .page {
+    font-size: 1.125em;
+    font-weight: 400;
+    color: #4F3738;
+    padding: -1 0 11px 55px;
+    margin-bottom: 0px;
+  }
+  
+  /* Responsive styles */
+  @media (min-width: 600px) {
+    .card {
+      max-width: 80%; /* Limit card width on medium screens */
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .card {
+      max-width: 600px; /* Limit card width on larger screens */
+    }
+    .title {
+      font-size: 1.5rem;
+    }
+    .page {
+      font-size: 1.125rem;
+    }
+  }
+  

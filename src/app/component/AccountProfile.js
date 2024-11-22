@@ -1,53 +1,38 @@
-import { useEffect, useState } from "react";
+"use client";
 import Section from "../component/layouts/Section";
 import Link from "next/link";
-import { auth, db } from "../../firebase";
-import { doc, getDoc } from "firebase/firestore";
-import { useSession, signOut } from "next-auth/react"; // Import useSession and signOut
-import { useRouter } from "next/router";
+import { signOut } from "next-auth/react"; // Import useSession and signOut
+import useQuery from "../libs/useQuery";
+import { Toaster, toast } from "react-hot-toast";
+
+// Full-Screen Loader Component
+const FullScreenLoader = () => (
+  <div className="full-screen-loader">
+    <div className="loading"></div>
+  </div>
+);
 
 const AccountProfile = () => {
-  const [userData, setUserData] = useState(null);
-  const { data: session, status } = useSession(); // Destructure session data
-  const router = useRouter();
-  const userId = session?.user?.id; // Retrieve user ID from the session object
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (userId) {
-        try {
-          const docRef = doc(db, "users", userId);
-          const docSnap = await getDoc(docRef);
-
-          if (docSnap.exists()) {
-            setUserData(docSnap.data());
-          } else {
-            console.log("No such document!"); // This will log if the document does not exist
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      }
-    };
-
-    fetchUserData();
-  }, [userId]);
+  const { data: userData } = useQuery("/api/me"); // Destructure session data
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <FullScreenLoader />;
   }
 
   const handleLogout = async () => {
+    const loadingToast = toast.loading("Logging out...");
     try {
-        await signOut({ callbackUrl: "/signin" });
+      await signOut({ callbackUrl: "/signin" });
+      toast.success("Logged out successfully!", { id: loadingToast });
     } catch (error) {
-        console.error("Error logging out:", error);
+      toast.error("Failed to log out. Please try again.", { id: loadingToast });
+      console.error("Error logging out:", error);
     }
-};
-
+  };
 
   return (
     <Section allNotification={false} searchPopup={true} title="Account Profile">
+      <Toaster position="top-center" />
       <div className="profile-area">
         <div className="container">
           <div className="profile-card">
@@ -88,9 +73,9 @@ const AccountProfile = () => {
                         ).toLocaleDateString("en-GB", {
                           day: "numeric",
                           month: "long",
-                          year: "numeric"
+                          year: "numeric",
                         })
-                        : "Unknown"}
+                      : "Unknown"}
                   </span>
                 </div>
               </div>

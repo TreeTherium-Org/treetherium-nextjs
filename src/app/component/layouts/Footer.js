@@ -2,11 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react"; // Import useSession
+import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookOpenReader } from "@fortawesome/free-solid-svg-icons";
+import useQuery from "@/app/libs/useQuery";
 
 const Footer = () => {
-  const { data: session } = useSession(); // Destructure session data
+  const { data: session } = useQuery("/api/me");
+
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
@@ -40,29 +43,46 @@ const Footer = () => {
           <div className="footer-bottom d-flex justify-content-around">
             <ul
               className="footer-menu d-flex justify-content-around"
-              style={{ width: "100%", padding: "0", margin: "0", listStyle: "none" }}
+              style={{
+                width: "100%",
+                padding: "0",
+                margin: "0",
+                listStyle: "none",
+              }}
             >
               <li className="text-center">
                 <Link href="/home" className="home-clicked">
-                  <i className="fa fa-home" style={{ fontSize: "22px", color: "#4F3738" }} />
+                  <i
+                    className="fa fa-home"
+                    style={{ fontSize: "22px", color: "#4F3738" }}
+                  />
                   <p style={{ margin: "0", color: "#4F3738" }}>Home</p>
                 </Link>
               </li>
               <li className="text-center">
-                <Link href="/menu">
-                  <i className="fa fa-bars" style={{ fontSize: "22px", color: "#4F3738" }} />
-                  <p style={{ margin: "0", color: "#4F3738" }}>Menu</p>
+                <Link href="/knowledge-base">
+                  <FontAwesomeIcon
+                    icon={faBookOpenReader}
+                    style={{ fontSize: "20px", color: "#4F3738" }}
+                  />
+                  <p style={{ margin: "0", color: "#4F3738" }}>Guides</p>
                 </Link>
               </li>
               <li className="text-center">
                 <Link href="/faq">
-                  <i className="fa fa-question-circle" style={{ fontSize: "22px", color: "#4F3738" }} />
+                  <i
+                    className="fa fa-question-circle"
+                    style={{ fontSize: "22px", color: "#4F3738" }}
+                  />
                   <p style={{ margin: "0", color: "#4F3738" }}>FAQ</p>
                 </Link>
               </li>
               <li className="text-center">
-                <a href="#" onClick={handleProfileClick}>
-                  <i className="fa fa-user" style={{ fontSize: "22px", color: "#4F3738" }} />
+                <a href="/accountprofile">
+                  <i
+                    className="fa fa-user"
+                    style={{ fontSize: "22px", color: "#4F3738" }}
+                  />
                   <p style={{ margin: "0", color: "#4F3738" }}>Profile</p>
                 </a>
               </li>

@@ -23,18 +23,7 @@
 		font-weight: 500;
 	}
 }
-.balance-area-bg-home{
-	&:after {
-		background-image: url('../../assets/img/bg/8.png') !important;
-		background-size: cover;
-	}
-	.balance-title h6 {
-		color: #fff;
-	}
-}
-.bg-user-setting::after {
-	background-image: url('../../assets/img/bg/9.png') !important;
-}
+
 .balance-title {
 	padding: 18px 0 12px 0;
 }

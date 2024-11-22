@@ -1,20 +1,21 @@
+"use client";
 import { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/router";
-import Section from '../component/layouts/Section';
-import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
-import { useSession } from "next-auth/react";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
-import { getNames } from 'country-list';
+import { useRouter } from "next/navigation";
+import Section from "../component/layouts/Section";
+import { getNames } from "country-list";
+import useQuery from "../libs/useQuery";
+import useMutation from "../libs/useMutation";
+import Image from "next/image";
+import { Toaster, toast } from "react-hot-toast";
 
 const UserSetting = () => {
-  const { data: session } = useSession();
-  const userId = session?.user?.id;
+  const { data: userData } = useQuery("/api/me");
   const fileInputRef = useRef(null);
   const DEFAULT_PROFILE_IMAGE = "/assets/img/user.png"; // Define default image path as constant
 
   const [formData, setFormData] = useState({
     username: "",
-    motto: '',
+    motto: "",
     email: "",
     walletAddress: "",
     country: "",
@@ -28,182 +29,129 @@ const UserSetting = () => {
   const [showConnectWalletPopup, setShowConnectWalletPopup] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
-  const db = getFirestore();
-  const storage = getStorage();
+  // const db = getFirestore();
+  // const storage = getStorage();
   const router = useRouter();
 
   useEffect(() => {
     setCountries(getNames());
 
-    const fetchUserData = async () => {
-      try {
-        const userDocRef = doc(db, "users", userId);
-        const userDoc = await getDoc(userDocRef);
-
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          setFormData({
-            ...userData,
-            profileImageUrl: userData.profileImageUrl || DEFAULT_PROFILE_IMAGE
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setFormData(prev => ({
-          ...prev,
-          profileImageUrl: DEFAULT_PROFILE_IMAGE
-        }));
-      }
-    };
-
-    fetchUserData();
-  }, [db, userId]);
+    setFormData({
+      ...userData,
+      username: userData?.username || "",
+      motto: userData?.motto || "",
+      email: userData?.email || "",
+      walletAddress: userData?.walletAddress || "",
+      country: userData?.country || "",
+      profileImageUrl: userData?.profileImageUrl || DEFAULT_PROFILE_IMAGE,
+    });
+  }, [userData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value || "" });
   };
 
   const handleImageError = () => {
     setImageError(true);
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      profileImageUrl: DEFAULT_PROFILE_IMAGE
+      profileImageUrl: DEFAULT_PROFILE_IMAGE,
     }));
   };
 
   const validateFile = (file) => {
-    const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    const validTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     const maxSize = 5 * 1024 * 1024; // 5MB
 
     if (!validTypes.includes(file.type)) {
-      throw new Error('Please upload an image file (JPEG, PNG, GIF, or WEBP)');
+      throw new Error("Please upload an image file (JPEG, PNG, GIF, or WEBP)");
     }
 
     if (file.size > maxSize) {
-      throw new Error('File size must be less than 5MB');
+      throw new Error("File size must be less than 5MB");
     }
   };
 
   // Inside your handleImageUpload function:
+
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
+    const loadingToast = toast.loading("Uploading image...");
     try {
-      // Reset previous errors
-      setUploadError("");
-      setImageError(false);
+      const formData = new FormData();
+      formData.append("file", file);
 
-      // Validate file
-      validateFile(file);
-
-      // Start upload
-      setIsUploading(true);
-
-      if (!userId) {
-        throw new Error('User ID not available');
-      }
-
-      // Delete the old image if it exists and is not the default one
-      if (formData.profileImageUrl && formData.profileImageUrl !== DEFAULT_PROFILE_IMAGE) {
-        const oldImageRef = ref(storage, formData.profileImageUrl);
-        await deleteObject(oldImageRef);
-        console.log('Old profile image deleted successfully');
-      }
-
-      // Create a reference to the storage location for the new image
-      const storageRef = ref(storage, `profile-images/${userId}_${Date.now()}`);
-
-      // Log upload attempt
-      console.log('Attempting to upload file:', {
-        name: file.name,
-        size: file.size,
-        type: file.type,
+      const response = await fetch("/api/profile/upload", {
+        method: "POST",
+        body: formData,
       });
 
-      // Upload the file
-      const uploadResult = await uploadBytes(storageRef, file);
-      console.log('Upload successful:', uploadResult);
+      if (!response.ok) {
+        const { error } = await response.json();
+        throw new Error(error || "Upload failed");
+      }
 
-      // Get the download URL of the new image
-      const downloadUrl = await getDownloadURL(storageRef);
-      console.log('Download URL obtained:', downloadUrl);
+      const { downloadUrl } = await response.json();
 
-      // Update form data with new image URL
-      setFormData((prev) => ({
-        ...prev,
-        profileImageUrl: downloadUrl,
-      }));
-
-      // Update the user document in Firestore with the new profile image URL
-      const userDocRef = doc(db, "users", userId);
-      await updateDoc(userDocRef, {
-        profileImageUrl: downloadUrl,
-      });
-
-      console.log('Profile image updated successfully');
+      setFormData((prev) => ({ ...prev, profileImageUrl: downloadUrl }));
+      toast.success("Image uploaded successfully!", { id: loadingToast });
     } catch (error) {
-      console.error('Error during image upload:', error);
-      setUploadError(error.message || 'Failed to upload image. Please try again.');
-      setFormData((prev) => ({
-        ...prev,
-        profileImageUrl: prev.profileImageUrl || DEFAULT_PROFILE_IMAGE,
-      }));
+      toast.error(error.message || "Failed to upload image.", {
+        id: loadingToast,
+      });
     } finally {
-      setIsUploading(false);
-      // Reset file input
       if (fileInputRef.current) {
-        fileInputRef.current.value = '';
+        fileInputRef.current.value = "";
       }
     }
   };
+
+  const [{ loading }, updateProfile] = useMutation({
+    url: `/api/profile/`,
+  });
 
   const handleSave = async () => {
+    const loadingToast = toast.loading("Saving profile...");
     try {
-      const userDocRef = doc(db, "users", userId);
-      await updateDoc(userDocRef, formData);
+      await updateProfile({ ...formData });
+      toast.success("Profile updated successfully!", { id: loadingToast });
       router.push("/accountprofile");
     } catch (error) {
-      console.error("Error updating user data:", error);
-      alert("Failed to save changes. Please try again.");
+      toast.error("Failed to save changes. Please try again.", {
+        id: loadingToast,
+      });
     }
-  };
-
-  const handleCancel = () => {
-    router.push("/accountprofile");
   };
 
   const handleWalletConnect = async () => {
+    // TODO: Add feature to verify wallet signature at the backend
+    // TODO: handle case if wallet is used by another account.
     if ("solana" in window) {
       const provider = window.solana;
       try {
         const response = await provider.connect();
         const newWalletAddress = response.publicKey.toString();
-        const userDocRef = doc(db, "users", userId);
-        const userDoc = await getDoc(userDocRef);
 
-        if (userDoc.exists()) {
-          const currentWalletAddress = userDoc.data().walletAddress;
-          if (currentWalletAddress && currentWalletAddress !== newWalletAddress) {
-            // Show popup to ask user to connect a new wallet
-            setShowConnectWalletPopup(true);
-            return;
-          }
-
-          // Update wallet address if it's new
-          await updateDoc(userDocRef, { walletAddress: newWalletAddress });
-          setFormData({ ...formData, walletAddress: newWalletAddress });
-
-          // Show success message
-          setShowSuccessPopup(true);
-          setTimeout(() => setShowSuccessPopup(false), 3000);
+        const currentWalletAddress = userData.walletAddress;
+        if (currentWalletAddress && currentWalletAddress !== newWalletAddress) {
+          toast.error(
+            "Wallet address mismatch. Please connect the correct wallet."
+          );
+          return;
         }
+
+        await updateProfile({ ...formData, walletAddress: newWalletAddress });
+        setFormData({ ...formData, walletAddress: newWalletAddress });
+
+        toast.success("Wallet address updated successfully!");
       } catch (error) {
-        console.error("Failed to connect to Phantom Wallet:", error);
+        toast.error("Failed to connect to Phantom Wallet. Please try again.");
       }
     } else {
-      alert("Phantom Wallet not found. Please install it first.");
+      toast.error("Phantom Wallet not found. Please install it first.");
     }
   };
 
@@ -211,10 +159,9 @@ const UserSetting = () => {
     const provider = window.solana;
     const response = await provider.connect();
     const newWalletAddress = response.publicKey.toString();
-    const userDocRef = doc(db, "users", userId);
-    await updateDoc(userDocRef, { walletAddress: newWalletAddress });
-    setFormData({ ...formData, walletAddress: newWalletAddress });
 
+    await updateProfile({ ...formData, walletAddress: newWalletAddress });
+    setFormData({ ...formData, walletAddress: newWalletAddress });
     // Hide popup and show success message
     setShowConnectWalletPopup(false);
     setShowSuccessPopup(true);
@@ -223,16 +170,24 @@ const UserSetting = () => {
 
   return (
     <Section allNotification={false} searchPopup={true} title="Edit Profile">
+      <Toaster position="top-center" />
       <div className="settings-area">
         <div className="container">
           <div className="settings-card">
             <div className="profile-image-container">
               <div className="image-wrapper">
-                <img
-                  src={imageError ? DEFAULT_PROFILE_IMAGE : formData.profileImageUrl}
+                <Image
+                  src={
+                    imageError
+                      ? DEFAULT_PROFILE_IMAGE
+                      : formData.profileImageUrl
+                  }
                   alt="Profile"
                   className="profile-image"
                   onError={handleImageError}
+                  sizes="(max-width: 300px) 100vw, (max-width: 300px) 50vw, 33vw"
+                  fill
+                  unoptimized
                 />
                 <button
                   className="edit-icon"
@@ -256,9 +211,7 @@ const UserSetting = () => {
                 )}
               </div>
               {uploadError && (
-                <div className="error-message">
-                  {uploadError}
-                </div>
+                <div className="error-message">{uploadError}</div>
               )}
             </div>
 
@@ -319,15 +272,25 @@ const UserSetting = () => {
                   type="text"
                   id="walletAddress"
                   name="walletAddress"
-                  value={formData.walletAddress || "Click here to connect Phantom Wallet."}
+                  value={
+                    formData.walletAddress
+                      ? formData.walletAddress
+                      : "Click here to connect Phantom Wallet."
+                  }
                   readOnly
                   onClick={handleWalletConnect}
-                  style={{ cursor: 'pointer' }}
+                  style={{
+                    cursor: "pointer",
+                    color: formData.walletAddress ? "black" : "red", // Red text if no wallet address
+                  }}
                 />
               </div>
 
               <div className="form-actions">
-                <button className="btn-cancel" onClick={handleCancel}>
+                <button
+                  className="btn-cancel"
+                  onClick={() => router.push("/accountprofile")}
+                >
                   Cancel
                 </button>
                 <button className="btn-save" onClick={handleSave}>
@@ -338,325 +301,6 @@ const UserSetting = () => {
           </div>
         </div>
       </div>
-
-      {/* Popup for connecting a new wallet */}
-      {showConnectWalletPopup && (
-        <div className="popup">
-          <div className="popup-content">
-            <p>A wallet is already connected. Do you want to connect a new one?</p>
-            <button onClick={handleConfirmConnectNewWallet}>Yes</button>
-            <button onClick={() => setShowConnectWalletPopup(false)}>No</button>
-          </div>
-        </div>
-      )}
-
-      {/* Success popup for 3 seconds */}
-      {showSuccessPopup && (
-        <div className="success-popup">
-          <p>Wallet address updated successfully!</p>
-        </div>
-      )}
-
-      <style jsx>{`
-        .settings-area {
-          padding: 40px 0;
-        }
-
-        .settings-card {
-          background-color: #fff;
-          border-radius: 16px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-          padding: 20px;
-          max-width: 400px;
-          margin: auto;
-          text-align: left;
-        }
-
-        .profile-image-container {
-          position: relative;
-          display: flex;
-          justify-content: center;
-          margin-bottom: 20px;
-        }
-
-        .image-wrapper {
-          position: relative;
-          width: 100px;
-          height: 100px;
-        }
-
-        .profile-image {
-          width: 100px;
-          height: 100px;
-          border-radius: 50%;
-          border: 4px solid #4F3738;
-          object-fit: cover;
-        }
-
-        .edit-icon {
-          position: absolute;
-          bottom: 0;
-          right: -5px;
-          background-color: #778B28;
-          color: #fff;
-          border-radius: 50%;
-          width: 30px;
-          height: 30px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          border: 2px solid #fff;
-          padding: 0;
-          transition: background-color 0.2s;
-        }
-
-        .edit-icon:hover {
-          background-color: #3a2a2b;
-        }
-
-        .edit-icon:disabled {
-          background-color: #999;
-          cursor: not-allowed;
-        }
-
-       .error-message {
-          color: #dc3545;
-          font-size: 0.875rem;
-          margin-top: 0.5rem;
-          text-align: center;
-        }
-
-        .upload-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.5);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-size: 12px;
-        }
-
-        .hidden-file-input {
-          display: none;
-        }
-
-        .form-group {
-          margin-bottom: 20px;
-        }
-
-        .form-group label {
-          display: block;
-          font-weight: bold;
-          color: #4F3738;
-          margin-bottom: 5px;
-        }
-
-        .form-group input,
-        .select-wrapper select {
-          width: 100%;
-          padding: 10px;
-          border-radius: 8px;
-          border: 1px solid #eaeaea;
-          background-color: #f9f9f9;
-        }
-
-        .select-wrapper {
-          position: relative;
-        }
-
-        .select-wrapper select {
-          appearance: none;
-          padding-right: 30px;
-          cursor: pointer;
-        }
-
-        .select-wrapper::after {
-          content: '▼';
-          font-size: 12px;
-          color: #4F3738;
-          position: absolute;
-          right: 10px;
-          top: 50%;
-          transform: translateY(-50%);
-          pointer-events: none;
-        }
-
-        .form-actions {
-          display: flex;
-          justify-content: space-between;
-          margin-top: 20px;
-        }
-
-        .btn-cancel, .btn-save {
-          flex: 1;
-          padding: 10px;
-          border-radius: 8px;
-          font-weight: 500;
-          cursor: pointer;
-          border: none;
-          margin: 0 5px;
-          transition: opacity 0.2s;
-          font-size: 20px;
-        }
-
-        .btn-cancel {
-          background-color: #eaeaea;
-          color: #4F3738;
-        }
-
-        .btn-save {
-          background-color: #4F3738;
-          color: #fff;
-        }
-
-        .btn-cancel:hover, .btn-save:hover {
-          opacity: 0.9;
-        }
-       .select-container {
-          position: relative;
-          z-index: 1;
-        }
-
-        .select-wrapper {
-          position: relative;
-          width: 100%;
-        }
-
-        .select-wrapper select {
-          width: 100%;
-          padding: 10px;
-          border-radius: 8px;
-          border: 1px solid #eaeaea;
-          background-color: #f9f9f9;
-          appearance: none;
-          padding-right: 30px;
-          cursor: pointer;
-          color: #4F3738;
-        }
-
-        .select-wrapper::after {
-          content: '▼';
-          font-size: 12px;
-          color: #4F3738;
-          position: absolute;
-          right: 10px;
-          top: 50%;
-          transform: translateY(-50%);
-          pointer-events: none;
-        }
-
-        /* New styles for dropdown positioning */
-        .select-wrapper select:focus {
-          outline: none;
-          border-color: #4F3738;
-        }
-
-        .select-wrapper select option {
-          background: white;
-          color: #4F3738;
-          padding: 10px;
-        }
-
-        /* Force dropdown to appear below */
-        @supports (-webkit-appearance: none) or (-moz-appearance: none) {
-          .select-container {
-            overflow: visible;
-          }
-
-          .select-wrapper select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-          }
-
-          .select-wrapper select::-ms-expand {
-            display: none;
-          }
-        }
-
-        .select-wrapper select:focus + .select-wrapper::after {
-          transform: translateY(-50%) rotate(180deg);
-        }
-
-        .form-group + .form-group {
-          margin-top: 20px;
-          position: relative;
-          z-index: 0;
-        }
-
-        .select-wrapper select option {
-          padding: 10px;
-          min-height: 1.2em;
-          background: white;
-        }
-
-        .form-group:not(.select-container) {
-          position: relative;
-          z-index: 0;
-        }
-
-              .popup {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: rgba(0, 0, 0, 0.5);
-          z-index: 1000;
-        }
-
-        .popup-content {
-          background: white;
-          padding: 20px;
-          border-radius: 10px;
-          text-align: center;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .popup-content button {
-          margin: 10px;
-          padding: 10px 20px;
-          border: none;
-          background-color: #4F3738;
-          color: white;
-          border-radius: 5px;
-          cursor: pointer;
-        }
-
-        .popup-content button:hover {
-          opacity: 0.9;
-        }
-
-        /* Styles for the success message popup */
-        .success-popup {
-          position: fixed;
-          top: 20px;
-          right: 20px;
-          background: #4CAF50;
-          color: white;
-          padding: 10px 20px;
-          border-radius: 5px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-          animation: fadeOut 3s forwards;
-        }
-
-        @keyframes fadeOut {
-          0% {
-            opacity: 1;
-          }
-          100% {
-            opacity: 0;
-            display: none;
-          }
-      `}</style>
     </Section>
   );
 };

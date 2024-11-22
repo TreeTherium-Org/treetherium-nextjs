@@ -1,0 +1,391 @@
+/* LandingPage.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #ebf6e2;
+}
+
+/* Container for the login/register */
+.loginRegisterContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ebf6e2;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+}
+
+/* Wrapper for the form content */
+.formWrapper {
+  width: 100%;
+  max-width: 360px; /* Adjusted max width for desktop */
+  text-align: center;
+  padding: 0;
+}
+
+.formWrapper2 {
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  align-items: center; /* Ensure center alignment within */
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+/* Logo styling for Login / Register */
+.logo {
+  width: 120px;
+  height: 120px;
+  margin: 0 0;
+}
+
+/* Header for Landing Page */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+/* Header for Onboarding Steps */
+.header-top {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerLogo {
+  border-radius: 50%;
+  width: 82px;
+  height: 82px;
+}
+
+.imageContainer {
+  width: 100%; /* Full width */
+  height: 30vh; /* Automatic height */
+  max-width: 148vw; /* Maximum width */
+  min-height: 38vh; /* Minimum height */
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Main Image Container */
+.imageContainer1 {
+  width: 100%;
+  height: 30vh;
+  min-height: 32vh;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 21px;
+}
+
+.image1 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Card Styles */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 10px 20px;
+}
+
+.innerCardStyle {
+  width: 100%;
+  height: 100%;
+  border: 2px solid #d9d9d9;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.cardTitle h2 {
+  font-size: 1.5em;
+  font-weight: 500;
+  text-align: left;
+}
+
+.divider {
+  width: 100%;
+  height: 5px;
+  margin: 4px 0px 18px;
+  border-radius: 50px;
+  background-color: #e7e1ee;
+}
+
+/* Text for Landing Page */
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ebf6e2;
+  padding: 20px;
+}
+
+.title {
+  flex-wrap: wrap;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+  padding-top: 90px;
+}
+
+.subtitle {
+  font-size: 1em;
+  margin-bottom: 38px;
+  text-align: center;
+}
+
+/* Title styling for Login / Register*/
+.title1 {
+  font-size: 1.5em;
+  font-weight: 500;
+  color: #4f3738;
+  text-align: center;
+  padding-top: 30%;
+  padding-bottom: 30%;
+}
+/* Subtitle Paragraphs for Onboarding Steps*/
+.subtitleParagraph {
+  padding: 0 15px;
+  font-size: 1em;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  margin-bottom: 32px;
+}
+
+/* Remove extra margin on last paragraph */
+.subtitleParagraph:last-child {
+  margin-bottom: 0;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+}
+
+/* Button Container for Onboarding Steps */
+.buttonContainer1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 182px;
+  margin: 20px 0 0;
+}
+
+.buttonContainer4 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 152px;
+  margin: 20px 0 0;
+}
+
+.buttonContainer2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+
+.buttonContainer3 {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 0 20px 60%;
+}
+
+.button {
+  background-color: #778b28;
+  color: white;
+  padding: 1px 20px;
+  font-size: 1.25em;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  line-height: 50px;
+  text-align: center;
+  width: 100%;
+  max-width: 340px; /* Maximum button width */
+  height: auto; /* Automatic height */
+  min-height: 40px; /* Minimum height */
+}
+
+.buttonSecondary {
+  background-color: #ffffff;
+  color: #778b28;
+  padding: 1px 20px;
+  font-size: 1.25em;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 1px solid #778b28;
+  cursor: pointer;
+  line-height: 50px;
+  text-align: center;
+  width: 100%;
+  max-width: 340px; /* Maximum button width */
+  height: auto; /* Automatic height */
+  min-height: 40px; /* Minimum height */
+}
+
+.buttonTertiary {
+  background-color: #ffffff;
+  color: #778b28;
+  padding: 1px 20px;
+  font-size: 1.25em;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 1px solid #778b28;
+  cursor: pointer;
+  line-height: 50px;
+  text-align: center;
+  width: 100%;
+  max-width: 93px; /* Maximum button width */
+  height: auto; /* Automatic height */
+  min-height: 40px; /* Minimum height */
+}
+
+.buttonQuartery {
+  background-color: #778b28;
+  color: white;
+  padding: 1px 20px;
+  font-size: 1.25em;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  line-height: 50px;
+  text-align: center;
+  width: 100%;
+  max-width: 93px; /* Maximum button width */
+  height: auto; /* Automatic height */
+  min-height: 40px; /* Minimum height */
+}
+
+.registerButton {
+  background-color: #778b28;
+  color: white;
+  padding: 1px 20px;
+  font-size: 1.25em;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  line-height: 50px;
+  text-align: center;
+  width: 100%;
+  max-width: 120px; /* Maximum button width */
+  height: auto; /* Automatic height */
+  min-height: 40px; /* Minimum height */
+}
+
+.backButton {
+  background-color: #ffffff;
+  color: #778b28;
+  padding: 1px 20px;
+  font-size: 1.25em;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 1px solid #778b28;
+  cursor: pointer;
+  line-height: 50px;
+  text-align: center;
+  width: 100%;
+  max-width: 120px; /* Maximum button width */
+  height: auto; /* Automatic height */
+  min-height: 40px; /* Minimum height */
+}
+
+/* Progress Indicators */
+.progressIndicator {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 32px;
+}
+
+.indicator {
+  width: 12px; /* Smaller indicators */
+  height: 6px;
+  border-radius: 100px;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.indicator.active {
+  background-color: #778b28;
+}
+
+.indicator.inactive {
+  background-color: #ffffff;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .formWrapper {
+    max-width: 90%; /* Adjust max width for mobile */
+  }
+
+  .imageContainer {
+    height: 30vh; /* Adjust height on smaller screens */
+    width: 125vw;
+  }
+
+  .imageContainer1 {
+    height: 30vh; /* Adjust height on smaller screens */
+  }
+
+  .title {
+    font-size: 2em;
+  }
+
+  .card-title h2 {
+    font-size: 1.5em;
+  }
+
+  .subtitle {
+    font-size: 1.063em;
+  }
+
+  .buttonContainer1 {
+    flex-direction: row;
+    gap: 182px;
+  }
+
+  .button {
+    font-size: 1.25em;
+  }
+
+  .buttonSecondary {
+    font-size: 1.25em;
+  }
+}
+
+@media (min-width: 430px) {
+  .title1 {
+    white-space: nowrap; /* Prevents text wrapping */
+  }
+}

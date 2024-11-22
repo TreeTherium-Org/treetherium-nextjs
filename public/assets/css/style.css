@@ -30,8 +30,8 @@ Version: 1.0.0
 /*----------------------------------------------
     # Typography
 ----------------------------------------------*/
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
 :root {
   --main-color: #6236ff;
@@ -39,8 +39,8 @@ Version: 1.0.0
   --paragraph-color: #4F3738;
   --light-green: #A3A830;
   --dark-green: #778B28;
-  --heading-font: 'Roboto';
-  --body-font: 'Roboto';
+  --heading-font: "Roboto";
+  --body-font: "Roboto";
 }
 
 
@@ -65,7 +65,7 @@ body {
   margin: 0;
   color: var(--paragraph-color);
   overflow-x: hidden;
-  font-family: var(--body-font);
+  font-family: "Roboto";
   background: #ebf6e2;
   font-size: 14px;
 }
@@ -107,7 +107,6 @@ h4,
 h5,
 h6 {
   color: var(--heading-color);
-  font-family: var(--heading-font);
   font-weight: 600;
 }
 
@@ -797,12 +796,7 @@ ul {
   border-radius: 5px;
 }
 
-.bg-transaction-details::after {
-  background-image: url("../../assets/img/bg/8.png") !important;
-  background-size: cover !important;
-  background-position: center !important;
-  border-radius: 5px;
-}
+
 
 /*-------------------------
     ## section-title
@@ -816,7 +810,6 @@ ul {
 .section-title .title {
   font-size: 24px;
   font-weight: 600;
-
   display: inline-block;
 }
 
@@ -1282,7 +1275,6 @@ ul {
 }
 
 .header-area .logo {
-
   margin-top: 2px;
   display: inline-block;
 }
@@ -1296,7 +1288,7 @@ ul {
 .header-area .page-name {
   margin-top: 5px;
   color: #4F3738;
-  font-family: 'Roboto';
+  font-family: Roboto;
 }
 
 .header-area .header-search {
@@ -1366,7 +1358,7 @@ ul {
 .ba-navbar {
   width: 300px;
   position: fixed;
-  left: -300px;
+  left: -330px;
   top: 0;
   transition: 0.5s;
   z-index: 9;
@@ -1864,10 +1856,6 @@ ul {
   font-weight: 500;
 }
 
-.balance-area-bg-home:after {
-  background-image: url("../../assets/img/bg/8.png") !important;
-  background-size: cover;
-}
 
 .balance-area-bg-home .balance-title h6 {
   color: #fff;
@@ -5157,7 +5145,7 @@ span.badge-pulse-orange {
  * TOOLTIP
  */
 .tooltip-inner {
-  font-family: "Roboto";
+  font-family: Roboto;
   font-size: 1rem;
   font-weight: 600;
   max-width: 200px;
@@ -5795,7 +5783,6 @@ span.badge-pulse-orange {
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 1rem;
-  font-family: 'Roboto';
   transition: border-color 0.3s ease;
 }
 
@@ -5843,10 +5830,24 @@ span.badge-pulse-orange {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.card-img-top {
-  height: 253px;
-  object-fit: cover;
+.image-container {
+  width: 100%;
+  height: auto;
+  max-height: 600px; /* Adjust to your desired max height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #f0f0f0; 
 }
+
+.card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  object-position: center; 
+}
+
 
 .card-body {
   padding: 20px;
@@ -6037,7 +6038,7 @@ span.badge-pulse-orange {
   100% { transform: rotate(360deg); }
 }
 
-/* Error Message Style */
+/* Error & success Message Style */
 .error-message {
   color: #D8000C; /* Red color for error */
   background-color: #FFD2D2; /* Light red background */
@@ -6052,3 +6053,19 @@ span.badge-pulse-orange {
   margin-right: auto;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.success-message {
+  color: #4F8A10; /* Green color for success */
+  background-color: #DFF2BF; /* Light green background */
+  border: 1px solid #4F8A10;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
