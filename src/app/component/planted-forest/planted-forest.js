@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { getFirestore, doc, getDoc } from "firebase/firestore"; // Firebase import
 import useQuery from "@/app/libs/useQuery";
 import { Toaster, toast } from "react-hot-toast";
+import Link from "next/link";
 // import { useSession } from "next-auth/react"; // Assuming you're using next-auth
 
 const MyPlantedForest = () => {
