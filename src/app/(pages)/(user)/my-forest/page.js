@@ -1,4 +1,4 @@
-import MyForest from "@/app/component/project/my-forest";
+import MyForest from "@/app/component/my-forest/my-forest";
 
 export default function MyForestPage() {
   return (

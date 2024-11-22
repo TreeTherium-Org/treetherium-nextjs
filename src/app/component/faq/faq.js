@@ -1,6 +1,7 @@
 "use client";
 
 import Section from "../layouts/Section.js";
+import styles from "./faq.module.css";
 import Link from "next/link";
 import React, { useState } from 'react';
 import {
@@ -10,7 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import styles from "./faq.module.css";
 
 const faqData = [
   {

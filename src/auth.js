@@ -147,9 +147,9 @@ export const {
   },
   session: {
     strategy: "jwt",
-    maxAge: 24 * 60 * 60, 
-    updateAge: 12 * 60 * 60,
-  },
+    maxAge: 60, // 1 minute (60 seconds)
+    updateAge: 60, // 1 minute (60 seconds)
+  },  
   secret: process.env.NEXTAUTH_SECRET,
   // adapter: FirestoreAdapter(authfirestore),
 });
