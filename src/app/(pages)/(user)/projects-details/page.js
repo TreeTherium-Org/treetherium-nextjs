@@ -1,6 +1,6 @@
-import ProjectsDetails from "@/app/component/project/projects-details";
+import ProjectsDetails from "@/app/component/project/project-details";
 
-export default function ProjectsFormPage() {
+export default function ProjectsDetailsPage() {
   return (
     <div>
       <ProjectsDetails />
