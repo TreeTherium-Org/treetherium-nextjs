@@ -102,7 +102,7 @@ export default function ProjectForm() {
       {/* Toaster for notifications */}
       <Toaster position="top-center" />
       <div className="container">
-        <h3 className="form-title">"let us know about your project"</h3>
+        <h3 className="form-title"> &quot;let us know about your project &quot;</h3>
         <div className="form-image">
           <img
             src="/assets/img/step-3.png"
