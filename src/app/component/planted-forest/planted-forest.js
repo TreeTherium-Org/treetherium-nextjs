@@ -15,7 +15,7 @@ const MyPlantedForest = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [showRedirectPopup, setShowRedirectPopup] = useState(false);
   const router = useRouter();
-  const { data: userData } = useQuery("/api/me");
+  const { data: user } = useQuery("/api/me");
   // const db = getFirestore();
 
   // useEffect(() => {
@@ -34,6 +34,18 @@ const MyPlantedForest = () => {
 
   //   checkWalletConnection();
   // }, [db, session]);
+
+  useEffect(() => {
+    const checkWalletConnection = async () => {
+      if (user?.walletAddress) {
+        setIsWalletConnected(true);
+      } else {
+        setIsWalletConnected(false);
+      }
+    };
+
+    checkWalletConnection();
+  }, [user]);
 
   const handleButtonClick = async (route) => {
     if (isWalletConnected) {

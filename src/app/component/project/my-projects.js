@@ -73,7 +73,7 @@ const ListProjects = () => {
             {projects?.length > 0 ? (
               projects.map((project) => (
                 <div key={project.id} className="project-item">
-                  <Link href={`/project-details?id=${project.id}`}>
+                  <Link href={`/my-projects/${project.id}`}>
                     <div className="project-image">
                       <Image
                         src={project.imageUrl || "/default-image.jpg"}
@@ -84,12 +84,12 @@ const ListProjects = () => {
                       />
                     </div>
                     <h5 className="project-title">
-                      {project.title || "Unnamed Project"}
+                      {project.projectName || "Unnamed Project"}
                     </h5>
                     <strong>
-                      {project.timestamp
+                      {project.startDate
                         ? new Date(
-                            project.timestamp.seconds * 1000
+                            project.startDate.seconds * 1000
                           ).toLocaleDateString("en-GB", {
                             day: "numeric",
                             month: "long",
