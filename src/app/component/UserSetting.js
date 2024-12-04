@@ -7,6 +7,7 @@ import useQuery from "../libs/useQuery";
 import useMutation from "../libs/useMutation";
 import Image from "next/image";
 import { Toaster, toast } from "react-hot-toast";
+import styles from './UserSetting.module.css';
 
 const UserSetting = () => {
   const { data: userData } = useQuery("/api/me");
@@ -171,26 +172,22 @@ const UserSetting = () => {
   return (
     <Section allNotification={false} searchPopup={true} title="Edit Profile">
       <Toaster position="top-center" />
-      <div className="settings-area">
-        <div className="container">
-          <div className="settings-card">
-            <div className="profile-image-container">
-              <div className="image-wrapper">
+      <div className={styles.settingsArea}>
+        <div className={styles.container}>
+          <div className={styles.settingsCard}>
+            <div className={styles.profileImageContainer}>
+              <div className={styles.imageWrapper}>
                 <Image
-                  src={
-                    imageError
-                      ? DEFAULT_PROFILE_IMAGE
-                      : formData.profileImageUrl
-                  }
+                  src={imageError ? DEFAULT_PROFILE_IMAGE : formData.profileImageUrl}
                   alt="Profile"
-                  className="profile-image"
+                  className={styles.profileImage}
                   onError={handleImageError}
                   sizes="(max-width: 300px) 100vw, (max-width: 300px) 50vw, 33vw"
                   fill
                   unoptimized
                 />
                 <button
-                  className="edit-icon"
+                  className={styles.editIcon}
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isUploading}
                   title="Upload profile picture"
@@ -202,21 +199,21 @@ const UserSetting = () => {
                   type="file"
                   accept="image/jpeg,image/png,image/gif,image/webp"
                   onChange={handleImageUpload}
-                  className="hidden-file-input"
+                  className={styles.hiddenFileInput}
                 />
                 {isUploading && (
-                  <div className="upload-overlay">
+                  <div className={styles.uploadOverlay}>
                     <span>Uploading...</span>
                   </div>
                 )}
               </div>
               {uploadError && (
-                <div className="error-message">{uploadError}</div>
+                <div className={styles.errorMessage}>{uploadError}</div>
               )}
             </div>
 
-            <div className="form">
-              <div className="form-group">
+            <div className={styles.form}>
+              <div className={styles.formGroup}>
                 <label htmlFor="username">User Name</label>
                 <input
                   type="text"
@@ -226,7 +223,8 @@ const UserSetting = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="form-group">
+
+              <div className={styles.formGroup}>
                 <label htmlFor="motto">Motto</label>
                 <input
                   type="text"
@@ -238,9 +236,10 @@ const UserSetting = () => {
                   className="form-control"
                 />
               </div>
-              <div className="form-group select-container">
+
+              <div className={styles.formGroup}>
                 <label htmlFor="country">Country</label>
-                <div className="select-wrapper">
+                <div className={styles.selectWrapper}>
                   <select
                     id="country"
                     name="country"
@@ -256,7 +255,8 @@ const UserSetting = () => {
                   </select>
                 </div>
               </div>
-              <div className="form-group">
+
+              <div className={styles.formGroup}>
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
@@ -266,17 +266,14 @@ const UserSetting = () => {
                   readOnly
                 />
               </div>
-              <div className="form-group">
+
+              <div className={styles.formGroup}>
                 <label htmlFor="walletAddress">Wallet Address</label>
                 <input
                   type="text"
                   id="walletAddress"
                   name="walletAddress"
-                  value={
-                    formData.walletAddress
-                      ? formData.walletAddress
-                      : "Click here to connect Phantom Wallet."
-                  }
+                  value={formData.walletAddress ? formData.walletAddress : "Click here to connect Phantom Wallet."}
                   readOnly
                   onClick={handleWalletConnect}
                   style={{
@@ -286,14 +283,17 @@ const UserSetting = () => {
                 />
               </div>
 
-              <div className="form-actions">
+              <div className={styles.formActions}>
                 <button
-                  className="btn-cancel"
+                  className={styles.btnCancel}
                   onClick={() => router.push("/accountprofile")}
                 >
                   Cancel
                 </button>
-                <button className="btn-save" onClick={handleSave}>
+                <button
+                  className={styles.btnSave}
+                  onClick={handleSave}
+                >
                   Save
                 </button>
               </div>

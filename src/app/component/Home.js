@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Section from "../component/layouts/Section.js";
+import styles from './Home.module.css'; // Import the CSS module
 
 const Home = () => {
   const router = useRouter();
@@ -15,39 +16,23 @@ const Home = () => {
 
   return (
     <Section allNotification={false} searchPopup={true} title={"Home"}>
-      <div style={containerStyle}>
-        <div
-          style={{
-            ...headerStyle,
-            padding: 0,
-            marginTop: 30,
-            marginBottom: 30,
-          }}
-        >
-          <div
-            style={{
-              width: "100vw",
-              position: "relative",
-              left: "50%",
-              transform: "translateX(-50%)",
-              overflow: "hidden",
-            }}
-          >
-            {" "}
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <div className={styles.headerImageContainer}>
             <Image
               src="/assets/img/landing-home.png"
               alt="Everyone Can Grow A Tree"
               width={2000} // Set a large enough width for the image
               height={600} // Adjust the height according to your needs
-              style={{ width: "100%", height: "auto" }} // Ensure the image fills the container
+              className={styles.headerImage} // Use class from module
               priority={true}
             />
           </div>
         </div>
-        <main style={mainStyle}>
-          <div style={buttonGridStyle}>
+        <main className={styles.main}>
+          <div className={styles.buttonGrid}>
             <div
-              style={buttonCardStyle}
+              className={styles.buttonCard}
               onClick={() => handleButtonClick("/my-forest")}
             >
               <Image
@@ -55,13 +40,13 @@ const Home = () => {
                 alt="Tree Planting Project"
                 width={109}
                 height={109}
-                style={{ borderRadius: "20%" }}
+                className={styles.image} // Use class from module
                 priority={true}
               />
-              <strong style={textStyle}>My Forest</strong>
+              <strong className={styles.text}>My Forest</strong>
             </div>
             <div
-              style={buttonCardStyle}
+              className={styles.buttonCard}
               onClick={() => handleButtonClick("/analytics")}
             >
               <Image
@@ -69,13 +54,13 @@ const Home = () => {
                 alt="Single Tree"
                 width={109}
                 height={109}
-                style={{ borderRadius: "20%" }}
+                className={styles.image} // Use class from module
                 priority={true}
               />
-              <strong style={textStyle}>Analytics</strong>
+              <strong className={styles.text}>Analytics</strong>
             </div>
             <div
-              style={buttonCardStyle}
+              className={styles.buttonCard}
               onClick={() => handleButtonClick("/knowledge-base")}
             >
               <Image
@@ -83,10 +68,10 @@ const Home = () => {
                 alt="Single Tree"
                 width={109}
                 height={109}
-                style={{ borderRadius: "20%" }}
+                className={styles.image} // Use class from module
                 priority={true}
               />
-              <strong style={textStyle}>Knowledge Base</strong>
+              <strong className={styles.text}>Knowledge Base</strong>
             </div>
           </div>
         </main>
@@ -96,72 +81,3 @@ const Home = () => {
 };
 
 export default Home;
-
-const containerStyle = {
-  display: "flex",
-  flexDirection: "column",
-  height: "100vh",
-  padding: "30px",
-};
-
-const headerStyle = {
-  textAlign: "center",
-};
-
-const mainStyle = {
-  flex: 1,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-start",
-  gap: "20px",
-  marginTop: 30,
-};
-
-const dataGridStyle = {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: "20px",
-  marginBottom: "250px",
-};
-
-const dataCardStyle = {
-  backgroundColor: "#f7f4f1", // Light brown
-  borderRadius: "20px",
-  padding: "20px",
-  textAlign: "center",
-  border: "1px solid #c1b3a8", // Brown
-  boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Light shadow
-  height: "120px", // Fixed height to ensure uniformity
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-};
-
-const buttonGridStyle = {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr", // Two columns to match the layout of the data cards
-  gap: "20px", // Adjusts spacing between the buttons
-};
-
-const buttonCardStyle = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  textAlign: "center",
-  cursor: "pointer",
-  border: "2px solid #c1b3a8",
-  backgroundColor: "#f7f4f1",
-  borderRadius: "20px",
-  boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Light shadow for consistency
-  height: "172px", // Adjust as needed for visual consistency with the data cards
-  width: "100%",
-  justifyContent: "center",
-  gap: "10px", // Space between the image and text
-  //transform: 'translateX(-7%)',
-};
-
-const textStyle = {
-  fontSize: "0.938em", // Adjust if needed to fit within button width
-  whiteSpace: "nowrap", // Prevents text wrapping
-};

@@ -6,11 +6,12 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase"; // Ensure the correct path to your firebase.js
 import useQuery from "@/app/libs/useQuery";
+import styles from "./project.module.css";
 
 // Full-Screen Loader Component
 const FullScreenLoader = () => (
-  <div className="full-screen-loader">
-    <div className="loading"></div>
+  <div className={styles.fullScreenLoader}>
+    <div className={styles.loadingMessage}></div>
   </div>
 );
 
@@ -28,46 +29,47 @@ const ProjectDetails = () => {
       searchPopup={true}
       title={"Project Details"}
     >
-      <div className="transaction-area pd-top-36">
-        <div className="container">
-          <div
-            className="card"
-          >
-            <div className="image-container">
+      <div className={styles.pdTop36}>
+        <div className={styles.container}>
+          <div className={styles.card}>
+            <div className={styles.imageContainer}>
               <img
-                className="card-img-top"
+                className={styles.cardImgTop}
                 src={project.imageUrl || "/default-image.jpg"}
                 alt="Project Image"
               />
             </div>
-            <div className="card-body">
-              <h5 className="card-title">{project.projectName || "Unnamed Tree"}</h5>
+            <div className={styles.cardBody}>
+              <h5 className={styles.cardTitle}>
+                {project.projectName || "Unnamed Project"}
+              </h5>
 
               <div
-                className="divider"
+                className={styles.divider}
                 style={{
                   margin: "10px 0",
                   height: "2px",
                   backgroundColor: "#ccc",
                 }}
               />
-              <p className="card-text">
+              <p className={styles.cardText}>
                 <strong>Description:</strong>{" "}
                 {project.description || "No description available."}
               </p>
-              <p className="card-text">
+              <p className={styles.cardText}>
                 <strong>Tree Species:</strong>{" "}
                 {project.treeSpecies || "Not specified"}
               </p>
-              <p className="card-text">
+              <p className={styles.cardText}>
                 <strong>Number of Planted Trees:</strong>{" "}
                 {project.targetTrees || "Not specified"}
               </p>
-              <p className="card-text">
+              <p className={styles.cardText}>
                 <strong>Location:</strong>{" "}
-                {project.location || "No location available."}{", " + project.country || "."}
+                {project.location || "No location available."}{" "}
+                {", " + project.country || "."}
               </p>
-              <p className="card-text">
+              <p className={styles.cardText}>
                 <strong>Start Date:</strong>{" "}
                 {project.startDate
                   ? new Date(project.startDate.seconds * 1000).toLocaleString(
@@ -84,10 +86,10 @@ const ProjectDetails = () => {
                     )
                   : "Unknown"}
               </p>
-              <p className="card-text">
-                <strong>End Date:</strong>
-                {project.startDate
-                  ? new Date(project.startDate.seconds * 1000).toLocaleString(
+              <p className={styles.cardText}>
+                <strong>End Date:</strong>{" "}
+                {project.endDate
+                  ? new Date(project.endDate.seconds * 1000).toLocaleString(
                       "en-GB",
                       {
                         day: "numeric",
@@ -103,11 +105,8 @@ const ProjectDetails = () => {
               </p>
             </div>
           </div>
-          <div
-            className="btn-wrap mg-top-30"
-            style={{ textAlign: "center", marginTop: "20px" }}
-          >
-            <Link href="/my-projects" className="view-tree-button">
+          <div className={`${styles.btnWrap} ${styles.mgTop30}`}>
+            <Link href="/my-projects" className={styles.viewProjectButton}>
               View All Projects
             </Link>
           </div>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Section from "../layouts/Section";
 import { getData } from "country-list";
+import styles from "./tree.module.css";
 
 export default function TreesForm() {
   const [formData, setFormData] = useState({
@@ -75,124 +76,118 @@ export default function TreesForm() {
   };
 
   return (
-    <Section
-      allNotification={false}
-      searchPopup={false}
-      title={"Upload A Tree"}
-    >
-      <div className="transaction-area pd-top-36">
-        <div className="container">
-          <h3 className="form-title">
-            &quot;let us know about your tree&quot;
-          </h3>
-          <div className="form-image">
-            <img
-              src="/assets/img/step-3.png"
-              alt="Tree illustration"
-              className="illustration-image"
-            />
-          </div>
-          <div className="card upload-card">
-            {error && <p className="error-message">{error}</p>}
-            <form
-              onSubmit={handleSubmit}
-              encType="multipart/form-data"
-              className="upload-form"
-            >
-              <div className="form-group">
-                <label htmlFor="title">Tree Species</label>
-                <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  required
-                  className="form-control"
-                  placeholder="Enter species"
-                />
-              </div>
+    <Section allNotification={false} searchPopup={false} title="Upload A Tree">
+    <div className={styles.pdTop36}>
+      <div className={styles.container}>
+        <h3 className={styles.formTitle}>"Let us know about your tree"</h3>
+        <div className={styles.formImage}>
+          <img
+            src="/assets/img/step-3.png"
+            alt="Tree illustration"
+            className={styles.illustrationImage}
+          />
+        </div>
+        <div className={styles.uploadCard}>
+          {error && <p className={styles.errorMessage}>{error}</p>}
+          <form
+            onSubmit={handleSubmit}
+            encType="multipart/form-data"
+            className={styles.uploadForm}
+          >
+            <div className={styles.formGroup}>
+              <label htmlFor="title">Tree Species</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                value={formData.title}
+                onChange={handleChange}
+                required
+                className={styles.formControl}
+                placeholder="Enter species"
+              />
+            </div>
 
-              <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <textarea
-                  name="description"
-                  id="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  required
-                  className="form-control"
-                  placeholder="Enter description"
-                />
-              </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="description">Description</label>
+              <textarea
+                name="description"
+                id="description"
+                value={formData.description}
+                onChange={handleChange}
+                required
+                className={styles.formControl}
+                placeholder="Enter description"
+              />
+            </div>
 
-              <div className="form-group">
-                <label htmlFor="location">Location</label>
-                <input
-                  type="text"
-                  name="location"
-                  id="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  required
-                  className="form-control"
-                  placeholder="Enter location"
-                />
-              </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="location">Location</label>
+              <input
+                type="text"
+                name="location"
+                id="location"
+                value={formData.location}
+                onChange={handleChange}
+                required
+                className={styles.formControl}
+                placeholder="Enter location"
+              />
+            </div>
 
-              <div className="form-group">
-                <label htmlFor="country">Country</label>
-                <select
-                  name="country"
-                  id="country"
-                  value={formData.country}
-                  onChange={handleChange}
-                  required
-                  className="form-control"
-                >
-                  <option value="">Enter country</option>
-                  {countries.map((country) => (
-                    <option key={country.code} value={country.name}>
-                      {country.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="country">Country</label>
+              <select
+                name="country"
+                id="country"
+                value={formData.country}
+                onChange={handleChange}
+                required
+                className={styles.formControl}
+              >
+                <option value="">Enter country</option>
+                {countries.map((country) => (
+                  <option key={country.code} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div className="form-group">
-                <label htmlFor="image">Image Of The Tree</label>
-                <input
-                  type="file"
-                  name="image"
-                  id="image"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  required
-                  className="form-control"
-                />
-              </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="image">Image Of The Tree</label>
+              <input
+                type="file"
+                name="image"
+                id="image"
+                accept="image/*"
+                onChange={handleImageChange}
+                required
+                className={styles.formControl}
+              />
+            </div>
 
-              {isUploading && (
-                <div className="form-group">
-                  <p style="color: brown;">
-                    Uploading: {Math.round(uploadProgress)}%
-                  </p>
-                </div>
-              )}
-
-              <div className="btn-wrap">
-                <button
-                  type="submit"
-                  className="btn-submit"
-                  disabled={isUploading}
-                >
-                  {isUploading ? "Uploading..." : "Submit"}
-                </button>
+            {isUploading && (
+              <div className={styles.formGroup}>
+                <p style={{ color: 'brown' }}>
+                  Uploading: {Math.round(uploadProgress)}%
+                </p>
               </div>
-            </form>
-          </div>
+            )}
+
+            <div className={styles.btnWrap}>
+              <button
+                type="submit"
+                className={styles.btnSubmit}
+                disabled={isUploading}
+              >
+                {isUploading ? "Uploading..." : "Submit"}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    </Section>
+    </div>
+  </Section>
   );
 }

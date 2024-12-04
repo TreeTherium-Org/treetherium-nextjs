@@ -1,8 +1,5 @@
 // TODO : move other css into global.css
 import "./globals.css";
-import "../../public/assets/css/responsive.css";
-
-import "../../public/assets/css/components/_buttons.css";
 import { Roboto } from "next/font/google";
 
 export const metadata = {
