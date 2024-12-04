@@ -1,0 +1,274 @@
+/* UserSetting.module.css */
+
+/* Main container for settings */
+.settingsArea {
+  padding: 40px 0;
+}
+
+/* Settings card */
+.settingsCard {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  margin: auto;
+  text-align: left;
+}
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+/* Profile image container */
+.profileImageContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Image wrapper for profile */
+.imageWrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+/* Profile image */
+.profileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid #4f3738;
+  object-fit: cover;
+}
+
+/* Edit icon */
+.editIcon {
+  position: absolute;
+  bottom: 0;
+  right: -5px;
+  background-color: #778b28;
+  color: #fff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid #fff;
+  padding: 0;
+  transition: background-color 0.2s;
+}
+
+.editIcon:hover {
+  background-color: #3a2a2b;
+}
+
+.editIcon:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Error message */
+.errorMessage {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* Upload overlay */
+.uploadOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+}
+
+/* Hidden file input */
+.hiddenFileInput {
+  display: none;
+}
+
+/* Form group container */
+.formGroup {
+  margin-bottom: 20px;
+}
+
+/* Label for form fields */
+.formGroup label {
+  display: block;
+  font-weight: bold;
+  color: #4f3738;
+  margin-bottom: 5px;
+}
+
+/* Input fields for form */
+.formGroup input,
+.selectWrapper select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #eaeaea;
+  background-color: #f9f9f9;
+}
+
+/* Select wrapper */
+.selectWrapper {
+  position: relative;
+}
+
+/* Select styling */
+.selectWrapper select {
+  appearance: none;
+  padding-right: 30px;
+  cursor: pointer;
+}
+
+/* Dropdown arrow styling */
+.selectWrapper::after {
+  content: "▼";
+  font-size: 12px;
+  color: #4f3738;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Form actions (Cancel/Save buttons) */
+.formActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Cancel button */
+.btnCancel,
+.btnSave {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  margin: 0 5px;
+  transition: opacity 0.2s;
+  font-size: 20px;
+}
+
+/* Cancel button specific style */
+.btnCancel {
+  background-color: #eaeaea;
+  color: #4f3738;
+}
+
+/* Save button specific style */
+.btnSave {
+  background-color: #4f3738;
+  color: #fff;
+}
+
+/* Button hover effects */
+.btnCancel:hover,
+.btnSave:hover {
+  opacity: 0.9;
+}
+
+/* Select container */
+.selectContainer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Select box focus styling */
+.selectWrapper select:focus {
+  outline: none;
+  border-color: #4f3738;
+}
+
+/* Select option styling */
+.selectWrapper select option {
+  background: white;
+  color: #4f3738;
+  padding: 10px;
+}
+
+/* Force dropdown to appear below */
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+  .selectContainer {
+    overflow: visible;
+  }
+
+  .selectWrapper select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  .selectWrapper select::-ms-expand {
+    display: none;
+  }
+}
+
+/* Dropdown rotation on focus */
+.selectWrapper select:focus + .selectWrapper::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Spacing between form groups */
+.formGroup + .formGroup {
+  margin-top: 20px;
+  position: relative;
+  z-index: 0;
+}
+
+/* Select option styling */
+.selectWrapper select option {
+  padding: 10px;
+  min-height: 1.2em;
+  background: white;
+}
+
+/* Non-select form groups */
+.formGroup:not(.selectContainer) {
+  position: relative;
+  z-index: 0;
+}

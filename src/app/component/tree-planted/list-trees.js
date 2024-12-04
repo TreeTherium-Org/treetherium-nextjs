@@ -3,11 +3,11 @@ import Section from "../layouts/Section";
 import Link from "next/link";
 import Image from "next/image";
 import useQuery from "@/app/libs/useQuery";
+import styles from "./tree.module.css";
 
-// Full-Screen Loader Component
 const FullScreenLoader = () => (
-  <div className="full-screen-loader">
-    <div className="loading-message">Loading trees...</div>
+  <div className={styles.fullScreenLoader}>
+    <div className={styles.loadingMessage}></div>
   </div>
 );
 
@@ -28,22 +28,22 @@ const ListTrees = () => {
 
   return (
     <Section allNotification={false} searchPopup={true} title={"My Trees"}>
-      <div className="transaction-area pd-top-36">
-        <div className="container">
-          <div className="btn-wrap mg-bottom-60">
-            <div className="container">
-              <Link href="/trees-form" className="add-tree-button">
+      <div className={`${styles.transactionArea} ${styles.pdTop36}`}>
+        <div className={styles.container}>
+          <div className={`${styles.btnWrap} ${styles.mgBottom60}`} >
+            <div className={styles.container}>
+              <Link href="/trees-form" className={styles.addTreeButton}>
                 Add New Tree{" "}
                 <i className="fa fa-angle-double-right icon-spacing" />
               </Link>
             </div>
           </div>
-          <div className="tree-gallery">
+          <div className={styles.treeGallery}>
             {trees?.length > 0 ? (
               trees.map((tree) => (
-                <div key={tree.id} className="tree-item">
+                <div key={tree.id} className={styles.treeItem}>
                   <Link href={`/list-trees/${tree.id}`}>
-                    <div className="tree-image">
+                    <div className={styles.treeImage}>
                       <Image
                         src={tree.imageUrl || "/default-image.jpg"}
                         alt={tree.title || "Unnamed Tree"}
@@ -52,7 +52,7 @@ const ListTrees = () => {
                         style={{ borderRadius: "20px" }}
                       />
                     </div>
-                    <h5 className="tree-title">
+                    <h5 className={styles.treeTitle}>
                       {tree.title || "Unnamed Tree"}
                     </h5>
                     <strong>
@@ -70,7 +70,7 @@ const ListTrees = () => {
                 </div>
               ))
             ) : (
-              <div className="no-tree">No trees found.</div>
+              <div className={styles.noTree}>No trees found.</div>
             )}
           </div>
         </div>

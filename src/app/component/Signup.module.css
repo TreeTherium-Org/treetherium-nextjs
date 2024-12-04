@@ -1,0 +1,435 @@
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+.mgBottom35 {
+  margin-bottom: 35px;
+}
+
+.contactFormInner {
+  background: #c4dad2;
+  padding: 40px 20px;
+}
+
+.contactFormInner .btn {
+  height: 45px;
+  line-height: 45px;
+  padding: 0 40px;
+  border-radius: 0;
+  margin-top: 30px;
+  font-weight: bold;
+}
+
+.contactFormInner .forgotBtn {
+  display: block;
+  margin-top: 20px;
+  color: #4f3738;
+}
+
+.singleInputWrap {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.singleInputWrap span {
+  color: #4f3738;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.singleInputWrap input {
+  width: 100%;
+  height: 45px;
+  padding: 0 15px;
+  border: 1px solid #ececec;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Adds drop shadow */
+  transition: box-shadow 0.2s ease;
+  /* Smooth transition for shadow on focus */
+}
+
+.singleCheckboxWrap input {
+  margin-top: 3px;
+  float: left;
+  margin-right: 4px;
+}
+
+.singleCheckboxWrap span {
+  color: #4f3738;
+}
+
+.forgotPasswordLink {
+  color: #4f3738;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rememberPassword {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.accept-terms {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* Button Styles */
+.btn {
+  border: 0;
+  height: 50px;
+  line-height: 50px;
+  font-size: 14px;
+  padding: 0 25px;
+  -webkit-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  color: #fff;
+  opacity: 0.7;
+}
+
+.btn:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #fff;
+  outline: 0;
+  opacity: 0.7;
+}
+
+.btn:active {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #fff;
+  outline: 0;
+  opacity: 0.7;
+}
+
+.btn i {
+  padding-left: 10px;
+}
+
+/* Large Button Styles */
+.btnLarge {
+  border: 0;
+  height: 70px;
+  line-height: 70px;
+  font-size: 20px;
+  padding: 0 25px;
+  -webkit-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+  border-radius: 5px;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+}
+
+.btnLarge:hover {
+  color: #fff;
+  opacity: 0.7;
+}
+
+.btnLarge:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #fff;
+  outline: 0;
+  opacity: 0.7;
+}
+
+.btnLarge:active {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #fff;
+  outline: 0;
+  opacity: 0.7;
+}
+
+.btnLarge i {
+  padding-left: 10px;
+}
+
+/* btnLogin */
+.btnLogin {
+  background: #778b28;
+  color: #fff;
+  border-radius: 4px; /* Ensure the button has rounded corners */
+  font-size: 14px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 25px;
+  border: 0;
+  -webkit-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.btnLogin:hover {
+  color: #fff;
+  opacity: 0.7;
+}
+
+.btnLogin:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #fff;
+  outline: 0;
+  opacity: 0.7;
+}
+
+.btnLogin:active {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #fff;
+  outline: 0;
+  opacity: 0.7;
+}
+
+.socialButtons {
+  padding-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  /* Spacing between buttons */
+}
+
+.socialButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 350px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.socialButton img {
+  width: auto;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.btnGoogle {
+  background-color: #4285f4;
+}
+
+.btnFacebook {
+  background-color: #0078d4;
+}
+
+.btnGoogle:hover {
+  background-color: #357ae8;
+}
+
+.btnFacebook:hover {
+  background-color: #005a9e;
+}
+
+.btnPhantomWallet {
+  background-color: #ab9ff2;
+}
+
+.btnPhantomWallet:hover {
+  background-color: #357ae8;
+}
+
+.underlineText {
+  text-decoration: underline;
+  color: inherit;
+}
+
+/* Error & success Message Style */
+.errorMessage {
+  color: #d8000c; /* Red color for error */
+  background-color: #ffd2d2; /* Light red background */
+  border: 1px solid #d8000c;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.successMessage {
+  color: #4f8a10; /* Green color for success */
+  background-color: #dff2bf; /* Light green background */
+  border: 1px solid #4f8a10;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Signup.module.css */
+
+/* Body styles for modal open state */
+body.active-modal {
+    overflow-y: hidden;
+  }
+  
+  /* Modal Title */
+  .titleModal {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #4f3738;
+    margin-bottom: 15px;
+  }
+  
+  /* Modal Section Titles */
+  .sectionTitle {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #4f3738;
+  }
+  
+  /* Modal Paragraphs */
+  .paragraphModal {
+    font-size: 1em;
+    font-weight: 500;
+    color: #4f3738;
+  }
+  
+  /* Modal Button Container */
+  .btn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  /* Button for Agree */
+  .btnAgree {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    margin: 0 5px;
+    font-size: 20px;
+    background-color: #778b28;
+    color: #fff;
+  }
+  
+  /* Button for Disagree */
+  .btnDisagree {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    margin: 0 5px;
+    font-size: 20px;
+    background-color: #4f3738;
+    color: white;
+  }
+  
+  /* Modal Container */
+  .modal {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 999;
+  }
+  
+  /* Modal Overlay (Background) */
+  .overlay {
+    background: rgba(49, 49, 49, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  /* Modal Content Area */
+  .modalContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 8px;
+    max-width: 600px;
+    min-width: 300px;
+    max-height: 80vh;
+    overflow-y: auto; /* Makes content scrollable if needed */
+  }
+  
+  /* Close Button for Modal */
+  .closeModal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 7px;
+  }
+  
