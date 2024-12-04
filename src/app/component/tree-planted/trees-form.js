@@ -79,7 +79,7 @@ export default function TreesForm() {
     <Section allNotification={false} searchPopup={false} title="Upload A Tree">
     <div className={styles.pdTop36}>
       <div className={styles.container}>
-        <h3 className={styles.formTitle}>"Let us know about your tree"</h3>
+        <h3 className={styles.formTitle}> &quot;Let us know about your tree &quot;</h3>
         <div className={styles.formImage}>
           <img
             src="/assets/img/step-3.png"
