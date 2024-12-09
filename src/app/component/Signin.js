@@ -10,6 +10,7 @@ import { doc, getDoc, collection } from "firebase/firestore";
 import { SigninMessage } from "../libs/signinMessage.js";
 import { Toaster, toast } from "react-hot-toast";
 import bs58 from "bs58";
+import styles from "./Signin.module.css";
 
 // Full-Screen Loader Component
 const FullScreenLoader = () => (
@@ -170,17 +171,20 @@ const Signin = () => {
     <>
       <Toaster position="top-center" />
       <Section allNotification={false} searchPopup={true} title="Login">
-        <div className="logo-container">
+        <div className={styles.logoContainer}>
           <h3></h3>
         </div>
 
-        <div className="signin-area mg-bottom-35">
-          <div className="container">
-            <form className="contact-form-inner" onSubmit={signInWithEmail}>
-              {error && <p className="error-message">{error}</p>}
-              {success && <p className="success-message">{success}</p>}{" "}
+        <div className={`${styles.signinArea} ${styles.mgBottom35}`}>
+          <div className={styles.container}>
+            <form
+              className={styles.contactFormInner}
+              onSubmit={signInWithEmail}
+            >
+              {error && <p className={styles.errorMessage}>{error}</p>}
+              {success && <p className={styles.successMessage}>{success}</p>}
               {/* Success message */}
-              <label className="single-input-wrap">
+              <label className={styles.singleInputWrap}>
                 <span>Email Address*</span>
                 <input
                   type="email"
@@ -190,7 +194,7 @@ const Signin = () => {
                   required
                 />
               </label>
-              <label className="single-input-wrap">
+              <label className={styles.singleInputWrap}>
                 <span>Password*</span>
                 <input
                   type="password"
@@ -200,8 +204,8 @@ const Signin = () => {
                   required
                 />
               </label>
-              <div className="options">
-                <label className="remember-password">
+              <div className={styles.options}>
+                <label className={styles.rememberPassword}>
                   <input
                     type="checkbox"
                     checked={rememberPassword}
@@ -209,21 +213,28 @@ const Signin = () => {
                   />
                   Remember Password
                 </label>
-                <Link href="/lostpassword" className="forgot-password-link">
+                <Link
+                  href="/lostpassword"
+                  className={styles.forgotPasswordLink}
+                >
                   Forgot Password
                 </Link>
               </div>
-              <button type="submit" className="btn btn-purple">
+              <button
+                type="submit"
+                className={`${styles.btn} ${styles.btnLogin}`}
+              >
                 Login
               </button>
-              <Link className="forgot-btn" href="/signup">
-                <span className="underline-text">Create an account</span>
+
+              <Link className={styles.forgotBtn} href="/signup">
+                <span className={styles.underlineText}>Create an account</span>
               </Link>
             </form>
-            <div className="social-buttons">
+            <div className={styles.socialButtons}>
               <button
                 onClick={handlePhantomWalletSignin}
-                className="social-button btn-phantom-wallet"
+                className={`${styles.socialButton} ${styles.btnPhantomWallet}`}
               >
                 <img
                   src="https://s5-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/073/700/original/1200x1200.png?1712005160"
@@ -233,9 +244,8 @@ const Signin = () => {
               </button>
               {/* <WalletButton /> */}
               <button
-                // onClick={() => handleProviderSignIn(googleProvider)}
                 onClick={() => signIn("google")}
-                className="social-button btn-google"
+                className={`${styles.socialButton} ${styles.btnGoogle}`}
               >
                 <img
                   src="https://theplace2b.com.au/wp-content/uploads/2020/09/178-1783296_g-transparent-circle-google-logo.png"

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Section from "../layouts/Section";
 import { getData } from "country-list";
 import { Toaster, toast } from "react-hot-toast";
+import styles from "./project.module.css";
 
 export default function ProjectForm() {
   const [formData, setFormData] = useState({
@@ -98,195 +99,179 @@ export default function ProjectForm() {
   };
 
   return (
-    <Section title="Create A Project">
-      {/* Toaster for notifications */}
-      <Toaster position="top-center" />
-      <div className="container">
-        <h3 className="form-title"> &quot;let us know about your project &quot;</h3>
-        <div className="form-image">
-          <img
-            src="/assets/img/step-3.png"
-            alt="Project illustration"
-            className="illustration-image"
+<Section title="Create A Project">
+  {/* Toaster for notifications */}
+  <Toaster position="top-center" />
+  <div className={styles.container}>
+    <h3 className={styles.formTitle}>&quot;let us know about your project &quot;</h3>
+    <div className={styles.formImage}>
+      <img
+        src="/assets/img/step-3.png"
+        alt="Project illustration"
+        className={styles.illustrationImage}
+      />
+    </div>
+    <div className={`${styles.card} ${styles.uploadCard}`}>
+      <form
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+        className={styles.uploadForm}
+      >
+        {/* Project Name */}
+        <div className={styles.formGroup}>
+          <label htmlFor="projectName">Project Name</label>
+          <input
+            type="text"
+            name="projectName"
+            id="projectName"
+            value={formData.projectName}
+            onChange={handleChange}
+            required
+            placeholder="Enter project name"
+            className={styles.formControl}
           />
         </div>
-        <div className="card upload-card">
-          <form
-            onSubmit={handleSubmit}
-            encType="multipart/form-data"
-            className="upload-form"
-          >
-            {/* Project Name */}
-            <div className="form-group">
-              <label htmlFor="projectName">Project Name</label>
-              <input
-                type="text"
-                name="projectName"
-                id="projectName"
-                value={formData.projectName}
-                onChange={handleChange}
-                required
-                placeholder="Enter project name"
-                className="form-control"
-              />
-            </div>
 
-            {/* Description */}
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
-              <textarea
-                name="description"
-                id="description"
-                value={formData.description}
-                onChange={handleChange}
-                required
-                placeholder="Enter description"
-                className="form-control"
-              />
-            </div>
-
-            {/* Tree Species */}
-            <div className="form-group">
-              <label htmlFor="treeSpecies">Tree Species</label>
-              <input
-                type="text"
-                name="treeSpecies"
-                id="treeSpecies"
-                value={formData.treeSpecies}
-                onChange={handleChange}
-                required
-                placeholder="Enter species"
-                className="form-control"
-              />
-            </div>
-
-            {/* Target Trees */}
-            <div className="form-group">
-              <label htmlFor="targetTrees">Target Number Of Trees</label>
-              <input
-                type="number"
-                name="targetTrees"
-                id="targetTrees"
-                value={formData.targetTrees}
-                onChange={handleChange}
-                required
-                placeholder="Enter target number"
-                className="form-control"
-              />
-            </div>
-
-            {/* Add Members
-            <div className="form-group">
-              <label htmlFor="members">Add Members</label>
-              <input
-                type="email"
-                name="members"
-                id="members"
-                value={formData.members}
-                onChange={handleChange}
-                placeholder="Enter email"
-                className="form-control"
-              />
-            </div>
-
-            */}
-
-            {/* Start Date */}
-            <div className="form-group">
-              <label htmlFor="startDate">Start Date</label>
-              <input
-                type="date"
-                name="startDate"
-                id="startDate"
-                value={formData.startDate}
-                onChange={handleChange}
-                required
-                className="form-control"
-              />
-            </div>
-
-            {/* End Date */}
-            <div className="form-group">
-              <label htmlFor="endDate">End Date</label>
-              <input
-                type="date"
-                name="endDate"
-                id="endDate"
-                value={formData.endDate}
-                onChange={handleChange}
-                required
-                className="form-control"
-              />
-            </div>
-
-            {/* Location */}
-            <div className="form-group">
-              <label htmlFor="location">Location</label>
-              <input
-                type="text"
-                name="location"
-                id="location"
-                value={formData.location}
-                onChange={handleChange}
-                required
-                placeholder="Enter location"
-                className="form-control"
-              />
-            </div>
-
-            {/* Country */}
-            <div className="form-group">
-              <label htmlFor="country">Country</label>
-              <select
-                name="country"
-                id="country"
-                value={formData.country}
-                onChange={handleChange}
-                required
-                className="form-control"
-              >
-                <option value="">Enter country</option>
-                {countries.map((country) => (
-                  <option key={country.code} value={country.name}>
-                    {country.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Image Upload */}
-            <div className="form-group">
-              <label htmlFor="image">Image Of The Project</label>
-              <input
-                type="file"
-                name="image"
-                id="image"
-                accept="image/*"
-                onChange={handleImageChange}
-                required
-                className="form-control"
-              />
-            </div>
-
-            {isUploading && (
-              <p style={{ color: "brown" }}>
-                Uploading: {Math.round(uploadProgress)}%
-              </p>
-            )}
-
-            {/* Submit Button */}
-            <div className="btn-wrap">
-              <button
-                type="submit"
-                className="btn-submit"
-                disabled={isUploading}
-              >
-                {isUploading ? "Uploading..." : "Submit"}
-              </button>
-            </div>
-          </form>
+        {/* Description */}
+        <div className={styles.formGroup}>
+          <label htmlFor="description">Description</label>
+          <textarea
+            name="description"
+            id="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+            placeholder="Enter description"
+            className={styles.formControl}
+          />
         </div>
-      </div>
-    </Section>
+
+        {/* Tree Species */}
+        <div className={styles.formGroup}>
+          <label htmlFor="treeSpecies">Tree Species</label>
+          <input
+            type="text"
+            name="treeSpecies"
+            id="treeSpecies"
+            value={formData.treeSpecies}
+            onChange={handleChange}
+            required
+            placeholder="Enter species"
+            className={styles.formControl}
+          />
+        </div>
+
+        {/* Target Trees */}
+        <div className={styles.formGroup}>
+          <label htmlFor="targetTrees">Target Number Of Trees</label>
+          <input
+            type="number"
+            name="targetTrees"
+            id="targetTrees"
+            value={formData.targetTrees}
+            onChange={handleChange}
+            required
+            placeholder="Enter target number"
+            className={styles.formControl}
+          />
+        </div>
+
+        {/* Start Date */}
+        <div className={styles.formGroup}>
+          <label htmlFor="startDate">Start Date</label>
+          <input
+            type="date"
+            name="startDate"
+            id="startDate"
+            value={formData.startDate}
+            onChange={handleChange}
+            required
+            className={styles.formControl}
+          />
+        </div>
+
+        {/* End Date */}
+        <div className={styles.formGroup}>
+          <label htmlFor="endDate">End Date</label>
+          <input
+            type="date"
+            name="endDate"
+            id="endDate"
+            value={formData.endDate}
+            onChange={handleChange}
+            required
+            className={styles.formControl}
+          />
+        </div>
+
+        {/* Location */}
+        <div className={styles.formGroup}>
+          <label htmlFor="location">Location</label>
+          <input
+            type="text"
+            name="location"
+            id="location"
+            value={formData.location}
+            onChange={handleChange}
+            required
+            placeholder="Enter location"
+            className={styles.formControl}
+          />
+        </div>
+
+        {/* Country */}
+        <div className={styles.formGroup}>
+          <label htmlFor="country">Country</label>
+          <select
+            name="country"
+            id="country"
+            value={formData.country}
+            onChange={handleChange}
+            required
+            className={styles.formControl}
+          >
+            <option value="">Enter country</option>
+            {countries.map((country) => (
+              <option key={country.code} value={country.name}>
+                {country.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Image Upload */}
+        <div className={styles.formGroup}>
+          <label htmlFor="image">Image Of The Project</label>
+          <input
+            type="file"
+            name="image"
+            id="image"
+            accept="image/*"
+            onChange={handleImageChange}
+            required
+            className={styles.formControl}
+          />
+        </div>
+
+        {isUploading && (
+          <p style={{ color: "brown" }}>
+            Uploading: {Math.round(uploadProgress)}%
+          </p>
+        )}
+
+        {/* Submit Button */}
+        <div className={styles.btnWrap}>
+          <button
+            type="submit"
+            className={styles.btnSubmit}
+            disabled={isUploading}
+          >
+            {isUploading ? "Uploading..." : "Submit"}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</Section>
   );
 }
